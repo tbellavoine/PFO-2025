@@ -1,0 +1,25 @@
+<div class="flex flex-col p-6 md:p-20 gap-8 md:gap-20 text-light/60">
+  <div class="flex flex-col gap-2 justify-center items-center">
+    <p class="text-xs text-accent/50 mb-4">
+      &lt;skills /&gt;
+    </p>
+    <h3 class="text-2xl md:text-5xl text-light font-semibold text-center">Mes compétences techniques / fonctionnelles</h3>
+    <p class="text-accent text-lg md:text-xl italic text-center">Des compétences au top...</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <json-card [jsonObject]="frontObject()" [title]="'// Front End 🎨'" class="h-full"/>
+    <json-card [jsonObject]="backObject()" [title]="'// Back End 🛠️'" class="h-full"/>
+    <json-card [jsonObject]="qualityObject()" [title]="'// Qualité 📐'" class="h-full"/>
+    <json-card [jsonObject]="uxUiObject()" [title]="'// UX/UI 👁️'" class="h-full"/>
+    <json-card [jsonObject]="devOpsObject()" [title]="'// DevOps 📦'" class="h-full"/>
+    <json-card [jsonObject]="toolsObject()" [title]="'// Outils 🔧'" class="h-full"/>
+  </div>
+  <p class="text-accent text-xl italic text-center">Et d'autres...</p>
+  <div class="flex items-center justify-center flex-wrap gap-4">
+    @for (skill of moreSkills; track skill) {
+      <p class="text-sm text-light">
+        &lt;{{ skill }} /&gt;
+      </p>
+    }
+  </div>
+</div>

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-jetbrains: 'JetBrains Mono', sans-serif;
+  --font-source: 'Source Sans 3', sans-serif;
+  --font-fira: 'Fira sans', sans-serif;
+  --font-google: 'Google Sans Code', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-consolas: 'Consolas', 'monaco', 'monospace', sans-serif;
+  --color-primary: #1f1f1f;
+  --color-primary-darker: #181818;
+  --color-accent: #f9826c;
+  --color-light: #efefef;
+  --color-blue-light: #9cdcfe;
+  --color-orange-light: #ce9178;
+  --color-green-light: #b5cea8;
+  --color-blue: #569cd6;
+  --color-grey: #666;
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+}
+@layer utilities {
+  ::-webkit-scrollbar {
+    @apply w-1 h-1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-lg;
+  }
+}

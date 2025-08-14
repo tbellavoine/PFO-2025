@@ -1,0 +1,47 @@
+<div class="flex flex-col h-full w-full overflow-hidden">
+  <div class="flex items-center justify-between w-full bg-primary border-b border-primary-darker p-2 gap-4 text-light">
+    <button (click)="resetZoom()" class="cursor-pointer transition-all hover:text-accent" title="Reset Zoom (Ctrl + 0)">
+      ↻
+    </button>
+    <div class="flex items-center gap-4">
+      <button (click)="zoomOut()"
+              [disabled]="zoomLevel() <= minZoomLevel()"
+              class="cursor-pointer transition-all hover:text-accent"
+              title="Zoom Out (Ctrl + -)"
+      >-
+      </button>
+      <span class="zoom-level">{{ (zoomLevel() * 100).toFixed(0) }}%</span>
+      <button (click)="zoomIn()"
+              [disabled]="zoomLevel() >= 5"
+              class="cursor-pointer transition-all hover:text-accent"
+              title="Zoom In (Ctrl + +)"
+      >+
+      </button>
+    </div>
+    <button (click)="fitToScreen()" class="cursor-pointer transition-all hover:text-accent" title="Fit to Screen">
+      ⛶
+    </button>
+  </div>
+
+  <div #imageContainer
+       (mousedown)="startPan($event)"
+       (mouseleave)="stopPan()"
+       (mousemove)="onPan($event)"
+       (mouseup)="stopPan()"
+       (wheel)="onWheel($event)"
+       (window:resize)="onResize()"
+       [style.cursor]="isPanning() ? 'grabbing' : (zoomLevel() > minZoomLevel() ? 'grab' : 'default')"
+       class="flex-1 h-full w-full overflow-hidden flex items-center justify-center">
+
+    <img #imageElement
+         (load)="onImageLoad()"
+         [alt]="imageName()"
+         [src]="imagePath()"
+         [style.opacity]="isImageLoaded() ? '1' : '0'"
+         [style.pointer-events]="'none'"
+         [style.transform-origin]="'center center'"
+         [style.transform]="getTransform()"
+         [style.user-select]="'none'"
+    />
+  </div>
+</div>

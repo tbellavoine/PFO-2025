@@ -1,0 +1,42 @@
+<div class="flex flex-col md:flex-row md:items-center h-full p-8 gap-6">
+  <div class="flex flex-col gap-6 w-full md:w-1/2">
+    <div class="flex flex-col gap-4 mb-6 md:mb-14">
+      <h3 class="text-5xl font-semibold text-light">Thomas BELLAVOINE</h3>
+      <p class="text-2xl text-light/50">Développeur frontend Angular</p>
+    </div>
+    <div class="flex flex-col gap-2">
+      <p class="text-light mb-2 text-lg">Commencer</p>
+      @for (startItem of StartMenu; track startItem) {
+        <a [routerLink]="startItem.route"
+           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">
+          <fa-icon [icon]="startItem.icon"/>
+          {{ startItem.label | translate }}
+        </a>
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <p class="text-light mb-2 text-lg">Récents -
+        <fa-icon (click)="clearHistory()" [icon]="['far', 'trash-can']" class="text-accent cursor-pointer"/>
+      </p>
+      @for (page of lastPages(); track page + $index) {
+        <a [routerLink]="page"
+           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">
+          <span class="truncate">{{ getPageName(page) | translate }}</span> <span class="text-light/50 truncate">-
+          {{ getPageUrl(page) }}</span>
+        </a>
+      }
+    </div>
+  </div>
+  <div class="flex flex-col gap-2 w-full pb-12 md:w-1/2 md:max-w-102">
+    <p class="text-light mb-2 text-lg">A propos</p>
+    @for (aboutItem of AboutMenu; track aboutItem) {
+      <a
+        [href]="aboutItem.link"
+        [target]="'_blank'"
+        class="flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary">
+        <fa-icon [icon]="aboutItem.icon"/>
+        {{ aboutItem.label | translate }}
+      </a>
+    }
+  </div>
+</div>

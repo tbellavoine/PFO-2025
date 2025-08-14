@@ -1,0 +1,13 @@
+<div class="flex flex-col h-screen bg-primary font-source overflow-hidden">
+  <titlebar/>
+  <div class="flex items-stretch h-full w-full overflow-hidden">
+    <sidenav/>
+    <div class="flex flex-col h-full w-full overflow-hidden">
+      <tabs/>
+      <div class="flex flex-col h-full w-full overflow-auto font-jetbrains">
+        <router-outlet/>
+      </div>
+    </div>
+  </div>
+  <status-bar/>
+</div>

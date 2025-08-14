@@ -1,0 +1,14 @@
+export enum MenuKey {
+  EXPLORER,
+  PROFILE,
+  WORKS,
+  SKILLS,
+  PROJECTS,
+  CONTACT,
+  ABOUT,
+  DASHBOARD,
+  MEMORY,
+  LINKEDIN,
+  GITHUB,
+  PREVIEW,
+}

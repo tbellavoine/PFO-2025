@@ -1,0 +1,35 @@
+{
+  "MENUS": {
+    "HOME": "Bienvenue",
+    "ABOUT": "A propos",
+    "SIDE_PROJETS": "Projets perso",
+    "CONTACT": "Contact",
+    "WORKS": "Experiences",
+    "SKILLS": "Compétences",
+    "PROJECTS": "Projets",
+    "PROFILE": "Profil",
+    "SKILLS_START": "Compétences...",
+    "PROJECTS_START": "Projets...",
+    "WORKS_START": "Experiences...",
+    "CONTACT_START": "Rester en contact...",
+    "LINKEDIN": "Linkedin",
+    "GITHUB": "Github",
+    "ASSETS": "Images"
+  },
+  "MESSAGES": {
+    "ERROR": {
+      "SAVE_HISTORY": "Impossible de sauvegarder l'historique",
+      "LOAD_HISTORY": "Impossible de charger l'historique"
+    }
+  },
+  "EXPLORER": {
+    "ME_FILE": "me.html",
+    "WORKS_FILE": "experiences.css",
+    "SKILLS_FILE": "compétences.js",
+    "PROJECTS_FILE": "projects.js",
+    "DASHBOARD": "Dashboard",
+    "MEMORY": "Memory",
+    "CONTACT_FILE": "Email.spec.ts",
+    "HOME": "Bienvenue"
+  }
+}

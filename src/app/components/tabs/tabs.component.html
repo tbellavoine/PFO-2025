@@ -1,0 +1,15 @@
+<div class="flex items-stretch w-full bg-primary-darker overflow-auto">
+  @for (tab of tabs(); let index = $index; track tab) {
+    <a [routerLink]="tab.route"
+       [routerLinkActive]="'!border-t-accent rounded-t-xs bg-primary'"
+       class="flex items-center transition-all text-light p-2 gap-2 border-r border-r-white/5 border-t-2 border-t-transparent bg-primar-darker hover:bg-primary text-xs">
+      @if (!!tab.icon) {
+        <fa-icon [icon]="tab.icon" [attr.class]="tab.iconTheme"/>
+      }
+      @if (!!tab.label) {
+        <span class="text-xs whitespace-nowrap">{{ tab.label | translate }}</span>
+      }
+      <fa-icon [icon]="['fas', 'xmark']" (click)="removeTab(tab, $event)" class="text-light/50 ml-4"/>
+    </a>
+  }
+</div>

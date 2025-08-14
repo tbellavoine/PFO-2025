@@ -1,0 +1,60 @@
+<div class="flex items-center justify-between bg-primary border-t border-t-white/5 font-consolas">
+  <div>
+    <div class="relative p-1">
+      <div (click)="toggleGitBranch()"
+           [ngClass]="{'bg-accent' : isGitbranchOpen}"
+           class="flex items-center gap-1 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
+      >
+        <fa-icon [icon]="['fas','code-branch']"/>
+        master
+      </div>
+      @if (isGitbranchOpen) {
+        <div class="absolute left-1 bottom-10 rounded-sm bg-primary w-100 border border-white/5 p-2 text-light text-xs">
+          <div
+            (click)="isGitbranchOpen = false"
+            class="flex items-center gap-1 transition-all text-light/40 cursor-not-allowed p-2 m-1 border-b border-b-white/5"
+          >
+            <fa-icon [icon]="['fas','plus']"/>
+            <p class="flex items-center gap-1">Créer une nouvelle branche...</p>
+          </div>
+          <div
+            (click)="isGitbranchOpen = false"
+            class="flex items-center justify-between gap-2 transition-all text-light hover:bg-accent cursor-pointer p-2 rounded-sm m-1"
+          >
+            <div class="flex items-center gap-1">
+              <fa-icon [icon]="['fas','code-branch']"/>
+              <p class="flex items-center gap-2">master <span class="text-light/30">79c6a29</span></p>
+            </div>
+            <p class="text-accent">branch</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="flex items-center">
+    <div class="relative p-1">
+      <div class="flex items-center gap-1 text-light text-xs py-1 px-2 rounded-sm">
+        <fa-icon [icon]="['fab','angular']" class="text-red-500"/>
+        <span>Angular</span>
+      </div>
+    </div>
+    <div class="relative p-1">
+      <div class="flex items-center gap-1 text-light text-xs py-1 px-2 rounded-sm">
+        <span class="text-blue-500">&#123;&#125;</span><span>Typescript</span>
+      </div>
+    </div>
+    <div class="relative p-1">
+      <div (click)="toggleAlert()"
+           [ngClass]="{'bg-accent' : isAlertOpen}"
+           class="flex items-center gap-2 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
+      >
+        <fa-icon [icon]="['fas','bell']"/>
+      </div>
+      @if (isAlertOpen) {
+        <div class="absolute right-1 bottom-10 rounded-sm bg-primary w-100 border border-white/5 p-2 text-light text-xs">
+          <p>Pas de nouvelles notification</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

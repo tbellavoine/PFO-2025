@@ -1,0 +1,60 @@
+<div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">
+  <div class="flex flex-col gap-2  justify-center items-center">
+    <p class="text-xs text-accent/50 mb-4">
+      &lt;about-me /&gt;
+    </p>
+    <h3 class="text-5xl text-light font-semibold">Thomas BELLAVOINE</h3>
+    <p class="text-accent text-xl italic">Développeur frontend Angular</p>
+  </div>
+  <div class="flex flex-col gap-6">
+    <p class="text-light">
+      Salut, moi c’est Thomas 👋
+    </p>
+    <p>
+      <strong class="text-light">Développeur front-end</strong> depuis plus de dix ans, je <em class="text-light">conçois</em> et <em
+      class="text-light">construis</em> des interfaces web qui allient
+      <em class="text-light">performance</em> et <em class="text-light">plaisir d’utilisation</em>. Mon domaine de prédilection :
+      <strong>Angular</strong>, que j’ai vu
+      évoluer du 8
+      jusqu’au 19, et
+      avec lequel j’ai réalisé aussi bien des refontes techniques critiques que des applications complètes prêtes pour la production.
+    </p>
+    <p>
+      Mon approche est <strong class="text-light">simple</strong> : <em class="text-light">comprendre</em> les besoins réels, <em class="text-light">anticiper</em>
+      les contraintes techniques et
+      <em class="text-light">trouver</em> la solution
+      la plus élégante. Je suis un passionné des détails — du temps de chargement à la compatibilité entre navigateurs — parce que ce sont souvent eux
+      qui font la différence pour l’utilisateur final.
+    </p>
+    <p>
+      Au fil des années, j’ai travaillé sur des projets variés : e-commerce, applications métiers, expériences 3D interactives, ou encore modules sur
+      mesure pour des marques prestigieuses. J’aime aussi <strong class="text-light">transmettre</strong> : <em class="text-light">former</em> de
+      nouveaux développeurs, <em class="text-light">partager</em>
+      de bonnes
+      pratiques, et
+      parfois <em class="text-light">sauver</em> une mise en production de dernière minute (ce qui, avouons-le, donne plus d’adrénaline que le café).
+    </p>
+    <p>
+      Ce qui m’anime avant tout, c’est de créer des produits qui rendent service, qui durent, et qui donnent envie de revenir. Parce qu’au fond, le
+      code
+      n’est qu’un outil : <strong class="text-light">ce qui compte, c’est l’expérience qu’il permet de vivre</strong>.
+    </p>
+  </div>
+  <div class="flex flex-col md:flex-row md:items-center gap-12 md:gap-6 w-full">
+    <div class="flex flex-col gap-2 w-full md:w-1/2">
+      <p class="text-lg text-accent/70">
+        &lt;Savoir-être /&gt;
+      </p>
+      <json-card [jsonObject]="softSkillsObject()"/>
+    </div>
+    <div class="flex flex-col items-center gap-2 w-full md:w-1/2">
+      <div (click)="openCV()" class="group flex flex-col items-center gap-4 cursor-pointer">
+        <div
+          class="flex items-center justify-center p-3 rounded-full h-30 w-30 border-2 border-light transition-all group-hover:border-accent group-hover:text-accent">
+          <fa-icon [icon]="['fas','file-arrow-down']" [size]="'3x'" class="transition-all group-hover:animate-pulse"/>
+        </div>
+        <span class="transition-all group-hover:!text-accent text-light/20">Télécharger le CV</span>
+      </div>
+    </div>
+  </div>
+</div>
