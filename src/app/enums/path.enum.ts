@@ -10,15 +10,5 @@ export enum Path {
   MEMORY = 'memory',
   HOME = 'home',
   PREVIEW = 'preview',
-  GRP = 'Gestion relation producteur.jpg',
-  PATIENCE_K_COATCHING = 'Patience K Coaching.jpg',
-  HORA_ASOCIADOS = 'Hora Asociados.jpg',
-  SVP = 'SVP.jpg',
-  LONGCHAMP = 'Longchamp Mypliage.jpg',
-  INOVARION = 'Inovarion.jpg',
-  YPOSKESI = 'Yposkesi.jpg',
-  PINET = 'Pinet.jpg',
-  NEXTENSIA = 'Nextensia.jpg',
-  METROSCOPE = 'Metroscope.jpg',
-  FAPP = 'Fondation avenir du patrimoine paris.jpg'
+  TICTACTOE = 'tictactoe',
 }

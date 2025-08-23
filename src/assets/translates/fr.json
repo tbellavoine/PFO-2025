@@ -2,7 +2,7 @@
   "MENUS": {
     "HOME": "Bienvenue",
     "ABOUT": "A propos",
-    "SIDE_PROJETS": "Projets perso",
+    "GAMES": "Mini-jeux",
     "CONTACT": "Contact",
     "WORKS": "Experiences",
     "SKILLS": "Compétences",
@@ -27,7 +27,7 @@
     "WORKS_FILE": "experiences.css",
     "SKILLS_FILE": "compétences.js",
     "PROJECTS_FILE": "projects.js",
-    "DASHBOARD": "Dashboard",
+    "TICTACTOE_V2": "Morpion V2",
     "MEMORY": "Memory",
     "CONTACT_FILE": "Email.spec.ts",
     "HOME": "Bienvenue"

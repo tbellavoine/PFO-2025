@@ -8,6 +8,7 @@ import { SkillsComponent } from './pages/skills/skills.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { Path } from './enums/path.enum';
 import { ImageViewerComponent } from '@components/image-viewer/image-viewer.component';
+import { TicTacToeComponent } from './pages/tic-tac-toe.component/tic-tac-toe.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,10 @@ export const routes: Routes = [
   {
     path: Path.PREVIEW + '/:imageName',
     component: ImageViewerComponent
+  },
+  {
+    path: Path.TICTACTOE,
+    component: TicTacToeComponent
   },
   {
     path: '**',

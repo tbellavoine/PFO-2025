@@ -9,8 +9,8 @@ const AboutMenu: MenuItem[] = [
   new MenuItem(MenuKey.PROJECTS, ['fas', 'code'], 'EXPLORER.PROJECTS_FILE', Path.PROJECTS, undefined, 'text-blue-500'),
 ];
 
-const SideProjectsMenu: MenuItem[] = [
-  new MenuItem(MenuKey.DASHBOARD, ['fas', 'folder'], 'EXPLORER.DASHBOARD', Path.DASHBOARD, undefined, 'text-light'),
+const GamesMenu: MenuItem[] = [
+  new MenuItem(MenuKey.TICTACTOE, ['fas', 'folder'], 'EXPLORER.TICTACTOE', Path.TICTACTOE, undefined, 'text-light'),
   new MenuItem(MenuKey.MEMORY, ['fas', 'folder'], 'EXPLORER.MEMORY', Path.MEMORY, undefined, 'text-light'),
 ];
 
@@ -19,9 +19,9 @@ const ContactMenu: MenuItem[] = [
 ];
 
 export const ExplorerMap: Map<string, MenuItem[]> = new Map([
-  ['ABOUT', AboutMenu],
-  ['SIDE_PROJETS', SideProjectsMenu],
-  ['CONTACT', ContactMenu]
+  ['MENUS.ABOUT', AboutMenu],
+  ['MENUS.GAMES', GamesMenu],
+  ['MENUS.CONTACT', ContactMenu]
 ]);
 
 

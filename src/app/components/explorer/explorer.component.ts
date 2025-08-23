@@ -23,7 +23,7 @@ import { MenuKey } from '../../enums/menu-key.enum';
 })
 export class ExplorerComponent {
   protected explorerMap = computed(() => {
-    ExplorerMap.set('ASSETS', Array.from(ImageAssetsMap).map((imageAsset) => new MenuItem(MenuKey.PREVIEW, ['fas', 'image'], imageAsset[1], [Path.PREVIEW, imageAsset[0]], undefined, 'text-blue-300')));
+    ExplorerMap.set('MENUS.ASSETS', Array.from(ImageAssetsMap).map((imageAsset) => new MenuItem(MenuKey.PREVIEW, ['fas', 'image'], imageAsset[1], [Path.PREVIEW, imageAsset[0]], undefined, 'text-blue-300')));
     return Array.from(ExplorerMap.entries());
   });
   public openCategories = signal<Set<string>>(new Set(this.explorerMap().map(category => category[0])));

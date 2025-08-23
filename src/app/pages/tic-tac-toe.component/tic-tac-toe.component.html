@@ -1,0 +1,89 @@
+<div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">
+  <div class="flex flex-col gap-2  justify-center items-center">
+    <p class="text-xs text-accent/50 mb-4">
+      &lt;game /&gt;
+    </p>
+    <h3 class="text-5xl text-light font-semibold">Morpion</h3>
+    <p class="text-accent text-xl italic">Jouons...</p>
+  </div>
+  <div class="flex flex-col items-center gap-6">
+
+    <div class="flex gap-6 w-full justify-center">
+      <div class="grid grid-cols-3 gap-3 items-center justify-center w-full max-w-100 self-end">
+        @for (cell of board(); track $index) {
+          <div (click)="makeMove($index)"
+               class="aspect-square border-1 border-accent
+                    flex items-center justify-center text-4xl font-bold cursor-not-allowed
+                    transition-all duration-200
+                    active:bg-accent active:text-light"
+               [ngClass]="{'!cursor-pointer hover:bg-accent hover:text-white' : cell === ''}">
+
+            @if (cell === 'X') {
+              <fa-icon [icon]="['fas', 'xmark']"/>
+            } @else if (cell === 'O') {
+              <fa-icon [icon]="['far', 'circle']"/>
+            }
+          </div>
+        }
+      </div>
+      <div class="flex flex-col self-start text-center">
+        <div class="p-4">
+          @if (!gameOver() && !isDraw()) {
+            <div class="text-white text-xl font-semibold">
+              <div class="flex items-center gap-4">
+                <span class="text-md italic text-accent">Tour du joueur:</span>
+                <span class="text-2xl">
+                 @if (currentPlayer() === 'X') {
+                   <fa-icon [icon]="['fas', 'xmark']"/>
+                 } @else if (currentPlayer() === 'O') {
+                   <fa-icon [icon]="['far', 'circle']"/>
+                 }
+              </span>
+              </div>
+            </div>
+          }
+
+          @if (gameOver() && !isDraw()) {
+            <div class="text-white text-xl font-semibold">
+              Joueur
+              @if (winner() === 'X') {
+                <fa-icon [icon]="['fas', 'xmark']"/>
+              } @else if (winner() === 'O') {
+                <fa-icon [icon]="['far', 'circle']"/>
+              }
+              gagne !
+            </div>
+          }
+
+          @if (isDraw()) {
+            <div class="text-2xl font-bold text-light">
+              Match nul !
+            </div>
+          }
+        </div>
+        <div class="border-t border-t-accent border-b border-b-accent flex flex-col gap-6 py-8">
+          <p class="text-light text-sm">
+            <span class="text-accent">{{ stats().X }}</span>
+            victoires
+            <fa-icon [icon]="['fas', 'xmark']"/>
+          </p>
+          <p class="text-light text-sm"><span class="text-accent">{{ stats().draws }}</span> match nuls</p>
+          <p class="text-light text-sm">
+            <span class="text-accent">{{ stats().O }}</span>
+            victoires
+            <fa-icon [icon]="['far', 'circle']"/>
+          </p>
+          <p class="text-light text-sm"><span class="text-accent">{{ totalGames() }}</span> partie(s) jouée(s)</p>
+        </div>
+        <div class="flex flex-col justify-center gap-6 pt-6">
+          <button (click)="resetGame()" class="p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer">Nouvelle
+            partie
+          </button>
+          <button (click)="resetStats()" class="p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

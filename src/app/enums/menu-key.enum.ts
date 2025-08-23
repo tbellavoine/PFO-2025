@@ -11,4 +11,5 @@ export enum MenuKey {
   LINKEDIN,
   GITHUB,
   PREVIEW,
+  TICTACTOE,
 }
