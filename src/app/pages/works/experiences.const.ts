@@ -57,7 +57,7 @@ export const Experiences = {
   },
   front_end_developer_adveris: {
     company: 'Adveris',
-    role: '"Développeur Front-End',
+    role: 'Développeur Front-End',
     period: 'Novembre 2018 - Avril 2019',
     status: 'Terminée',
     skills: {

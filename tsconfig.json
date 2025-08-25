@@ -18,8 +18,9 @@
     "paths": {
       "@components/*": ["app/components/*"],
       "@services/*": ["app/services/*"],
-      "@models/*": ["models/*"],
-      "@enums/*": ["enums/*"]
+      "@models/*": ["app/models/*"],
+      "@enums/*": ["app/enums/*"],
+      "@directive/*": ["app/directives/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,6 +1,6 @@
-import { MenuItem } from '../../models/menu-item.model';
-import { MenuKey } from '../../enums/menu-key.enum';
-import { Path } from '../../enums/path.enum';
+import { MenuItem } from '@models/menu-item.model';
+import { MenuKey } from '@enums/menu-key.enum';
+import { Path } from '@enums/path.enum';
 
 const AboutMenu: MenuItem[] = [
   new MenuItem(MenuKey.PROFILE, ['fab', 'html5'], 'EXPLORER.ME_FILE', Path.PROFILE, undefined, 'text-orange-500'),
@@ -10,8 +10,9 @@ const AboutMenu: MenuItem[] = [
 ];
 
 const GamesMenu: MenuItem[] = [
-  new MenuItem(MenuKey.TICTACTOE, ['fas', 'folder'], 'EXPLORER.TICTACTOE', Path.TICTACTOE, undefined, 'text-light'),
-  new MenuItem(MenuKey.MEMORY, ['fas', 'folder'], 'EXPLORER.MEMORY', Path.MEMORY, undefined, 'text-light'),
+  new MenuItem(MenuKey.TICTACTOE_V2, ['fas', 'folder'], 'EXPLORER.TICTACTOE_V2', Path.TICTACTOE_V2, undefined, 'text-light'),
+  new MenuItem(MenuKey.SNAKE, ['fas', 'folder'], 'EXPLORER.SNAKE', Path.SNAKE, undefined, 'text-light'),
+  new MenuItem(MenuKey.TWENTY_FORTY_EIGHT, ['fas', 'folder'], 'EXPLORER.TWENTY_FORTY_EIGHT', Path.TWENTY_FORTY_EIGHT, undefined, 'text-light'),
 ];
 
 const ContactMenu: MenuItem[] = [

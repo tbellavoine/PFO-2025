@@ -6,9 +6,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { SkillsComponent } from './pages/skills/skills.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { Path } from './enums/path.enum';
+import { Path } from '@enums/path.enum';
 import { ImageViewerComponent } from '@components/image-viewer/image-viewer.component';
-import { TicTacToeComponent } from './pages/tic-tac-toe.component/tic-tac-toe.component';
+import { TicTacToeComponent } from './pages/tic-tac-toe/tic-tac-toe.component';
+import { SnakeComponent } from './pages/snake/snake.component';
+import { TwentyFortyEightComponent } from './pages/twenty-forty-eight/twenty-forty-eight.component';
 
 export const routes: Routes = [
   {
@@ -45,8 +47,16 @@ export const routes: Routes = [
     component: ImageViewerComponent
   },
   {
-    path: Path.TICTACTOE,
+    path: Path.TICTACTOE_V2,
     component: TicTacToeComponent
+  },
+  {
+    path: Path.SNAKE,
+    component: SnakeComponent
+  },
+  {
+    path: Path.TWENTY_FORTY_EIGHT,
+    component: TwentyFortyEightComponent
   },
   {
     path: '**',

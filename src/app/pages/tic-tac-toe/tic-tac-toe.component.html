@@ -6,9 +6,7 @@
     <h3 class="text-5xl text-light font-semibold">Morpion</h3>
     <p class="text-accent text-xl italic">Jouons...</p>
   </div>
-  <div class="flex flex-col items-center gap-6">
-
-    <div class="flex gap-6 w-full justify-center">
+  <div class="flex flex-col lg:flex-row gap-6 w-full justify-center">
       <div class="grid grid-cols-3 gap-3 items-center justify-center w-full max-w-100 self-end">
         @for (cell of board(); track $index) {
           <div (click)="makeMove($index)"
@@ -85,5 +83,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

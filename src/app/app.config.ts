@@ -6,6 +6,8 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faAddressCard, faCircle, faCopy, faFile, faFolderOpen, faMessage, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import {
   faAngleDown,
+  faAppleWhole,
+  faBars,
   faBell,
   faCode,
   faCodeBranch,
@@ -42,7 +44,39 @@ export const appConfig: ApplicationConfig = {
       suffix: '.json'
     }),
     provideAppInitializer(() => {
-      inject(FaIconLibrary).addIcons(faCircle, faImage, faHouseChimney, faXmark, faWrench, faAngular, faBell, faCodeBranch, faPaperPlane, faTrashCan, faLinkedin, faGithub, faMessage, faFile, faFolderOpen, faAngleDown, faAddressCard, faEnvelope, faCopy, faPlus, faCodeCommit, faCode, faGear, faFileArrowDown, faHtml5, faCss3, faFlask, faJs, faFolder);
+      inject(FaIconLibrary).addIcons(
+        faAddressCard,
+        faAngleDown,
+        faAngular,
+        faAppleWhole,
+        faBars,
+        faBell,
+        faCircle,
+        faCode,
+        faCodeBranch,
+        faCodeCommit,
+        faCopy,
+        faCss3,
+        faEnvelope,
+        faFile,
+        faFileArrowDown,
+        faFlask,
+        faFolder,
+        faFolderOpen,
+        faGear,
+        faGithub,
+        faHouseChimney,
+        faHtml5,
+        faImage,
+        faJs,
+        faLinkedin,
+        faMessage,
+        faPaperPlane,
+        faPlus,
+        faTrashCan,
+        faWrench,
+        faXmark,
+      );
       inject(TranslateService).use(localStorage?.getItem('selectedLanguage') || 'fr');
     }),
   ]

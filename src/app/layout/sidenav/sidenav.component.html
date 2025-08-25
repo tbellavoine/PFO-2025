@@ -3,8 +3,13 @@
     <div
       (click)="toogleExplorer(MenuKey.EXPLORER)"
       [ngClass]="{'before:!bg-accent': isExplorerOpen()}"
-      class="relative flex items-center justify-center transition-all text-light cursor-pointer before:transition-all before:content-[''] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker">
-      <fa-icon [icon]="['far', 'copy']" class="m-2"/>
+      class="relative explorer-toggle flex items-center justify-center transition-all text-light cursor-pointer before:transition-all before:content-[''] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker">
+
+      @if (isMobile()) {
+        <fa-icon [icon]="isExplorerOpen() ? ['fas', 'xmark'] : ['fas', 'bars']" class="m-2 transition-all"/>
+      } @else {
+        <fa-icon [icon]="['far', 'copy']" class="m-2"/>
+      }
     </div>
     <div class="flex flex-col ">
       @for (navItem of SidenavBottom; track navItem) {
@@ -17,7 +22,11 @@
       }
     </div>
   </div>
-  <div [ngClass]="isExplorerOpen() ? 'w-60' : 'w-0'"
+  <div
+    clickOutside
+    [excludeElements]="['.explorer-toggle']"
+    (clickOutside)="closePanel()"
+    [ngClass]="isExplorerOpen() ? 'w-60' : 'w-0'"
        class="absolute top-0 left-9 bottom-0 md:static z-100 transition-all ease-in-expo overflow-hidden">
     <explorer/>
   </div>

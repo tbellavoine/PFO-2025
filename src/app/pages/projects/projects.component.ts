@@ -1,12 +1,12 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { TabKey } from '../../enums/tab-key.enum';
-import { Path } from '../../enums/path.enum';
+import { Tab } from '@models/tab.model';
+import { TabKey } from '@enums/tab-key.enum';
+import { Path } from '@enums/path.enum';
 import { JsonCardComponent } from '@components/json-card/json-card.component';
 import { Projects } from './projets.const';
-import { Project } from '../../models/project.model';
-import { ProjectCategory } from '../../enums/project-category.enum';
+import { Project } from '@models/project.model';
+import { ProjectCategory } from '@enums/project-category.enum';
 import { KeyValuePipe, NgClass } from '@angular/common';
 
 @Component({
@@ -28,11 +28,15 @@ export class ProjectsComponent implements OnInit {
   private readonly tabsService = inject(TabsService);
   private projectsTab: Tab = new Tab(TabKey.PROJECTS, ['fas', 'code'], 'text-blue-500', 'EXPLORER.PROJECTS_FILE', [Path.PROJECTS]);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.tabsService.addTab(this.projectsTab);
   }
 
-  filterProjectsByCategory(category: string) {
+  /**
+   * Filter projects by category
+   * @param category
+   */
+  filterProjectsByCategory(category: string): void {
     this.selectedCategory.set(category);
   }
 }

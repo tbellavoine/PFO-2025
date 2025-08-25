@@ -4,10 +4,10 @@ import { NgClass, UpperCasePipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Path } from '../../enums/path.enum';
+import { Path } from '@enums/path.enum';
 import { ImageAssetsMap } from '@components/explorer/assets-images.const';
-import { MenuItem } from '../../models/menu-item.model';
-import { MenuKey } from '../../enums/menu-key.enum';
+import { MenuItem } from '@models/menu-item.model';
+import { MenuKey } from '@enums/menu-key.enum';
 
 @Component({
   selector: 'explorer',
@@ -29,8 +29,12 @@ export class ExplorerComponent {
   public openCategories = signal<Set<string>>(new Set(this.explorerMap().map(category => category[0])));
   protected readonly Path = Path;
 
-  toggleCategory(categoryName: string) {
-    const current = this.openCategories();
+  /**
+   * Toggle the open state of a category
+   * @param categoryName
+   */
+  public toggleCategory(categoryName: string): void {
+    const current: Set<string> = this.openCategories();
     const newSet = new Set(current);
 
     if (newSet.has(categoryName)) {
@@ -42,7 +46,12 @@ export class ExplorerComponent {
     this.openCategories.set(newSet);
   }
 
-  isCategoryOpen(categoryName: string): boolean {
+  /**
+   * Check if a category is open
+   * @param categoryName
+   * @returns boolean
+   */
+  public isCategoryOpen(categoryName: string): boolean {
     return this.openCategories().has(categoryName);
   }
 }

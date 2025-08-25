@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
     class: 'w-full h-full'
   }
 })
-export class NotFoundComponent {
-
-}
+export class NotFoundComponent {}

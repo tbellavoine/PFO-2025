@@ -1,9 +1,9 @@
-import { Project } from '../../models/project.model';
-import { ProjectType } from '../../enums/project-type.enum';
-import { ProjectCategory } from '../../enums/project-category.enum';
-import { ProjectStatus } from '../../enums/project-status.enum';
-import { Skill } from '../../enums/skill.enum';
-import { Company } from '../../enums/company.enum';
+import { Project } from '@models/project.model';
+import { ProjectType } from '@enums/project-type.enum';
+import { ProjectCategory } from '@enums/project-category.enum';
+import { ProjectStatus } from '@enums/project-status.enum';
+import { Skill } from '@enums/skill.enum';
+import { Company } from '@enums/company.enum';
 import { ImageAssets } from '@components/explorer/assets-images.const';
 
 export const Projects: Project[] = [
@@ -25,10 +25,6 @@ export const Projects: Project[] = [
       {
         'label': 'Github',
         'url': 'https://github.com/tbellavoine/'
-      },
-      {
-        'label': 'Preview',
-        'url': '/assets/images/pfo.jpg'
       }
     ]
   ),
@@ -49,7 +45,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/grp.jpg'
+        'url': ImageAssets.GRP
       }
     ]
   ),
@@ -70,7 +66,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/patiencekcoaching.png'
+        'url': ImageAssets.PATIENCE_K_COATCHING
       }
     ]
   ),
@@ -91,7 +87,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/horaasociados.png'
+        'url': ImageAssets.HORA_ASOCIADOS
       }
     ]
   ),
@@ -112,7 +108,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/SVP.jpg'
+        'url': ImageAssets.SVP
       }
     ]
   ),
@@ -133,7 +129,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/mypliage.jpg'
+        'url': ImageAssets.LONGCHAMP
       }
     ]
   ),
@@ -150,7 +146,7 @@ export const Projects: Project[] = [
     [
       {
         'label': 'Preview',
-        'url': '/assets/images/inovarion.jpg'
+        'url': ImageAssets.INOVARION
       }
     ]
   ),
@@ -167,7 +163,7 @@ export const Projects: Project[] = [
     [
       {
         'label': 'Preview',
-        'url': '/assets/images/yposkesi.jpg'
+        'url': ImageAssets.YPOSKESI
       }
     ]
   ),
@@ -188,7 +184,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/pinet.jpg'
+        'url': ImageAssets.PINET
       }
     ]
   ),
@@ -209,7 +205,7 @@ export const Projects: Project[] = [
       },
       {
         'label': 'Preview',
-        'url': '/assets/images/pinet.jpg'
+        'url': ImageAssets.NEXTENSIA
       }
     ]
   ),
@@ -225,12 +221,8 @@ export const Projects: Project[] = [
     [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
     [
       {
-        'label': 'Site de l\'entreprise',
-        'url': 'https://www.pinet-industrie.com/fr/'
-      },
-      {
         'label': 'Preview',
-        'url': '/assets/images/pinet.jpg'
+        'url': ImageAssets.METROSCOPE
       }
     ]
   ),
@@ -247,11 +239,11 @@ export const Projects: Project[] = [
     [
       {
         'label': 'Site de l\'entreprise',
-        'url': 'https://www.pinet-industrie.com/fr/'
+        'url': 'https://fondationavenirpatrimoineparis.fr'
       },
       {
         'label': 'Preview',
-        'url': ImageAssets.PINET
+        'url': ImageAssets.FAPP
       }
     ]
   )

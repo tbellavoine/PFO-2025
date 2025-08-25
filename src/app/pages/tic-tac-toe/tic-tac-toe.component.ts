@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-tic-tac-toe.component',
+  selector: 'app-tic-tac-toe',
   imports: [
     NgClass,
     FaIconComponent
@@ -11,17 +11,17 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   templateUrl: './tic-tac-toe.component.html'
 })
 export class TicTacToeComponent {
-  board = signal<string[]>(Array(9).fill(''));
-  currentPlayer = signal<'X' | 'O'>('X');
-  gameOver = signal(false);
-  winner = signal<string | null>(null);
-  isDraw = signal(false);
-  stats = signal({
+  public board = signal<string[]>(Array(9).fill(''));
+  public currentPlayer = signal<'X' | 'O'>('X');
+  public gameOver = signal(false);
+  public winner = signal<string | null>(null);
+  public isDraw = signal(false);
+  public stats = signal({
     X: 0,
     O: 0,
     draws: 0
   });
-  totalGames = computed(() => {
+  public totalGames = computed(() => {
     const stats = this.stats();
     return stats.X + stats.O + stats.draws;
   });
@@ -31,7 +31,12 @@ export class TicTacToeComponent {
     [0, 4, 8], [2, 4, 6]
   ] as const;
 
-  makeMove(index: number): void {
+
+  /**
+   * Make a move on the board
+   * @param index
+   */
+  public makeMove(index: number): void {
     if (this.board()[index] !== '' || this.gameOver()) {
       return;
     }
@@ -66,7 +71,10 @@ export class TicTacToeComponent {
     this.currentPlayer.update(player => player === 'X' ? 'O' : 'X');
   }
 
-  resetGame(): void {
+  /**
+   * Reset the game to initial state
+   */
+  public resetGame(): void {
     this.board.set(Array(9).fill(''));
     this.currentPlayer.set('X');
     this.gameOver.set(false);
@@ -74,7 +82,10 @@ export class TicTacToeComponent {
     this.isDraw.set(false);
   }
 
-  resetStats(): void {
+  /**
+   * Reset the statistics and the game
+   */
+  public resetStats(): void {
     this.stats.set({
       X: 0,
       O: 0,
@@ -83,6 +94,10 @@ export class TicTacToeComponent {
     this.resetGame();
   }
 
+  /**
+   * Check if there's a winner
+   * @returns boolean
+   */
   private checkWinner(): boolean {
     const board = this.board();
     return this.winningCombinations.some(combination => {

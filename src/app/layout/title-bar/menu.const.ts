@@ -1,6 +1,6 @@
-import { MenuItem } from '../../models/menu-item.model';
-import { MenuKey } from '../../enums/menu-key.enum';
-import { Path } from '../../enums/path.enum';
+import { MenuItem } from '@models/menu-item.model';
+import { MenuKey } from '@enums/menu-key.enum';
+import { Path } from '@enums/path.enum';
 
 export const Menu: readonly MenuItem[] = [
   new MenuItem(MenuKey.WORKS, undefined, 'MENUS.WORKS', Path.WORKS),

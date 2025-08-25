@@ -3,8 +3,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { TabKey } from '../../enums/tab-key.enum';
+import { Tab } from '@models/tab.model';
+import { TabKey } from '@enums/tab-key.enum';
 
 @Component({
   selector: 'tabs',
@@ -21,18 +21,23 @@ export class TabsComponent {
   public tabs = computed(() => this.tabsService.tabs());
   private readonly router = inject(Router);
 
-  public removeTab(tab: Tab, event?: Event) {
+  /**
+   * Remove a tab and navigate to the appropriate tab
+   * @param tab
+   * @param event
+   */
+  public removeTab(tab: Tab, event?: Event): void {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
     if (tab.key === TabKey.HOME && this.tabs().length === 1) return;
 
-    const currentTabs = this.tabsService.tabs();
-    const currentTabIndex = currentTabs.indexOf(tab);
-    const previousTab = currentTabs[currentTabIndex - 1];
-    const nextTab = currentTabs[currentTabIndex + 1];
-    const newTabs = currentTabs.filter((_, index) => index !== currentTabIndex);
+    const currentTabs: Tab[] = this.tabsService.tabs();
+    const currentTabIndex: number = currentTabs.indexOf(tab);
+    const previousTab: Tab = currentTabs[currentTabIndex - 1];
+    const nextTab: Tab = currentTabs[currentTabIndex + 1];
+    const newTabs: Tab[] = currentTabs.filter((_, index) => index !== currentTabIndex);
 
     this.tabsService.tabs.set(newTabs);
 

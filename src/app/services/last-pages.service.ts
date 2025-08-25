@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageKey } from '../enums/localstorage-key.enum';
+import { LocalStorageKey } from '@enums/localstorage-key.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,19 @@ export class LastPagesService {
       });
   }
 
+  /**
+   * Clear the last pages history
+   */
   public clearHistory(): void {
     this.lastPagesSignal.set([]);
     localStorage.removeItem(LocalStorageKey.LAST_PAGES);
   }
 
+  /**
+   * Add a page to the history
+   * @param url
+   * @private
+   */
   private addPage(url: string): void {
     const currentPages = this.lastPagesSignal();
 
@@ -39,6 +47,10 @@ export class LastPagesService {
     }
   }
 
+  /**
+   * Save the last pages to local storage
+   * @private
+   */
   private saveToStorage(): void {
     try {
       localStorage.setItem(LocalStorageKey.LAST_PAGES, JSON.stringify(this.lastPagesSignal()));
@@ -47,6 +59,10 @@ export class LastPagesService {
     }
   }
 
+  /**
+   * Load the last pages from local storage
+   * @private
+   */
   private loadFromStorage(): void {
     try {
       const saved = localStorage.getItem(LocalStorageKey.LAST_PAGES);

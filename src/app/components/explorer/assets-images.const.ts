@@ -22,7 +22,7 @@ export const ImageAssetsMap = new Map<string, string | undefined>([
   [ImageAssets.YPOSKESI, 'Yposkesi.jpg'],
   [ImageAssets.PINET, 'Pinet.jpg'],
   [ImageAssets.NEXTENSIA, 'Nextensia.jpg'],
-  [ImageAssets.METROSCOPE, 'Metroscope.jpg'],
+  [ImageAssets.METROSCOPE, 'Metroscope EDF.jpg'],
   [ImageAssets.FAPP, 'Fondation avenir du patrimoine paris.jpg'],
 
 ]);

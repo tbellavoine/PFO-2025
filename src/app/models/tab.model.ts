@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { TabKey } from '../enums/tab-key.enum';
+import { TabKey } from '@enums/tab-key.enum';
 
 export class Tab {
   private readonly _key: TabKey | string | undefined;

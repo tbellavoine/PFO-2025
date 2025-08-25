@@ -1,0 +1,58 @@
+<div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">
+  <div class="flex flex-col gap-2  justify-center items-center">
+    <p class="text-xs text-accent/50 mb-4">
+      &lt;game /&gt;
+    </p>
+    <h3 class="text-5xl text-light font-semibold">2048</h3>
+    <p class="text-accent text-xl italic">Jouons...</p>
+  </div>
+  <div class="flex flex-col lg:flex-row gap-6 w-full justify-center">
+    <div class="p-4">
+      <div class="grid grid-cols-4 gap-1  mx-auto w-fit">
+        @for (row of board(); track $index) {
+          @for (cell of row; track cell.id) {
+            <div
+              class="h-16 w-16 lg:h-20 lg:w-20 flex items-center justify-center font-bold text-lg transition-all duration-200 transform border border-accent"
+              [ngClass]="getTileColor(cell.value)"
+              [class.scale-110]="cell.isNew"
+              [class.animate-pulse]="cell.merged">
+              @if (cell.value > 0) {
+                <span [class.text-xs]="cell.value >= 1024">
+                  {{ cell.value }}
+                </span>
+              }
+            </div>
+          }
+        }
+      </div>
+      <p class="text-center w-full p-3 italic text-xs">Z Q S D pour se déplacer</p>
+      <div class="flex flex-col lg: flex-row justify-center gap-6 pt-6">
+        <button (click)="resetGame()"  class="p-3 border border-accent transition-all text-light hover:bg-accent  cursor-pointer">Nouvelle
+          partie
+        </button>
+        <button
+          (click)="undoMove()"
+          [disabled]="!canUndo()" class="p-3 border border-accent transition-all text-light hover:bg-accent  cursor-pointer">
+          Annuler
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col items-center lg:items-start lg:self-start">
+      <div class="py-4">
+        <p class="text-white text-xl font-semibold">
+          <span class="text-md italic text-accent">Score: </span>{{ formatScore(score()) }}
+        </p>
+      </div>
+      <div class="border-t border-t-accent border-b border-b-accent flex flex-col gap-6 py-8">
+        <p class="text-light text-sm">
+          <span class="text-accent">Best: </span>
+          {{ formatScore(bestScore()) }}
+        </p>
+        <p class="text-light text-sm">
+          <span class="text-accent"> Moves: </span>
+          {{ moves() }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

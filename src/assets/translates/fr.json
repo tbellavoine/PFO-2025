@@ -1,35 +1,37 @@
 {
   "MENUS": {
-    "HOME": "Bienvenue",
     "ABOUT": "A propos",
-    "GAMES": "Mini-jeux",
+    "ASSETS": "Images",
     "CONTACT": "Contact",
-    "WORKS": "Experiences",
-    "SKILLS": "Compétences",
-    "PROJECTS": "Projets",
-    "PROFILE": "Profil",
-    "SKILLS_START": "Compétences...",
-    "PROJECTS_START": "Projets...",
-    "WORKS_START": "Experiences...",
     "CONTACT_START": "Rester en contact...",
-    "LINKEDIN": "Linkedin",
+    "GAMES": "Mini-jeux",
     "GITHUB": "Github",
-    "ASSETS": "Images"
+    "HOME": "Bienvenue",
+    "LINKEDIN": "Linkedin",
+    "PROFILE": "Profil",
+    "PROJECTS": "Projets",
+    "PROJECTS_START": "Projets...",
+    "SKILLS": "Compétences",
+    "SKILLS_START": "Compétences...",
+    "WORKS": "Experiences",
+    "WORKS_START": "Experiences..."
   },
   "MESSAGES": {
     "ERROR": {
-      "SAVE_HISTORY": "Impossible de sauvegarder l'historique",
-      "LOAD_HISTORY": "Impossible de charger l'historique"
+      "LOAD_HISTORY": "Impossible de charger l'historique",
+      "SAVE_HISTORY": "Impossible de sauvegarder l'historique"
     }
   },
   "EXPLORER": {
-    "ME_FILE": "me.html",
-    "WORKS_FILE": "experiences.css",
-    "SKILLS_FILE": "compétences.js",
-    "PROJECTS_FILE": "projects.js",
-    "TICTACTOE_V2": "Morpion V2",
-    "MEMORY": "Memory",
     "CONTACT_FILE": "Email.spec.ts",
-    "HOME": "Bienvenue"
+    "HOME": "Bienvenue",
+    "ME_FILE": "me.html",
+    "MEMORY": "Memory",
+    "PROJECTS_FILE": "projects.js",
+    "SKILLS_FILE": "compétences.js",
+    "SNAKE": "Snake",
+    "TICTACTOE_V2": "Morpion V2",
+    "TWENTY_FORTY_EIGHT": "2048",
+    "WORKS_FILE": "experiences.css"
   }
 }

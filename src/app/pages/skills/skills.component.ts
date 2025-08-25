@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { TabKey } from '../../enums/tab-key.enum';
-import { Path } from '../../enums/path.enum';
+import { Tab } from '@models/tab.model';
+import { TabKey } from '@enums/tab-key.enum';
+import { Path } from '@enums/path.enum';
 import { JsonCardComponent } from '@components/json-card/json-card.component';
 
 @Component({
@@ -33,6 +33,10 @@ export class SkillsComponent implements OnInit {
     this.tabsService.addTab(this.skillsTab);
   }
 
+  /**
+   * Initialize the front object
+   * @private
+   */
   private initFrontObject(): void {
     this.frontObject.set(
       {
@@ -47,6 +51,10 @@ export class SkillsComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the back object
+   * @private
+   */
   private initBackObject(): void {
     this.backObject.set({
         php: '~',
@@ -60,6 +68,10 @@ export class SkillsComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the quality object
+   * @private
+   */
   private initQualityObject(): void {
     this.qualityObject.set(
       {
@@ -73,6 +85,10 @@ export class SkillsComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the UX/UI object
+   * @private
+   */
   private initUxUiObject(): void {
     this.uxUiObject.set(
       {
@@ -86,6 +102,10 @@ export class SkillsComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the DevOps object
+   * @private
+   */
   private initDevOpsObject(): void {
     this.devOpsObject.set(
       {
@@ -99,6 +119,10 @@ export class SkillsComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the tools object
+   * @private
+   */
   private initToolsObject(): void {
     this.toolsObject.set(
       {

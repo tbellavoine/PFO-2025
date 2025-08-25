@@ -6,9 +6,9 @@ import { RouterLink } from '@angular/router';
 import { LastPagesService } from '@services/last-pages.service';
 import { AboutMenu } from './about-menu.const';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { TabKey } from '../../enums/tab-key.enum';
-import { Path } from '../../enums/path.enum';
+import { Tab } from '@models/tab.model';
+import { TabKey } from '@enums/tab-key.enum';
+import { Path } from '@enums/path.enum';
 
 @Component({
   selector: 'home',
@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit {
     this.tabsService.addTab(this.contactTab);
   }
 
+  /**
+   * Get the page name from the URL
+   * @param url
+   */
   getPageName(url: string): string {
     const pageNames: Record<string, string> = {
       '/home': 'MENUS.HOME',
@@ -46,10 +50,17 @@ export class HomeComponent implements OnInit {
     return pageNames[url] || url.replace('/', '').replace('-', ' ') || 'Page';
   }
 
+  /**
+   * Get the page URL from the URL
+   * @param url
+   */
   getPageUrl(url: string): string {
     return url;
   }
 
+  /**
+   * Clear the last pages history
+   */
   clearHistory(): void {
     this.lastPagesService.clearHistory();
   }

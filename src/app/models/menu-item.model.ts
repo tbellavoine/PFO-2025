@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { MenuKey } from '../enums/menu-key.enum';
+import { MenuKey } from '@enums/menu-key.enum';
 
 export class MenuItem {
   private readonly _key: MenuKey;

@@ -1,9 +1,9 @@
 import { Component, DOCUMENT, inject, OnInit, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { TabKey } from '../../enums/tab-key.enum';
-import { Path } from '../../enums/path.enum';
+import { Tab } from '@models/tab.model';
+import { TabKey } from '@enums/tab-key.enum';
+import { Path } from '@enums/path.enum';
 import { JsonCardComponent } from '@components/json-card/json-card.component';
 
 @Component({
@@ -23,11 +23,14 @@ export class ProfileComponent implements OnInit {
   private profileTab: Tab = new Tab(TabKey.PROFILE, ['fab', 'html5'], 'text-orange-500', 'EXPLORER.ME_FILE', [Path.PROFILE]);
   private readonly document = inject(DOCUMENT);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initSoftSkillsObject();
     this.tabsService.addTab(this.profileTab);
   }
 
+  /**
+   * Open the CV in a new tab
+   */
   public openCV(): void {
     const link = this.document.createElement('a');
     link.href = '/assets/pdf/CV-Thomas-BELLAVOINE.pdf';
@@ -35,6 +38,10 @@ export class ProfileComponent implements OnInit {
     link.click();
   }
 
+  /**
+   * Initialize the soft skills object
+   * @private
+   */
   private initSoftSkillsObject(): void {
     this.softSkillsObject.set(
       {

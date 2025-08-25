@@ -9,7 +9,7 @@
       @for (startItem of StartMenu; track startItem) {
         <a [routerLink]="startItem.route"
            class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">
-          <fa-icon [icon]="startItem.icon"/>
+          <fa-icon [icon]="startItem.icon" class="text-light"/>
           {{ startItem.label | translate }}
         </a>
       }

@@ -1,8 +1,8 @@
 import { Component, computed, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabsService } from '@services/tabs.service';
-import { Tab } from '../../models/tab.model';
-import { Path } from '../../enums/path.enum';
+import { Tab } from '@models/tab.model';
+import { Path } from '@enums/path.enum';
 import { ImageAssetsMap } from '@components/explorer/assets-images.const';
 
 @Component({
@@ -14,7 +14,6 @@ import { ImageAssetsMap } from '@components/explorer/assets-images.const';
   }
 })
 export class ImageViewerComponent implements OnInit, OnDestroy {
-  // Constants
   private static readonly INITIAL_ZOOM = 1;
   private static readonly MIN_ZOOM_ABSOLUTE = 0.1;
   private static readonly MAX_ZOOM = 5;
@@ -23,7 +22,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   private static readonly ZOOM_WHEEL_FACTOR_OUT = 0.9;
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   @ViewChild('imageContainer') imageContainer!: ElementRef<HTMLDivElement>;
-  // Signals
   public imageName = signal<string | undefined>('');
   public imagePath = computed(() => '/assets/images/' + this.imageName());
   public zoomLevel = signal<number>(ImageViewerComponent.INITIAL_ZOOM);
@@ -36,7 +34,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
   public originalImageSize = signal<{ width: number, height: number }>({ width: 0, height: 0 });
   public lastPanPoint = signal<{ x: number, y: number }>({ x: 0, y: 0 });
 
-  // Services
   private readonly activatedRoute = inject(ActivatedRoute);
   public imageTab = signal<Tab>(new Tab(
     this.imageName(),
@@ -63,11 +60,17 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     document.addEventListener('keydown', this.onKeyDown.bind(this));
   }
 
+  /**
+   * Cleans up event listeners when the component is destroyed.
+   */
   ngOnDestroy() {
     document.removeEventListener('keydown', this.onKeyDown.bind(this));
   }
 
-  onImageLoad() {
+  /**
+   * Handles the image load event, setting the original image size and adjusting zoom and pan settings.
+   */
+  public onImageLoad(): void {
     const img = this.imageElement.nativeElement;
     this.originalImageSize.set({
       width: img.naturalWidth,
@@ -76,44 +79,45 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
     this.calculateMinZoom();
     this.fitToScreen();
-    // Marquer l'image comme chargée après avoir appliqué les transformations
     this.isImageLoaded.set(true);
   }
 
-  calculateMinZoom() {
-    if (!this.imageContainer || !this.originalImageSize().width) return;
-
-    const container = this.imageContainer.nativeElement;
-    const containerRect = container.getBoundingClientRect();
-
-    const scaleX = containerRect.width / this.originalImageSize().width;
-    const scaleY = containerRect.height / this.originalImageSize().height;
-    const minScale = Math.min(scaleX, scaleY);
-
-    this.minZoomLevel.set(Math.max(ImageViewerComponent.MIN_ZOOM_ABSOLUTE, minScale));
-  }
-
-  zoomIn() {
+  /**
+   * Zooms in the image by a predefined step.
+   */
+  public zoomIn(): void {
     this.setZoom(this.zoomLevel() * ImageViewerComponent.ZOOM_STEP);
   }
 
-  zoomOut() {
+  /**
+   * Zooms out the image by a predefined step.
+   */
+  public zoomOut(): void {
     this.setZoom(this.zoomLevel() / ImageViewerComponent.ZOOM_STEP);
   }
 
-  resetZoom() {
+  /**
+   * Resets the zoom level to the minimum zoom level and centers the image.
+   */
+  public resetZoom(): void {
     this.setZoom(this.minZoomLevel());
     this.resetPan();
   }
 
-  onResize() {
+  /**
+   * Handles window resize events to recalculate minimum zoom and adjust current zoom if necessary.
+   */
+  public onResize(): void {
     this.calculateMinZoom();
     if (this.zoomLevel() < this.minZoomLevel()) {
       this.setZoom(this.minZoomLevel());
     }
   }
 
-  fitToScreen() {
+  /**
+   * Fits the image to the screen by adjusting the zoom level and centering the image.
+   */
+  public fitToScreen(): void {
     if (!this.imageContainer || !this.originalImageSize().width) return;
 
     const container = this.imageContainer.nativeElement;
@@ -127,23 +131,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     this.resetPan();
   }
 
-  setZoom(level: number) {
-    const min = this.minZoomLevel();
-    const max = ImageViewerComponent.MAX_ZOOM;
-    const newZoom = Math.max(min, Math.min(max, level));
-
-    if (newZoom === min && this.zoomLevel() !== min) {
-      this.resetPan();
-    }
-
-    this.zoomLevel.set(newZoom);
-
-    if (this.imageContainer) {
-      this.updateCursor();
-    }
-  }
-
-  startPan(event: MouseEvent) {
+  /**
+   * Initiates the panning process when the user starts dragging the image.
+   * @param event
+   */
+  public startPan(event: MouseEvent): void {
     if (this.zoomLevel() <= this.minZoomLevel()) {
       return;
     }
@@ -153,7 +145,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
-  onPan(event: MouseEvent) {
+  /**
+   * Handles the panning movement as the user drags the image.
+   * @param event
+   */
+  public onPan(event: MouseEvent): void {
     if (!this.isPanning()) return;
 
     const deltaX = event.clientX - this.lastPanPoint().x;
@@ -166,12 +162,19 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
-  stopPan() {
+  /**
+   * Stops the panning process when the user releases the mouse button.
+   */
+  public stopPan(): void {
     this.isPanning.set(false);
     this.updateCursor();
   }
 
-  onWheel(event: WheelEvent) {
+  /**
+   * Handles zooming in and out using the mouse wheel, centering the zoom on the mouse position.
+   * @param event
+   */
+  public onWheel(event: WheelEvent): void {
     event.preventDefault();
 
     const delta = event.deltaY;
@@ -196,7 +199,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onKeyDown(event: KeyboardEvent) {
+  /**
+   * Handles keyboard shortcuts for zooming and toggling the overlay.
+   * @param event
+   */
+  public onKeyDown(event: KeyboardEvent): void {
     if (event.ctrlKey || event.metaKey) {
       this.handleZoomKeyboardShortcuts(event);
     }
@@ -206,17 +213,67 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetView() {
+  /**
+   * Generates the CSS transform string for the image based on current pan and zoom levels.
+   * @returns string
+   */
+  public getTransform(): string {
+    return `translate(${this.panX()}px, ${this.panY()}px) scale(${this.zoomLevel()})`;
+  }
+
+  /**
+   * Calculates the minimum zoom level based on the container size and original image dimensions.
+   * @private
+   */
+  private calculateMinZoom(): void {
+    if (!this.imageContainer || !this.originalImageSize().width) return;
+
+    const container = this.imageContainer.nativeElement;
+    const containerRect = container.getBoundingClientRect();
+
+    const scaleX = containerRect.width / this.originalImageSize().width;
+    const scaleY = containerRect.height / this.originalImageSize().height;
+    const minScale = Math.min(scaleX, scaleY);
+
+    this.minZoomLevel.set(Math.max(ImageViewerComponent.MIN_ZOOM_ABSOLUTE, minScale));
+  }
+
+  /**
+   * Sets the zoom level, ensuring it stays within defined bounds, and updates the cursor style.
+   * @param level
+   * @private
+   */
+  private setZoom(level: number): void {
+    const min = this.minZoomLevel();
+    const max = ImageViewerComponent.MAX_ZOOM;
+    const newZoom = Math.max(min, Math.min(max, level));
+
+    if (newZoom === min && this.zoomLevel() !== min) {
+      this.resetPan();
+    }
+
+    this.zoomLevel.set(newZoom);
+
+    if (this.imageContainer) {
+      this.updateCursor();
+    }
+  }
+
+  /**
+   * Resets the entire view including zoom level, pan position, and image load state.
+   * @private
+   */
+  private resetView(): void {
     this.zoomLevel.set(ImageViewerComponent.INITIAL_ZOOM);
     this.resetPan();
     this.isImageLoaded.set(false);
   }
 
-  getTransform(): string {
-    return `translate(${this.panX()}px, ${this.panY()}px) scale(${this.zoomLevel()})`;
-  }
-
-  updateCursor() {
+  /**
+   * Updates the cursor style based on the current interaction state (panning or zoom level).
+   * @private
+   */
+  private updateCursor(): void {
     if (!this.imageContainer) return;
 
     let cursor: string;
@@ -231,7 +288,14 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     this.imageContainer.nativeElement.style.cursor = cursor;
   }
 
-  private zoomToMousePosition(event: WheelEvent, oldZoom: number, newZoom: number) {
+  /**
+   * Adjusts the pan position to keep the zoom centered around the mouse position.
+   * @param event
+   * @param oldZoom
+   * @param newZoom
+   * @private
+   */
+  private zoomToMousePosition(event: WheelEvent, oldZoom: number, newZoom: number): void {
     const rect = this.imageContainer.nativeElement.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
@@ -250,7 +314,12 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     this.panY.set(newPanY);
   }
 
-  private handleZoomKeyboardShortcuts(event: KeyboardEvent) {
+  /**
+   * Handles keyboard shortcuts for zooming in, zooming out, and resetting zoom.
+   * @param event
+   * @private
+   */
+  private handleZoomKeyboardShortcuts(event: KeyboardEvent): void {
     switch (event.key) {
       case '+':
       case '=':
@@ -268,7 +337,11 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private resetPan() {
+  /**
+   * Resets the pan position to the origin (0,0).
+   * @private
+   */
+  private resetPan(): void {
     this.panX.set(0);
     this.panY.set(0);
   }
