@@ -11,7 +11,7 @@ import { Path } from '@enums/path.enum';
   templateUrl: './json-card.component.html',
 })
 export class JsonCardComponent {
-  public readonly jsonObject = input.required<any>();
+  public readonly jsonObject = input<any>();
   public readonly title = input<string>();
   public readonly jsonLines = computed<string[]>(() => {
     const filteredJsonOject: any = { ...this.jsonObject() };
