@@ -20,9 +20,9 @@ import { KeyValuePipe, NgClass } from '@angular/common';
 })
 export class ProjectsComponent implements OnInit {
   public selectedCategory = signal<string>('');
-  protected readonly projects: Project[] = Projects;
-  protected readonly ProjectCategory = ProjectCategory;
-  protected readonly filteredProjects = computed(() => {
+  public readonly projects: Project[] = Projects;
+  public readonly ProjectCategory = ProjectCategory;
+  public readonly filteredProjects = computed(() => {
     return this.selectedCategory() ? [...this.projects].filter(project => this.selectedCategory() === project.category) : this.projects;
   });
   private readonly tabsService = inject(TabsService);

@@ -1,0 +1,1027 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>pfo-2025 documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Laravel.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">pfo-2025 documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#AboutMenu" title="src/app/components/explorer/explorer.map.ts" ><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#AboutMenu" title="src/app/pages/home/about-menu.const.ts" ><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../about-menu.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#appConfig" title="src/app/app.config.ts" ><b>appConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Contact" title="src/app/pages/contact/constact.const.ts" ><b>Contact</b>&nbsp;&nbsp;&nbsp;(src/.../constact.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ContactMenu" title="src/app/components/explorer/explorer.map.ts" ><b>ContactMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Experiences" title="src/app/pages/works/experiences.const.ts" ><b>Experiences</b>&nbsp;&nbsp;&nbsp;(src/.../experiences.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ExplorerMap" title="src/app/components/explorer/explorer.map.ts" ><b>ExplorerMap</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#GamesMenu" title="src/app/components/explorer/explorer.map.ts" ><b>GamesMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ImageAssetsMap" title="src/app/components/explorer/assets-images.const.ts" ><b>ImageAssetsMap</b>&nbsp;&nbsp;&nbsp;(src/.../assets-images.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Menu" title="src/app/layout/title-bar/menu.const.ts" ><b>Menu</b>&nbsp;&nbsp;&nbsp;(src/.../menu.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Projects" title="src/app/pages/projects/projets.const.ts" ><b>Projects</b>&nbsp;&nbsp;&nbsp;(src/.../projets.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SidenavBottom" title="src/app/layout/sidenav/sidenav.const.ts" ><b>SidenavBottom</b>&nbsp;&nbsp;&nbsp;(src/.../sidenav.const.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#StartMenu" title="src/app/pages/home/start-menu.const.ts" ><b>StartMenu</b>&nbsp;&nbsp;&nbsp;(src/.../start-menu.const.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/components/explorer/explorer.map.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AboutMenu"></a>
+                    <span class="name">
+                        <span ><b>AboutMenu</b></span>
+                        <a href="#AboutMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.PROFILE, [&#x27;fab&#x27;, &#x27;html5&#x27;], &#x27;EXPLORER.ME_FILE&#x27;, Path.PROFILE, undefined, &#x27;text-orange-500&#x27;),
+  new MenuItem(MenuKey.WORKS, [&#x27;fab&#x27;, &#x27;css3&#x27;], &#x27;EXPLORER.WORKS_FILE&#x27;, Path.WORKS, undefined, &#x27;text-blue-500&#x27;),
+  new MenuItem(MenuKey.SKILLS, [&#x27;fab&#x27;, &#x27;js&#x27;], &#x27;EXPLORER.SKILLS_FILE&#x27;, Path.SKILLS, undefined, &#x27;text-yellow-500&#x27;),
+  new MenuItem(MenuKey.PROJECTS, [&#x27;fas&#x27;, &#x27;code&#x27;], &#x27;EXPLORER.PROJECTS_FILE&#x27;, Path.PROJECTS, undefined, &#x27;text-blue-500&#x27;),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ContactMenu"></a>
+                    <span class="name">
+                        <span ><b>ContactMenu</b></span>
+                        <a href="#ContactMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.CONTACT, [&#x27;fas&#x27;, &#x27;envelope&#x27;], &#x27;EXPLORER.CONTACT_FILE&#x27;, Path.CONTACT, undefined, &#x27;text-accent&#x27;)
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ExplorerMap"></a>
+                    <span class="name">
+                        <span ><b>ExplorerMap</b></span>
+                        <a href="#ExplorerMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >Map&lt;string, MenuItem[]&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map([
+  [&#x27;MENUS.ABOUT&#x27;, AboutMenu],
+  [&#x27;MENUS.GAMES&#x27;, GamesMenu],
+  [&#x27;MENUS.CONTACT&#x27;, ContactMenu]
+])</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="GamesMenu"></a>
+                    <span class="name">
+                        <span ><b>GamesMenu</b></span>
+                        <a href="#GamesMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.TICTACTOE_V2, [&#x27;fas&#x27;, &#x27;folder&#x27;], &#x27;EXPLORER.TICTACTOE_V2&#x27;, Path.TICTACTOE_V2, undefined, &#x27;text-light&#x27;),
+  new MenuItem(MenuKey.SNAKE, [&#x27;fas&#x27;, &#x27;folder&#x27;], &#x27;EXPLORER.SNAKE&#x27;, Path.SNAKE, undefined, &#x27;text-light&#x27;),
+  new MenuItem(MenuKey.TWENTY_FORTY_EIGHT, [&#x27;fas&#x27;, &#x27;folder&#x27;], &#x27;EXPLORER.TWENTY_FORTY_EIGHT&#x27;, Path.TWENTY_FORTY_EIGHT, undefined, &#x27;text-light&#x27;),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/pages/home/about-menu.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AboutMenu"></a>
+                    <span class="name">
+                        <span ><b>AboutMenu</b></span>
+                        <a href="#AboutMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.LINKEDIN, [&#x27;fab&#x27;, &#x27;linkedin&#x27;], &#x27;MENUS.LINKEDIN&#x27;, undefined, &#x27;https://www.linkedin.com/in/t-bellavoine/&#x27;),
+  new MenuItem(MenuKey.GITHUB, [&#x27;fab&#x27;, &#x27;github&#x27;], &#x27;MENUS.GITHUB&#x27;, undefined, &#x27;https://github.com/tbellavoine?tab&#x3D;repositories&#x27;),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/app.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appConfig"></a>
+                    <span class="name">
+                        <span ><b>appConfig</b></span>
+                        <a href="#appConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ApplicationConfig</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    importProvidersFrom(FontAwesomeModule),
+    provideHttpClient(),
+    provideTranslateService({
+      defaultLanguage: &#x27;fr&#x27;
+    }),
+    provideTranslateHttpLoader({
+      prefix: &#x27;./assets/translates/&#x27;,
+      suffix: &#x27;.json&#x27;
+    }),
+    provideAppInitializer(() &#x3D;&gt; {
+      inject(FaIconLibrary).addIcons(
+        faAddressCard,
+        faAngleDown,
+        faAngular,
+        faAppleWhole,
+        faBars,
+        faBell,
+        faCircle,
+        faCode,
+        faCodeBranch,
+        faCodeCommit,
+        faCopy,
+        faCss3,
+        faEnvelope,
+        faFile,
+        faFileArrowDown,
+        faFlask,
+        faFolder,
+        faFolderOpen,
+        faGear,
+        faGithub,
+        faHouseChimney,
+        faHtml5,
+        faImage,
+        faJs,
+        faLinkedin,
+        faMessage,
+        faPaperPlane,
+        faPlus,
+        faTrashCan,
+        faWrench,
+        faXmark,
+      );
+      inject(TranslateService).use(localStorage?.getItem(&#x27;selectedLanguage&#x27;) || &#x27;fr&#x27;);
+    }),
+  ]
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/pages/contact/constact.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Contact"></a>
+                    <span class="name">
+                        <span ><b>Contact</b></span>
+                        <a href="#Contact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  site: &#x27;http://thomasbellavoine.fr&#x27;,
+  email: &#x27;mailto:bellavoine.thomas@gmail.com&#x27;,
+  linkedin: &#x27;https://www.linkedin.com/in/t-bellavoine/&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/pages/works/experiences.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Experiences"></a>
+                    <span class="name">
+                        <span ><b>Experiences</b></span>
+                        <a href="#Experiences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  front_end_developer_grdf: {
+    company: &#x27;Web atrio&#x27;,
+    role: &#x27;Développeur Front-End Angular&#x27;,
+    period: &#x27;Oct 2020&#x27;,
+    status: &#x27;En cours&#x27;,
+    skills: {
+      front_end: [&#x27;Angular&#x27;, &#x27;TypeScript&#x27;, &#x27;html&#x27;, &#x27;tailwindcss&#x27;],
+      back_end: [&#x27;Symfony&#x27;, &#x27;Doctrine&#x27;],
+      quality: [&#x27;Sonarqube&#x27;, &#x27;Jest&#x27;, &#x27;Phpunit&#x27;],
+      ux_ui: [&#x27;Figma&#x27;, &#x27;AdobeXD&#x27;],
+      dev_ops: [&#x27;Gitlab&#x27;, &#x27;Docker&#x27;, &#x27;Wsl&#x27;, &#x27;Aws&#x27;, &#x27;CI/CD&#x27;],
+      tools: [&#x27;Jira&#x27;, &#x27;Postman&#x27;, &#x27;Webstorm&#x27;],
+    },
+    achievements: [
+      &#x27;Conception et développement de l\&#x27;interface utilisateur pour la gestion des relations producteurs bio-méthane&#x27;,
+      &#x27;Pilotage de l\&#x27;architecture front-end Angular (migration progressive des versions 8 à 19)&#x27;,
+      &#x27;Assurance qualité par la mise en place de tests unitaires et d\&#x27;intégration (Jasmine/Jest)&#x27;,
+      &#x27;Développement back-end avec Symfony et API-Platform, déploiement sur AWS Cloud&#x27;,
+      &#x27;Formation et encadrement technique des nouveaux collaborateurs&#x27;
+    ],
+  },
+  front_end_developer_svp: {
+    company: &#x27;Web atrio&#x27;,
+    role: &#x27;Développeur Front-End&#x27;,
+    period: &#x27;Mai 2020 - Juin 2020&#x27;,
+    status: &#x27;Terminée&#x27;,
+    skills: {
+      front_end: [&#x27;html&#x27;, &#x27;scss&#x27;, &#x27;javascript&#x27;, &#x27;Webpack&#x27;],
+      back_end: [&#x27;Laravel blade&#x27;],
+      ux_ui: [&#x27;Zeplin&#x27;],
+      tools: [&#x27;Visual studio code&#x27;, &#x27;cross plateform&#x27;],
+    },
+    achievements: [
+      &#x27;Mission critique front-end : refonte technique en urgence avant mise en production&#x27;,
+      &#x27;Refonte technique : réduction de la dette technique front-end&#x27;,
+      &#x27;Intégration complète : transformation de maquettes Zeplin en interfaces HTML5/SCSS avec templating Laravel Blade&#x27;,
+      &#x27;Compatibilité cross-browser : mise en place du support IE11 via Webpack Mix et polyfills&#x27;
+    ],
+  },
+  front_end_developer_longchamp: {
+    company: &#x27;Web atrio&#x27;,
+    role: &#x27;Développeur Front-End&#x27;,
+    period: &#x27;Avril 2020&#x27;,
+    status: &#x27;Terminée&#x27;,
+    skills: {
+      front_end: [&#x27;Angular&#x27;, &#x27;TypeScript&#x27;, &#x27;Html/Isml&#x27;, &#x27;scss&#x27;, &#x27;Javascript&#x27;, &#x27;RGAA&#x27;, &#x27;performance&#x27;],
+      ux_ui: [&#x27;Photoshop&#x27;],
+      dev_ops: [&#x27;Gitlab&#x27;, &#x27;CI/CD&#x27;],
+      tools: [&#x27;Jira&#x27;, &#x27;Postman&#x27;, &#x27;Inteliji&#x27;, &#x27;Salesforce commerce cloud&#x27;],
+    },
+    achievements: [
+      &#x27;Développement de modules e-commerce HTML (ISML)/SASS/JavaScript natifs pour Salesforce Commerce Cloud avec optimisation des performances et conformité accessibilité AA&#x27;,
+      &#x27;Création d\&#x27;un module Angular 7 pour la personnalisation de produits Longchamp&#x27;,
+      &#x27;Intégration UI/UX : transformation de maquettes Photoshop en interfaces interactives optimisées pour l\&#x27;expérience utilisateur&#x27;,
+    ],
+  },
+  front_end_developer_adveris: {
+    company: &#x27;Adveris&#x27;,
+    role: &#x27;Développeur Front-End&#x27;,
+    period: &#x27;Novembre 2018 - Avril 2019&#x27;,
+    status: &#x27;Terminée&#x27;,
+    skills: {
+      front_end: [&#x27;Angular&#x27;, &#x27;TypeScript&#x27;, &#x27;Html&#x27;, &#x27;Scss&#x27;, &#x27;JQuery&#x27;, &#x27;Three.js&#x27;, &#x27;Twig&#x27;, &#x27;Bootstrap&#x27;],
+      back_end: [&#x27;Php&#x27;],
+      ux_ui: [&#x27;Zeplin&#x27;],
+      tools: [&#x27;Visual studio code&#x27;, &#x27;Wordpress&#x27;],
+    },
+    achievements: [
+      &#x27;Conception et développement de sites web responsive (WordPress/Twig/Symfony) avec architecture front-end performante&#x27;,
+      &#x27;Migration technique vers le framework Angular et développement de nouvelles fonctionnalités&#x27;,
+      &#x27;Développement d\&#x27;expériences 3D interactives avec Three.js pour enrichir l\&#x27;engagement utilisateur\n&#x27;,
+      &#x27;Réalisations : sites Inovarion, Yposkesi, Metroscope (production)&#x27;
+    ],
+  },
+  web_integrator_plaza: {
+    company: &#x27;Adveris&#x27;,
+    role: &#x27;Intégrateur Web&#x27;,
+    period: &#x27;janvier 2014 - Décembre 2018&#x27;,
+    status: &#x27;Terminée&#x27;,
+    skills: {
+      front_end: [&#x27;Html&#x27;, &#x27;Sass/less&#x27;, &#x27;JQuery&#x27;],
+      ux_ui: [&#x27;Photoshop&#x27;, &#x27;Illustrator&#x27;],
+      tools: [&#x27;Coda (mac)&#x27;, &#x27;Visual studio code&#x27;, &#x27;Microsoft Sharepoint 2010/2013&#x27;],
+    },
+    achievements: [
+      &#x27;Conception et intégration front-end pour intranets SharePoint 2010/2013 destinés aux grandes entreprises (BIC, CNES, Europe Airport, GRT)&#x27;,
+      &#x27;Optimisation d\&#x27;assets : découpage précis de maquettes Photoshop et compression d\&#x27;images pour des performances optimales&#x27;,
+      &#x27;Développement responsive HTML5/LESS/SASS garantissant une expérience utilisateur cohérente multi- dispositifs et cross-browser&#x27;,
+    ],
+  },
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/components/explorer/assets-images.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ImageAssetsMap"></a>
+                    <span class="name">
+                        <span ><b>ImageAssetsMap</b></span>
+                        <a href="#ImageAssetsMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map&lt;string, string | undefined&gt;([
+  [ImageAssets.GRP, &#x27;Gestion relation producteur.jpg&#x27;],
+  [ImageAssets.PATIENCE_K_COATCHING, &#x27;Patience K Coaching.jpg&#x27;],
+  [ImageAssets.HORA_ASOCIADOS, &#x27;Hora Asociados.jpg&#x27;],
+  [ImageAssets.SVP, &#x27;SVP.jpg&#x27;],
+  [ImageAssets.LONGCHAMP, &#x27;Longchamp Mypliage.jpg&#x27;],
+  [ImageAssets.INOVARION, &#x27;Inovarion.jpg&#x27;],
+  [ImageAssets.YPOSKESI, &#x27;Yposkesi.jpg&#x27;],
+  [ImageAssets.PINET, &#x27;Pinet.jpg&#x27;],
+  [ImageAssets.NEXTENSIA, &#x27;Nextensia.jpg&#x27;],
+  [ImageAssets.METROSCOPE, &#x27;Metroscope EDF.jpg&#x27;],
+  [ImageAssets.FAPP, &#x27;Fondation avenir du patrimoine paris.jpg&#x27;],
+
+])</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/layout/title-bar/menu.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Menu"></a>
+                    <span class="name">
+                        <span ><b>Menu</b></span>
+                        <a href="#Menu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.WORKS, undefined, &#x27;MENUS.WORKS&#x27;, Path.WORKS),
+  new MenuItem(MenuKey.SKILLS, undefined, &#x27;MENUS.SKILLS&#x27;, Path.SKILLS),
+  new MenuItem(MenuKey.PROJECTS, undefined, &#x27;MENUS.PROJECTS&#x27;, Path.PROJECTS),
+  new MenuItem(MenuKey.CONTACT, undefined, &#x27;MENUS.CONTACT&#x27;, Path.CONTACT),
+  new MenuItem(MenuKey.ABOUT, undefined, &#x27;MENUS.ABOUT&#x27;, Path.PROFILE),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/pages/projects/projets.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Projects"></a>
+                    <span class="name">
+                        <span ><b>Projects</b></span>
+                        <a href="#Projects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new Project(
+    1,
+    &#x27;2025&#x27;,
+    &#x27;Porfolio 2025&#x27;,
+    Company.PERSO,
+    ProjectCategory.WEBSITE,
+    ProjectType.PERSO,
+    ProjectStatus.IN_PROGRESS,
+    &#x27;Conception et réalisation d\&#x27;un portefolio pour mettre en avant mes dernière informations (compétences, project, experiences, ect...)&#x27;,
+    [Skill.ANGULAR, Skill.TYPESCRIPT, Skill.JASMINE, Skill.HTML, Skill.CSS, Skill.TAILWINDCSS, Skill.GITHUB],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site&#x27;,
+        &#x27;url&#x27;: &#x27;http://thomasbellavoine.fr&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Github&#x27;,
+        &#x27;url&#x27;: &#x27;https://github.com/tbellavoine/&#x27;
+      }
+    ]
+  ),
+  new Project(
+    2,
+    &#x27;2020 - 2025&#x27;,
+    &#x27;GRP: Gestion de la Relation Producteur&#x27;,
+    Company.WEB_ATRIO,
+    ProjectCategory.APP,
+    ProjectType.PRO,
+    ProjectStatus.IN_PROGRESS,
+    &#x27;Conception et développement de l’interface utilisateur pour la gestion des relations producteurs bio-méthane, pilotage de l’architecture front-end Angular (migration progressive v8 à v19), mise en place de tests unitaires et d’intégration (Jasmine/Jest), développement back-end avec Symfony et API-Platform, déploiement sur AWS Cloud, ainsi que formation et encadrement technique des nouveaux collaborateurs.&#x27;,
+    [Skill.ANGULAR, Skill.TYPESCRIPT, Skill.JEST, Skill.SONARQUBE, Skill.HTML, Skill.CSS, Skill.TAILWINDCSS, Skill.DOCKER, Skill.AWS, Skill.ADOBE_XD, Skill.CI_CD, Skill.SYMFONY, Skill.DOCTRINE, Skill.PHPUNIT, Skill.JIRA, Skill.GITLAB],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://www.grdf.fr/&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.GRP
+      }
+    ]
+  ),
+  new Project(
+    3,
+    &#x27;2022&#x27;,
+    &#x27;Patience .K - coaching&#x27;,
+    Company.PERSO,
+    ProjectCategory.APP,
+    ProjectType.PERSO,
+    ProjectStatus.ENDED,
+    &#x27;Site vitrine WordPress pour coach sportif à domicile spécialisé dans la remise en forme et perte de poids, avec design personnalisé créé sur maquettes validées et formation back-office pour une gestion autonome du contenu.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://patiencekcoaching.fr&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.PATIENCE_K_COATCHING
+      }
+    ]
+  ),
+  new Project(
+    4,
+    &#x27;2020&#x27;,
+    &#x27;HORA ASOCIADOS - Estudio Juririco Empresarial&#x27;,
+    Company.PERSO,
+    ProjectCategory.WEBSITE,
+    ProjectType.PERSO,
+    ProjectStatus.ENDED,
+    &#x27;Site vitrine WordPress pour cabinet d\&#x27;avocats spécialisé en droit du travail, fiscal et corporatif, avec design sur maquettes validées et formation back-office pour une gestion autonome du contenu professionnel.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP,],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://horaasociados.com/&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.HORA_ASOCIADOS
+      }
+    ]
+  ),
+  new Project(
+    5,
+    &#x27;2020&#x27;,
+    &#x27;SVP.com&#x27;,
+    Company.WEB_ATRIO,
+    ProjectCategory.BLOG,
+    ProjectType.PRO,
+    ProjectStatus.ENDED,
+    &#x27;Mission de refonte technique front-end en urgence : transformation complète des maquettes Zeplin en interfaces HTML5/SCSS compatibles cross-browser (IE11) avec templating Laravel Blade, incluant la réduction de la dette technique avant mise en production.&#x27;,
+    [Skill.HTML, Skill.CSS, Skill.JAVASCRIPT, Skill.ZEPLIN, Skill.LARAVEL],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://www.svp.com/&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.SVP
+      }
+    ]
+  ),
+  new Project(
+    6,
+    &#x27;2019 - 2020&#x27;,
+    &#x27;Longchamp&#x27;,
+    Company.WEB_ATRIO,
+    ProjectCategory.COMMERCE,
+    ProjectType.PRO,
+    ProjectStatus.ENDED,
+    &#x27;Développement et intégration front-end pour Salesforce Commerce Cloud et Angular 7, incluant la création de modules e-commerce personnalisés, l’optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.ANGULAR, Skill.TYPESCRIPT, Skill.HTML, Skill.ISML, Skill.SCSS, Skill.PHOTOSHOP, Skill.GITLAB],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://www.longchamp.com/fr/fr/mypliage&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.LONGCHAMP
+      }
+    ]
+  ),
+  new Project(
+    7,
+    &#x27;2019&#x27;,
+    &#x27;Inovarion&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.WEBSITE,
+    ProjectType.PRO,
+    ProjectStatus.REFUNDED,
+    &#x27;Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP, Skill.TREE_JS],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.INOVARION
+      }
+    ]
+  ),
+  new Project(
+    8,
+    &#x27;2019&#x27;,
+    &#x27;Yposkesi&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.WEBSITE,
+    ProjectType.PRO,
+    ProjectStatus.REFUNDED,
+    &#x27;Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.YPOSKESI
+      }
+    ]
+  ),
+  new Project(
+    9,
+    &#x27;2018&#x27;,
+    &#x27;Pinet&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.WEBSITE,
+    ProjectType.PRO,
+    ProjectStatus.ENDED,
+    &#x27;Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://www.pinet-industrie.com/fr/&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.PINET
+      }
+    ]
+  ),
+  new Project(
+    10,
+    &#x27;2018&#x27;,
+    &#x27;Nextensia&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.WEBSITE,
+    ProjectType.PRO,
+    ProjectStatus.ENDED,
+    &#x27;Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://www.pinet-industrie.com/fr/&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.NEXTENSIA
+      }
+    ]
+  ),
+  new Project(
+    11,
+    &#x27;2018&#x27;,
+    &#x27;Metroscope&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.WEBSITE,
+    ProjectType.PRO,
+    ProjectStatus.REFUNDED,
+    &#x27;Développement et intégration front-end sous wordpress. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.METROSCOPE
+      }
+    ]
+  ),
+  new Project(
+    12,
+    &#x27;2018&#x27;,
+    &#x27;Fondation avenir du patrimoine à paris&#x27;,
+    Company.ADVERIS,
+    ProjectCategory.COLLAB,
+    ProjectType.PRO,
+    ProjectStatus.ENDED,
+    &#x27;Développement et intégration front-end sous wordpress pour une fondation. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.&#x27;,
+    [Skill.WORDPRESS, Skill.HTML, Skill.JQUERY, Skill.JAVASCRIPT, Skill.SASS, Skill.PHOTOSHOP, Skill.ILLUSTRATOR, Skill.TWIG, Skill.PHP],
+    [
+      {
+        &#x27;label&#x27;: &#x27;Site de l\&#x27;entreprise&#x27;,
+        &#x27;url&#x27;: &#x27;https://fondationavenirpatrimoineparis.fr&#x27;
+      },
+      {
+        &#x27;label&#x27;: &#x27;Preview&#x27;,
+        &#x27;url&#x27;: ImageAssets.FAPP
+      }
+    ]
+  )
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/layout/sidenav/sidenav.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SidenavBottom"></a>
+                    <span class="name">
+                        <span ><b>SidenavBottom</b></span>
+                        <a href="#SidenavBottom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.PROFILE, [&#x27;far&#x27;, &#x27;address-card&#x27;], undefined, Path.PROFILE),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/pages/home/start-menu.const.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="StartMenu"></a>
+                    <span class="name">
+                        <span ><b>StartMenu</b></span>
+                        <a href="#StartMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  new MenuItem(MenuKey.WORKS, [&#x27;far&#x27;, &#x27;file&#x27;], &#x27;MENUS.WORKS_START&#x27;, &#x27;../&#x27; + Path.WORKS),
+  new MenuItem(MenuKey.SKILLS, [&#x27;fas&#x27;, &#x27;code&#x27;], &#x27;MENUS.SKILLS_START&#x27;, &#x27;../&#x27; + Path.SKILLS),
+  new MenuItem(MenuKey.PROJECTS, [&#x27;far&#x27;, &#x27;folder-open&#x27;], &#x27;MENUS.PROJECTS_START&#x27;, &#x27;../&#x27; + Path.PROJECTS),
+  new MenuItem(MenuKey.CONTACT, [&#x27;far&#x27;, &#x27;message&#x27;], &#x27;MENUS.CONTACT_START&#x27;, &#x27;../&#x27; + Path.CONTACT),
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

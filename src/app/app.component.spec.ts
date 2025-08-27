@@ -1,10 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { of } from 'rxjs';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useValue: {
+            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
+          }
+        }
+      })],
+      providers: [{ provide: ActivatedRoute, useValue: {} }]
     }).compileComponents();
   });
 
@@ -12,12 +24,5 @@ describe('App', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, PFO-2025');
   });
 });

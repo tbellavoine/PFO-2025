@@ -1,0 +1,1024 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>pfo-2025 documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Laravel.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">pfo-2025 documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TicTacToeComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/tic-tac-toe/tic-tac-toe.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-tic-tac-toe</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>NgClass</code>
+                            <code>FaIconComponent</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tic-tac-toe.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#board" >board</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#currentPlayer" >currentPlayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#gameOver" >gameOver</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDraw" >isDraw</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#stats" >stats</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#totalGames" >totalGames</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#winner" >winner</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#winningCombinations" >winningCombinations</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkWinner" >checkWinner</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#makeMove" >makeMove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resetGame" >resetGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#resetStats" >resetStats</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkWinner"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkWinner</b></span>
+                        <a href="#checkWinner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkWinner()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if there&#39;s a winner</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>boolean</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="makeMove"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>makeMove</b></span>
+                        <a href="#makeMove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>makeMove(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="39"
+                                    class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Make a move on the board</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetGame"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>resetGame</b></span>
+                        <a href="#resetGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetGame()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset the game to initial state</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetStats"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>resetStats</b></span>
+                        <a href="#resetStats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetStats()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Reset the statistics and the game</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="board"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>board</b></span>
+                        <a href="#board"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;string[]&gt;(Array(9).fill(&#x27;&#x27;))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentPlayer"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>currentPlayer</b></span>
+                        <a href="#currentPlayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;&#x27;X&#x27; | &#x27;O&#x27;&gt;(&#x27;X&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gameOver"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>gameOver</b></span>
+                        <a href="#gameOver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDraw"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isDraw</b></span>
+                        <a href="#isDraw"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stats"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>stats</b></span>
+                        <a href="#stats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal({
+    X: 0,
+    O: 0,
+    draws: 0
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalGames"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>totalGames</b></span>
+                        <a href="#totalGames"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; {
+    const stats &#x3D; this.stats();
+    return stats.X + stats.O + stats.draws;
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="winner"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>winner</b></span>
+                        <a href="#winner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;string | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="winningCombinations"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>winningCombinations</b></span>
+                        <a href="#winningCombinations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ] as const</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/tic-tac-toe/tic-tac-toe.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, signal } from &#x27;@angular/core&#x27;;
+import { NgClass } from &#x27;@angular/common&#x27;;
+import { FaIconComponent } from &#x27;@fortawesome/angular-fontawesome&#x27;;
+
+@Component({
+  selector: &#x27;app-tic-tac-toe&#x27;,
+  imports: [
+    NgClass,
+    FaIconComponent
+  ],
+  templateUrl: &#x27;./tic-tac-toe.component.html&#x27;
+})
+export class TicTacToeComponent {
+  public board &#x3D; signal&lt;string[]&gt;(Array(9).fill(&#x27;&#x27;));
+  public currentPlayer &#x3D; signal&lt;&#x27;X&#x27; | &#x27;O&#x27;&gt;(&#x27;X&#x27;);
+  public gameOver &#x3D; signal(false);
+  public winner &#x3D; signal&lt;string | null&gt;(null);
+  public isDraw &#x3D; signal(false);
+  public stats &#x3D; signal({
+    X: 0,
+    O: 0,
+    draws: 0
+  });
+  public totalGames &#x3D; computed(() &#x3D;&gt; {
+    const stats &#x3D; this.stats();
+    return stats.X + stats.O + stats.draws;
+  });
+  private readonly winningCombinations &#x3D; [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ] as const;
+
+
+  /**
+   * Make a move on the board
+   * @param index
+   */
+  public makeMove(index: number): void {
+    if (this.board()[index] !&#x3D;&#x3D; &#x27;&#x27; || this.gameOver()) {
+      return;
+    }
+
+    this.board.update(board &#x3D;&gt; {
+      const newBoard &#x3D; [...board];
+      newBoard[index] &#x3D; this.currentPlayer();
+      return newBoard;
+    });
+
+    if (this.checkWinner()) {
+      this.gameOver.set(true);
+      this.winner.set(this.currentPlayer());
+
+      this.stats.update(stats &#x3D;&gt; ({
+        ...stats,
+        [this.currentPlayer()]: stats[this.currentPlayer() as keyof typeof stats] + 1
+      }));
+      return;
+    }
+
+    if (this.board().every(cell &#x3D;&gt; cell !&#x3D;&#x3D; &#x27;&#x27;)) {
+      this.gameOver.set(true);
+      this.isDraw.set(true);
+      this.stats.update(stats &#x3D;&gt; ({
+        ...stats,
+        draws: stats.draws + 1
+      }));
+      return;
+    }
+
+    this.currentPlayer.update(player &#x3D;&gt; player &#x3D;&#x3D;&#x3D; &#x27;X&#x27; ? &#x27;O&#x27; : &#x27;X&#x27;);
+  }
+
+  /**
+   * Reset the game to initial state
+   */
+  public resetGame(): void {
+    this.board.set(Array(9).fill(&#x27;&#x27;));
+    this.currentPlayer.set(&#x27;X&#x27;);
+    this.gameOver.set(false);
+    this.winner.set(null);
+    this.isDraw.set(false);
+  }
+
+  /**
+   * Reset the statistics and the game
+   */
+  public resetStats(): void {
+    this.stats.set({
+      X: 0,
+      O: 0,
+      draws: 0
+    });
+    this.resetGame();
+  }
+
+  /**
+   * Check if there&#x27;s a winner
+   * @returns boolean
+   */
+  private checkWinner(): boolean {
+    const board &#x3D; this.board();
+    return this.winningCombinations.some(combination &#x3D;&gt; {
+      const [a, b, c] &#x3D; combination;
+      return board[a] !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp;
+        board[a] &#x3D;&#x3D;&#x3D; board[b] &amp;&amp;
+        board[b] &#x3D;&#x3D;&#x3D; board[c];
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;flex flex-col p-6 md:p-20 gap-12 text-light/60&quot;&gt;
+  &lt;div class&#x3D;&quot;flex flex-col gap-2  justify-center items-center&quot;&gt;
+    &lt;p class&#x3D;&quot;text-xs text-accent/50 mb-4&quot;&gt;
+      &amp;lt;game /&amp;gt;
+    &lt;/p&gt;
+    &lt;h3 class&#x3D;&quot;text-5xl text-light font-semibold&quot;&gt;Morpion&lt;/h3&gt;
+    &lt;p class&#x3D;&quot;text-accent text-xl italic&quot;&gt;Jouons...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;flex flex-col lg:flex-row gap-6 w-full justify-center&quot;&gt;
+      &lt;div class&#x3D;&quot;grid grid-cols-3 gap-3 items-center justify-center w-full max-w-100 self-end&quot;&gt;
+        @for (cell of board(); track $index) {
+          &lt;div (click)&#x3D;&quot;makeMove($index)&quot;
+               class&#x3D;&quot;aspect-square border-1 border-accent
+                    flex items-center justify-center text-4xl font-bold cursor-not-allowed
+                    transition-all duration-200
+                    active:bg-accent active:text-light&quot;
+               [ngClass]&#x3D;&quot;{&#x27;!cursor-pointer hover:bg-accent hover:text-white&#x27; : cell &#x3D;&#x3D;&#x3D; &#x27;&#x27;}&quot;&gt;
+
+            @if (cell &#x3D;&#x3D;&#x3D; &#x27;X&#x27;) {
+              &lt;fa-icon [icon]&#x3D;&quot;[&#x27;fas&#x27;, &#x27;xmark&#x27;]&quot;/&gt;
+            } @else if (cell &#x3D;&#x3D;&#x3D; &#x27;O&#x27;) {
+              &lt;fa-icon [icon]&#x3D;&quot;[&#x27;far&#x27;, &#x27;circle&#x27;]&quot;/&gt;
+            }
+          &lt;/div&gt;
+        }
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;flex flex-col self-start text-center&quot;&gt;
+        &lt;div class&#x3D;&quot;p-4&quot;&gt;
+          @if (!gameOver() &amp;&amp; !isDraw()) {
+            &lt;div class&#x3D;&quot;text-white text-xl font-semibold&quot;&gt;
+              &lt;div class&#x3D;&quot;flex items-center gap-4&quot;&gt;
+                &lt;span class&#x3D;&quot;text-md italic text-accent&quot;&gt;Tour du joueur:&lt;/span&gt;
+                &lt;span class&#x3D;&quot;text-2xl&quot;&gt;
+                 @if (currentPlayer() &#x3D;&#x3D;&#x3D; &#x27;X&#x27;) {
+                   &lt;fa-icon [icon]&#x3D;&quot;[&#x27;fas&#x27;, &#x27;xmark&#x27;]&quot;/&gt;
+                 } @else if (currentPlayer() &#x3D;&#x3D;&#x3D; &#x27;O&#x27;) {
+                   &lt;fa-icon [icon]&#x3D;&quot;[&#x27;far&#x27;, &#x27;circle&#x27;]&quot;/&gt;
+                 }
+              &lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          }
+
+          @if (gameOver() &amp;&amp; !isDraw()) {
+            &lt;div class&#x3D;&quot;text-white text-xl font-semibold&quot;&gt;
+              Joueur
+              @if (winner() &#x3D;&#x3D;&#x3D; &#x27;X&#x27;) {
+                &lt;fa-icon [icon]&#x3D;&quot;[&#x27;fas&#x27;, &#x27;xmark&#x27;]&quot;/&gt;
+              } @else if (winner() &#x3D;&#x3D;&#x3D; &#x27;O&#x27;) {
+                &lt;fa-icon [icon]&#x3D;&quot;[&#x27;far&#x27;, &#x27;circle&#x27;]&quot;/&gt;
+              }
+              gagne !
+            &lt;/div&gt;
+          }
+
+          @if (isDraw()) {
+            &lt;div class&#x3D;&quot;text-2xl font-bold text-light&quot;&gt;
+              Match nul !
+            &lt;/div&gt;
+          }
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;border-t border-t-accent border-b border-b-accent flex flex-col gap-6 py-8&quot;&gt;
+          &lt;p class&#x3D;&quot;text-light text-sm&quot;&gt;
+            &lt;span class&#x3D;&quot;text-accent&quot;&gt;{{ stats().X }}&lt;/span&gt;
+            victoires
+            &lt;fa-icon [icon]&#x3D;&quot;[&#x27;fas&#x27;, &#x27;xmark&#x27;]&quot;/&gt;
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;text-light text-sm&quot;&gt;&lt;span class&#x3D;&quot;text-accent&quot;&gt;{{ stats().draws }}&lt;/span&gt; match nuls&lt;/p&gt;
+          &lt;p class&#x3D;&quot;text-light text-sm&quot;&gt;
+            &lt;span class&#x3D;&quot;text-accent&quot;&gt;{{ stats().O }}&lt;/span&gt;
+            victoires
+            &lt;fa-icon [icon]&#x3D;&quot;[&#x27;far&#x27;, &#x27;circle&#x27;]&quot;/&gt;
+          &lt;/p&gt;
+          &lt;p class&#x3D;&quot;text-light text-sm&quot;&gt;&lt;span class&#x3D;&quot;text-accent&quot;&gt;{{ totalGames() }}&lt;/span&gt; partie(s) jouée(s)&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;flex flex-col justify-center gap-6 pt-6&quot;&gt;
+          &lt;button (click)&#x3D;&quot;resetGame()&quot; class&#x3D;&quot;p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer&quot;&gt;Nouvelle
+            partie
+          &lt;/button&gt;
+          &lt;button (click)&#x3D;&quot;resetStats()&quot; class&#x3D;&quot;p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer&quot;&gt;
+            Réinitialiser
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">  <div class="flex flex-col gap-2  justify-center items-center">    <p class="text-xs text-accent/50 mb-4">      &lt;game /&gt;    </p>    <h3 class="text-5xl text-light font-semibold">Morpion</h3>    <p class="text-accent text-xl italic">Jouons...</p>  </div>  <div class="flex flex-col lg:flex-row gap-6 w-full justify-center">      <div class="grid grid-cols-3 gap-3 items-center justify-center w-full max-w-100 self-end">        @for (cell of board(); track $index) {          <div (click)="makeMove($index)"               class="aspect-square border-1 border-accent                    flex items-center justify-center text-4xl font-bold cursor-not-allowed                    transition-all duration-200                    active:bg-accent active:text-light"               [ngClass]="{\'!cursor-pointer hover:bg-accent hover:text-white\' : cell === \'\'}">            @if (cell === \'X\') {              <fa-icon [icon]="[\'fas\', \'xmark\']"/>            } @else if (cell === \'O\') {              <fa-icon [icon]="[\'far\', \'circle\']"/>            }          </div>        }      </div>      <div class="flex flex-col self-start text-center">        <div class="p-4">          @if (!gameOver() && !isDraw()) {            <div class="text-white text-xl font-semibold">              <div class="flex items-center gap-4">                <span class="text-md italic text-accent">Tour du joueur:</span>                <span class="text-2xl">                 @if (currentPlayer() === \'X\') {                   <fa-icon [icon]="[\'fas\', \'xmark\']"/>                 } @else if (currentPlayer() === \'O\') {                   <fa-icon [icon]="[\'far\', \'circle\']"/>                 }              </span>              </div>            </div>          }          @if (gameOver() && !isDraw()) {            <div class="text-white text-xl font-semibold">              Joueur              @if (winner() === \'X\') {                <fa-icon [icon]="[\'fas\', \'xmark\']"/>              } @else if (winner() === \'O\') {                <fa-icon [icon]="[\'far\', \'circle\']"/>              }              gagne !            </div>          }          @if (isDraw()) {            <div class="text-2xl font-bold text-light">              Match nul !            </div>          }        </div>        <div class="border-t border-t-accent border-b border-b-accent flex flex-col gap-6 py-8">          <p class="text-light text-sm">            <span class="text-accent">{{ stats().X }}</span>            victoires            <fa-icon [icon]="[\'fas\', \'xmark\']"/>          </p>          <p class="text-light text-sm"><span class="text-accent">{{ stats().draws }}</span> match nuls</p>          <p class="text-light text-sm">            <span class="text-accent">{{ stats().O }}</span>            victoires            <fa-icon [icon]="[\'far\', \'circle\']"/>          </p>          <p class="text-light text-sm"><span class="text-accent">{{ totalGames() }}</span> partie(s) jouée(s)</p>        </div>        <div class="flex flex-col justify-center gap-6 pt-6">          <button (click)="resetGame()" class="p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer">Nouvelle            partie          </button>          <button (click)="resetStats()" class="p-3 border border-transparent transition-all hover:bg-accent hover:text-light cursor-pointer">            Réinitialiser          </button>        </div>      </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
+    var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
+    var ACTUAL_COMPONENT = {'name': 'TicTacToeComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TicTacToeComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -12,6 +12,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './title-bar.component.html'
 })
 export class TitleBarComponent {
-  protected title = signal<string>('Thomas BELLAVOINE - Visual Studio Code');
+  public title = signal<string>('Thomas BELLAVOINE - Visual Studio Code');
   protected readonly Menu = Menu;
 }

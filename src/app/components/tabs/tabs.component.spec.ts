@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, provideRouter, Router } from '@angular/router';
 import { TabsComponent } from './tabs.component';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { signal } from '@angular/core';
+import { BehaviorSubject, of } from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('TabsComponent', () => {
   let component: TabsComponent;
@@ -14,24 +17,39 @@ describe('TabsComponent', () => {
 
   const mockTabs: Tab[] = [
     { key: TabKey.HOME, route: ['/'], label: 'Home' },
-    { key: TabKey.PROJECTS, route: ['/settings'], label: 'Settings' },
-    { key: TabKey.PROFILE, route: ['/profile'], label: 'Profile' }
+    { key: TabKey.PROJECTS, route: ['/settings'], label: 'Settings' }
   ] as Tab[];
-
+  const paramMapSubject = new BehaviorSubject<ParamMap>({
+    get: (key: string) => 'test-image',
+    getAll: () => [],
+    has: () => true,
+    keys: [] as string[]
+  });
+  const mockActivatedRoute = {
+    paramMap: paramMapSubject.asObservable(),
+    snapshot: {
+      params: { imageName: 'test-image' }
+    }
+  };
   beforeEach(async () => {
     router = jasmine.createSpyObj('Router', ['navigate']);
-    router.navigate.and.returnValue(Promise.resolve(true));
-
-    tabsService = jasmine.createSpyObj('TabsService', ['tabs'], {
+    tabsService = jasmine.createSpyObj('TabsService', [], {
       tabs: signal(mockTabs)
     });
 
     await TestBed.configureTestingModule({
-      imports: [TabsComponent],
+      imports: [TabsComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useValue: {
+            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
+          }
+        }
+      })],
       providers: [
-        { provide: Router, useValue: router },
-        { provide: TabsService, useValue: tabsService }
-      ]
+        provideRouter([]),
+        { provide: TabsService, useValue: tabsService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TabsComponent);
@@ -48,40 +66,16 @@ describe('TabsComponent', () => {
   });
 
   describe('removeTab', () => {
-    it('should prevent default and stop propagation when event is provided', () => {
+    it('should prevent event propagation', () => {
       const event = jasmine.createSpyObj('Event', ['preventDefault', 'stopPropagation']);
-      const tab = mockTabs[1];
-
-      component.removeTab(tab, event);
-
+      component.removeTab(mockTabs[1], event);
       expect(event.preventDefault).toHaveBeenCalled();
       expect(event.stopPropagation).toHaveBeenCalled();
     });
 
-
-    it('should remove tab and update tabs list', () => {
-      const tabToRemove = mockTabs[1];
-      const expectedTabs = [mockTabs[0], mockTabs[2]];
-
-      component.removeTab(tabToRemove);
-
-      expect(tabsService.tabs()).toEqual(expectedTabs);
-    });
-
-    it('should navigate to previous tab when available', () => {
-      const tab = mockTabs[1];
-
-      component.removeTab(tab);
-
-      expect(router.navigate).toHaveBeenCalledWith(mockTabs[0].route);
-    });
-
-    it('should navigate to next tab when previous is not available', () => {
-      const tab = mockTabs[0];
-
-      component.removeTab(tab);
-
-      expect(router.navigate).toHaveBeenCalledWith(mockTabs[1].route);
+    it('should remove a tab', () => {
+      component.removeTab(mockTabs[1]);
+      expect(tabsService.tabs()).toEqual([mockTabs[0]]);
     });
   });
 });

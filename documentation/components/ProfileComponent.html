@@ -1,0 +1,751 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>pfo-2025 documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Laravel.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">pfo-2025 documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ProfileComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/profile/profile.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">host</td>
+                <td class="col-md-9"><code>{<br>}</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>profile</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>FaIconComponent</code>
+                                <code><a href="../components/JsonCardComponent.html" target="_self" >JsonCardComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./profile.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#document" >document</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#profileTab" >profileTab</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#softSkillsObject" >softSkillsObject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tabsService" >tabsService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#initSoftSkillsObject" >initSoftSkillsObject</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#openCV" >openCV</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initSoftSkillsObject"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>initSoftSkillsObject</b></span>
+                        <a href="#initSoftSkillsObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initSoftSkillsObject()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/pages/profile/profile.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initialize the soft skills object</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/app/pages/profile/profile.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openCV"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>openCV</b></span>
+                        <a href="#openCV"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>openCV()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="34"
+                                    class="link-to-prism">src/app/pages/profile/profile.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Open the CV in a new tab</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="document"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>document</b></span>
+                        <a href="#document"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(DOCUMENT)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/profile/profile.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="profileTab"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>profileTab</b></span>
+                        <a href="#profileTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Tab.html" target="_self" >Tab</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Tab(TabKey.PROFILE, [&#x27;fab&#x27;, &#x27;html5&#x27;], &#x27;text-orange-500&#x27;, &#x27;EXPLORER.ME_FILE&#x27;, [Path.PROFILE])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/profile/profile.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="softSkillsObject"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>softSkillsObject</b></span>
+                        <a href="#softSkillsObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;unknown&gt;(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/profile/profile.component.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabsService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tabsService</b></span>
+                        <a href="#tabsService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(TabsService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/profile/profile.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, DOCUMENT, inject, OnInit, signal } from &#x27;@angular/core&#x27;;
+import { FaIconComponent } from &#x27;@fortawesome/angular-fontawesome&#x27;;
+import { TabsService } from &#x27;@services/tabs.service&#x27;;
+import { Tab } from &#x27;@models/tab.model&#x27;;
+import { TabKey } from &#x27;@enums/tab-key.enum&#x27;;
+import { Path } from &#x27;@enums/path.enum&#x27;;
+import { JsonCardComponent } from &#x27;@components/json-card/json-card.component&#x27;;
+
+@Component({
+  selector: &#x27;profile&#x27;,
+  imports: [
+    FaIconComponent,
+    JsonCardComponent
+  ],
+  templateUrl: &#x27;./profile.component.html&#x27;,
+  host: {
+    class: &#x27;w-full&#x27;
+  }
+})
+export class ProfileComponent implements OnInit {
+  public softSkillsObject &#x3D; signal&lt;unknown&gt;(&#x27;&#x27;);
+  private readonly tabsService &#x3D; inject(TabsService);
+  private profileTab: Tab &#x3D; new Tab(TabKey.PROFILE, [&#x27;fab&#x27;, &#x27;html5&#x27;], &#x27;text-orange-500&#x27;, &#x27;EXPLORER.ME_FILE&#x27;, [Path.PROFILE]);
+  private readonly document &#x3D; inject(DOCUMENT);
+
+  ngOnInit(): void {
+    this.initSoftSkillsObject();
+    this.tabsService.addTab(this.profileTab);
+  }
+
+  /**
+   * Open the CV in a new tab
+   */
+  public openCV(): void {
+    const link &#x3D; this.document.createElement(&#x27;a&#x27;);
+    link.href &#x3D; &#x27;/assets/pdf/CV-Thomas-BELLAVOINE.pdf&#x27;;
+    link.target &#x3D; &#x27;_blank&#x27;;
+    link.click();
+  }
+
+  /**
+   * Initialize the soft skills object
+   * @private
+   */
+  private initSoftSkillsObject(): void {
+    this.softSkillsObject.set(
+      {
+        teamwork: &#x27;✓&#x27;,
+        proactive: &#x27;✓&#x27;,
+        adaptability: &#x27;✓&#x27;,
+        creativity: &#x27;✓&#x27;,
+        &#x27;critical thinking&#x27;: &#x27;✓&#x27;,
+        autonomy: &#x27;✓&#x27;,
+      }
+    );
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;flex flex-col p-6 md:p-20 gap-12 text-light/60&quot;&gt;
+  &lt;div class&#x3D;&quot;flex flex-col gap-2  justify-center items-center&quot;&gt;
+    &lt;p class&#x3D;&quot;text-xs text-accent/50 mb-4&quot;&gt;
+      &amp;lt;about-me /&amp;gt;
+    &lt;/p&gt;
+    &lt;h3 class&#x3D;&quot;text-5xl text-light font-semibold&quot;&gt;Thomas BELLAVOINE&lt;/h3&gt;
+    &lt;p class&#x3D;&quot;text-accent text-xl italic&quot;&gt;Développeur frontend Angular&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;flex flex-col gap-6&quot;&gt;
+    &lt;p class&#x3D;&quot;text-light&quot;&gt;
+      Salut, moi c’est Thomas 👋
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;strong class&#x3D;&quot;text-light&quot;&gt;Développeur front-end&lt;/strong&gt; depuis plus de dix ans, je &lt;em class&#x3D;&quot;text-light&quot;&gt;conçois&lt;/em&gt; et &lt;em
+      class&#x3D;&quot;text-light&quot;&gt;construis&lt;/em&gt; des interfaces web qui allient
+      &lt;em class&#x3D;&quot;text-light&quot;&gt;performance&lt;/em&gt; et &lt;em class&#x3D;&quot;text-light&quot;&gt;plaisir d’utilisation&lt;/em&gt;. Mon domaine de prédilection :
+      &lt;strong&gt;Angular&lt;/strong&gt;, que j’ai vu
+      évoluer du 8
+      jusqu’au 19, et
+      avec lequel j’ai réalisé aussi bien des refontes techniques critiques que des applications complètes prêtes pour la production.
+    &lt;/p&gt;
+    &lt;p&gt;
+      Mon approche est &lt;strong class&#x3D;&quot;text-light&quot;&gt;simple&lt;/strong&gt; : &lt;em class&#x3D;&quot;text-light&quot;&gt;comprendre&lt;/em&gt; les besoins réels, &lt;em class&#x3D;&quot;text-light&quot;&gt;anticiper&lt;/em&gt;
+      les contraintes techniques et
+      &lt;em class&#x3D;&quot;text-light&quot;&gt;trouver&lt;/em&gt; la solution
+      la plus élégante. Je suis un passionné des détails — du temps de chargement à la compatibilité entre navigateurs — parce que ce sont souvent eux
+      qui font la différence pour l’utilisateur final.
+    &lt;/p&gt;
+    &lt;p&gt;
+      Au fil des années, j’ai travaillé sur des projets variés : e-commerce, applications métiers, expériences 3D interactives, ou encore modules sur
+      mesure pour des marques prestigieuses. J’aime aussi &lt;strong class&#x3D;&quot;text-light&quot;&gt;transmettre&lt;/strong&gt; : &lt;em class&#x3D;&quot;text-light&quot;&gt;former&lt;/em&gt; de
+      nouveaux développeurs, &lt;em class&#x3D;&quot;text-light&quot;&gt;partager&lt;/em&gt;
+      de bonnes
+      pratiques, et
+      parfois &lt;em class&#x3D;&quot;text-light&quot;&gt;sauver&lt;/em&gt; une mise en production de dernière minute (ce qui, avouons-le, donne plus d’adrénaline que le café).
+    &lt;/p&gt;
+    &lt;p&gt;
+      Ce qui m’anime avant tout, c’est de créer des produits qui rendent service, qui durent, et qui donnent envie de revenir. Parce qu’au fond, le
+      code
+      n’est qu’un outil : &lt;strong class&#x3D;&quot;text-light&quot;&gt;ce qui compte, c’est l’expérience qu’il permet de vivre&lt;/strong&gt;.
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;flex flex-col md:flex-row md:items-center gap-12 md:gap-6 w-full&quot;&gt;
+    &lt;div class&#x3D;&quot;flex flex-col gap-2 w-full md:w-1/2&quot;&gt;
+      &lt;p class&#x3D;&quot;text-lg text-accent/70&quot;&gt;
+        &amp;lt;Savoir-être /&amp;gt;
+      &lt;/p&gt;
+      &lt;json-card [jsonObject]&#x3D;&quot;softSkillsObject()&quot;/&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;flex flex-col items-center gap-2 w-full md:w-1/2&quot;&gt;
+      &lt;div (click)&#x3D;&quot;openCV()&quot; class&#x3D;&quot;group flex flex-col items-center gap-4 cursor-pointer&quot;&gt;
+        &lt;div
+          class&#x3D;&quot;flex items-center justify-center p-3 rounded-full h-30 w-30 border-2 border-light transition-all group-hover:border-accent group-hover:text-accent&quot;&gt;
+          &lt;fa-icon [icon]&#x3D;&quot;[&#x27;fas&#x27;,&#x27;file-arrow-down&#x27;]&quot; [size]&#x3D;&quot;&#x27;3x&#x27;&quot; class&#x3D;&quot;transition-all group-hover:animate-pulse&quot;/&gt;
+        &lt;/div&gt;
+        &lt;span class&#x3D;&quot;transition-all group-hover:!text-accent text-light/20&quot;&gt;Télécharger le CV&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">  <div class="flex flex-col gap-2  justify-center items-center">    <p class="text-xs text-accent/50 mb-4">      &lt;about-me /&gt;    </p>    <h3 class="text-5xl text-light font-semibold">Thomas BELLAVOINE</h3>    <p class="text-accent text-xl italic">Développeur frontend Angular</p>  </div>  <div class="flex flex-col gap-6">    <p class="text-light">      Salut, moi c’est Thomas 👋    </p>    <p>      <strong class="text-light">Développeur front-end</strong> depuis plus de dix ans, je <em class="text-light">conçois</em> et <em      class="text-light">construis</em> des interfaces web qui allient      <em class="text-light">performance</em> et <em class="text-light">plaisir d’utilisation</em>. Mon domaine de prédilection :      <strong>Angular</strong>, que j’ai vu      évoluer du 8      jusqu’au 19, et      avec lequel j’ai réalisé aussi bien des refontes techniques critiques que des applications complètes prêtes pour la production.    </p>    <p>      Mon approche est <strong class="text-light">simple</strong> : <em class="text-light">comprendre</em> les besoins réels, <em class="text-light">anticiper</em>      les contraintes techniques et      <em class="text-light">trouver</em> la solution      la plus élégante. Je suis un passionné des détails — du temps de chargement à la compatibilité entre navigateurs — parce que ce sont souvent eux      qui font la différence pour l’utilisateur final.    </p>    <p>      Au fil des années, j’ai travaillé sur des projets variés : e-commerce, applications métiers, expériences 3D interactives, ou encore modules sur      mesure pour des marques prestigieuses. J’aime aussi <strong class="text-light">transmettre</strong> : <em class="text-light">former</em> de      nouveaux développeurs, <em class="text-light">partager</em>      de bonnes      pratiques, et      parfois <em class="text-light">sauver</em> une mise en production de dernière minute (ce qui, avouons-le, donne plus d’adrénaline que le café).    </p>    <p>      Ce qui m’anime avant tout, c’est de créer des produits qui rendent service, qui durent, et qui donnent envie de revenir. Parce qu’au fond, le      code      n’est qu’un outil : <strong class="text-light">ce qui compte, c’est l’expérience qu’il permet de vivre</strong>.    </p>  </div>  <div class="flex flex-col md:flex-row md:items-center gap-12 md:gap-6 w-full">    <div class="flex flex-col gap-2 w-full md:w-1/2">      <p class="text-lg text-accent/70">        &lt;Savoir-être /&gt;      </p>      <json-card [jsonObject]="softSkillsObject()"/>    </div>    <div class="flex flex-col items-center gap-2 w-full md:w-1/2">      <div (click)="openCV()" class="group flex flex-col items-center gap-4 cursor-pointer">        <div          class="flex items-center justify-center p-3 rounded-full h-30 w-30 border-2 border-light transition-all group-hover:border-accent group-hover:text-accent">          <fa-icon [icon]="[\'fas\',\'file-arrow-down\']" [size]="\'3x\'" class="transition-all group-hover:animate-pulse"/>        </div>        <span class="transition-all group-hover:!text-accent text-light/20">Télécharger le CV</span>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
+    var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
+    var ACTUAL_COMPONENT = {'name': 'ProfileComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProfileComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

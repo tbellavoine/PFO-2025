@@ -1,0 +1,862 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>pfo-2025 documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/Laravel.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">pfo-2025 documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  SidenavComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/layout/sidenav/sidenav.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">host</td>
+                <td class="col-md-9"><code>{<br>}</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>sidenav</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>FaIconComponent</code>
+                            <code>RouterLink</code>
+                            <code>RouterLinkActive</code>
+                                <code><a href="../components/ExplorerComponent.html" target="_self" >ExplorerComponent</a></code>
+                            <code>NgClass</code>
+                                <code><a href="../directives/ClickOutsideDirective.html" target="_self" >ClickOutsideDirective</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./sidenav.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#isExplorerOpen" >isExplorerOpen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isMobile" >isMobile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#MenuKey" >MenuKey</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mobileSizeLimit" >mobileSizeLimit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#SidenavBottom" >SidenavBottom</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#checkMobile" >checkMobile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#closePanel" >closePanel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#toogleExplorer" >toogleExplorer</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">function Object() { [native code] }</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkMobile"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>checkMobile</b></span>
+                        <a href="#checkMobile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkMobile()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if the screen is mobile size and update the signal</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closePanel"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>closePanel</b></span>
+                        <a href="#closePanel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>closePanel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Close the explorer panel on mobile</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toogleExplorer"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>toogleExplorer</b></span>
+                        <a href="#toogleExplorer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toogleExplorer(menuItemKey: <a href="../undefineds/MenuKey.html" target="_self">MenuKey</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggle the explorer panel</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>menuItemKey</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/enumerations.html#MenuKey" target="_self" >MenuKey</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isExplorerOpen"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                        <span ><b>isExplorerOpen</b></span>
+                        <a href="#isExplorerOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;boolean&gt;(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isMobile"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isMobile</b></span>
+                        <a href="#isMobile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(window.innerWidth &lt; this.mobileSizeLimit)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MenuKey"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>MenuKey</b></span>
+                        <a href="#MenuKey"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>MenuKey</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mobileSizeLimit"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mobileSizeLimit</b></span>
+                        <a href="#mobileSizeLimit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>768</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SidenavBottom"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>SidenavBottom</b></span>
+                        <a href="#SidenavBottom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SidenavBottom</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, inject, signal } from &#x27;@angular/core&#x27;;
+import { SidenavBottom } from &#x27;./sidenav.const&#x27;;
+import { FaIconComponent } from &#x27;@fortawesome/angular-fontawesome&#x27;;
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from &#x27;@angular/router&#x27;;
+import { ExplorerComponent } from &#x27;@components/explorer/explorer.component&#x27;;
+import { MenuKey } from &#x27;@enums/menu-key.enum&#x27;;
+import { NgClass } from &#x27;@angular/common&#x27;;
+import { filter } from &#x27;rxjs&#x27;;
+import { ClickOutsideDirective } from &#x27;@directive/click-outside.directive&#x27;;
+
+@Component({
+  selector: &#x27;sidenav&#x27;,
+  imports: [
+    FaIconComponent,
+    RouterLink,
+    RouterLinkActive,
+    ExplorerComponent,
+    NgClass,
+    ClickOutsideDirective
+  ],
+  templateUrl: &#x27;./sidenav.component.html&#x27;,
+  host: {
+    class: &#x27;h-full&#x27;,
+  },
+})
+export class SidenavComponent {
+  private readonly router &#x3D; inject(Router);
+  protected readonly SidenavBottom &#x3D; SidenavBottom;
+  protected isExplorerOpen &#x3D; signal&lt;boolean&gt;(false);
+  protected readonly MenuKey &#x3D; MenuKey;
+  private mobileSizeLimit &#x3D; 768;
+  public isMobile &#x3D; signal(window.innerWidth &lt; this.mobileSizeLimit);
+
+  constructor() {
+    this.checkMobile();
+    window.addEventListener(&#x27;resize&#x27;, () &#x3D;&gt; this.checkMobile());
+    this.router.events.pipe(
+      filter(event &#x3D;&gt; event instanceof NavigationEnd)
+    ).subscribe(() &#x3D;&gt; {
+      if (this.isMobile()) {
+        this.isExplorerOpen.set(false);
+      }
+    });
+  }
+
+  /**
+   * Close the explorer panel on mobile
+   * @protected
+   */
+  protected closePanel(): void {
+    if (this.isMobile()) {
+      this.isExplorerOpen.set(false);
+    }
+  }
+
+  /**
+   * Toggle the explorer panel
+   * @param menuItemKey
+   * @protected
+   */
+  protected toogleExplorer(menuItemKey: MenuKey): void {
+    if (menuItemKey !&#x3D;&#x3D; MenuKey.EXPLORER) {
+      this.isExplorerOpen.set(false);
+
+      return;
+    }
+    this.isExplorerOpen.set(!this.isExplorerOpen());
+  }
+
+  /**
+   * Check if the screen is mobile size and update the signal
+   * @private
+   */
+  private checkMobile(): void {
+    const mobile &#x3D; window.innerWidth &lt; 768;
+    this.isMobile.set(mobile);
+    if (mobile) {
+      this.isExplorerOpen.set(false);
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;relative flex items-stretch h-full&quot;&gt;
+  &lt;div class&#x3D;&quot;flex flex-col justify-between bg-primary h-full border-r border-r-white/5&quot;&gt;
+    &lt;div
+      (click)&#x3D;&quot;toogleExplorer(MenuKey.EXPLORER)&quot;
+      [ngClass]&#x3D;&quot;{&#x27;before:!bg-accent&#x27;: isExplorerOpen()}&quot;
+      class&#x3D;&quot;relative explorer-toggle flex items-center justify-center transition-all text-light cursor-pointer before:transition-all before:content-[&#x27;&#x27;] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker&quot;&gt;
+
+      @if (isMobile()) {
+        &lt;fa-icon [icon]&#x3D;&quot;isExplorerOpen() ? [&#x27;fas&#x27;, &#x27;xmark&#x27;] : [&#x27;fas&#x27;, &#x27;bars&#x27;]&quot; class&#x3D;&quot;m-2 transition-all&quot;/&gt;
+      } @else {
+        &lt;fa-icon [icon]&#x3D;&quot;[&#x27;far&#x27;, &#x27;copy&#x27;]&quot; class&#x3D;&quot;m-2&quot;/&gt;
+      }
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;flex flex-col &quot;&gt;
+      @for (navItem of SidenavBottom; track navItem) {
+        &lt;a [routerLink]&#x3D;&quot;navItem.route&quot;
+           [routerLinkActive]&#x3D;&quot;&#x27;before:!bg-accent !bg-primary-darker&#x27;&quot;
+           (click)&#x3D;&quot;toogleExplorer(navItem.key)&quot;
+           class&#x3D;&quot;relative flex items-center justify-center transition-all text-light before:transition-all before:content-[&#x27;&#x27;] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker&quot;&gt;
+          &lt;fa-icon [icon]&#x3D;&quot;navItem.icon&quot; class&#x3D;&quot;m-2&quot;/&gt;
+        &lt;/a&gt;
+      }
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div
+    clickOutside
+    [excludeElements]&#x3D;&quot;[&#x27;.explorer-toggle&#x27;]&quot;
+    (clickOutside)&#x3D;&quot;closePanel()&quot;
+    [ngClass]&#x3D;&quot;isExplorerOpen() ? &#x27;w-60&#x27; : &#x27;w-0&#x27;&quot;
+       class&#x3D;&quot;absolute top-0 left-9 bottom-0 md:static z-100 transition-all ease-in-expo overflow-hidden&quot;&gt;
+    &lt;explorer/&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="relative flex items-stretch h-full">  <div class="flex flex-col justify-between bg-primary h-full border-r border-r-white/5">    <div      (click)="toogleExplorer(MenuKey.EXPLORER)"      [ngClass]="{\'before:!bg-accent\': isExplorerOpen()}"      class="relative explorer-toggle flex items-center justify-center transition-all text-light cursor-pointer before:transition-all before:content-[\'\'] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker">      @if (isMobile()) {        <fa-icon [icon]="isExplorerOpen() ? [\'fas\', \'xmark\'] : [\'fas\', \'bars\']" class="m-2 transition-all"/>      } @else {        <fa-icon [icon]="[\'far\', \'copy\']" class="m-2"/>      }    </div>    <div class="flex flex-col ">      @for (navItem of SidenavBottom; track navItem) {        <a [routerLink]="navItem.route"           [routerLinkActive]="\'before:!bg-accent !bg-primary-darker\'"           (click)="toogleExplorer(navItem.key)"           class="relative flex items-center justify-center transition-all text-light before:transition-all before:content-[\'\'] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker">          <fa-icon [icon]="navItem.icon" class="m-2"/>        </a>      }    </div>  </div>  <div    clickOutside    [excludeElements]="[\'.explorer-toggle\']"    (clickOutside)="closePanel()"    [ngClass]="isExplorerOpen() ? \'w-60\' : \'w-0\'"       class="absolute top-0 left-9 bottom-0 md:static z-100 transition-all ease-in-expo overflow-hidden">    <explorer/>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
+    var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
+    var ACTUAL_COMPONENT = {'name': 'SidenavComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'SidenavComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

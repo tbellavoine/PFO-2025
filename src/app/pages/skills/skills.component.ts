@@ -19,7 +19,7 @@ export class SkillsComponent implements OnInit {
   public devOpsObject = signal<unknown>('');
   public toolsObject = signal<unknown>('');
   public qualityObject = signal<unknown>('');
-  protected moreSkills: string[] = ['material-design', 'responsive-design', 'seo', 'wordpress', 'twig', 'salesForce-commerce-cloud', 'office'];
+  public moreSkills: string[] = ['material-design', 'responsive-design', 'seo', 'wordpress', 'twig', 'salesForce-commerce-cloud', 'office'];
   private readonly tabsService = inject(TabsService);
   private skillsTab: Tab = new Tab(TabKey.SKILLS, ['fab', 'js'], 'text-yellow-500', 'EXPLORER.SKILLS_FILE', [Path.SKILLS]);
 

@@ -10,6 +10,4 @@ import { TabsComponent } from '@components/tabs/tabs.component';
   imports: [RouterOutlet, TitleBarComponent, SidenavComponent, StatusBarComponent, TabsComponent],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
-  protected readonly title = signal('PFO-2025');
-}
+export class AppComponent {}

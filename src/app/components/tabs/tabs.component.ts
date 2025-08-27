@@ -48,7 +48,6 @@ export class TabsComponent {
     }
 
     if (previousTab) {
-      console.log(previousTab);
       this.router.navigate(previousTab.route).then();
 
       return;

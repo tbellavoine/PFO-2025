@@ -14,7 +14,7 @@ import { Experiences } from './experiences.const';
   templateUrl: './works.component.html',
 })
 export class WorksComponent implements OnInit {
-  protected readonly Experiences = Experiences;
+  public readonly Experiences = Experiences;
   private readonly tabsService = inject(TabsService);
   private worksTab: Tab = new Tab(TabKey.WORKS, ['fab', 'css3'], 'text-blue-500', 'EXPLORER.WORKS_FILE', [Path.WORKS]);
 

@@ -3,6 +3,7 @@ import { ExplorerComponent } from './explorer.component';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { of } from 'rxjs';
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent;
@@ -14,7 +15,7 @@ describe('ExplorerComponent', () => {
         loader: {
           provide: TranslateLoader,
           useValue: {
-            getTranslation: () => new Promise(resolve => resolve({}))
+            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
           }
         }
       })],
