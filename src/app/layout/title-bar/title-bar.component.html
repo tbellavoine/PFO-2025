@@ -10,7 +10,7 @@
       @for (menuItem of Menu; track menuItem) {
         <a [routerLink]="menuItem.route"
            class="relative flex items-center justify-center transition-all text-light/70 text-xs hover:!text-light">
-          {{ menuItem.label | translate }}
+          {{ menuItem.label ?? '' | translate }}
         </a>
       }
     </div>

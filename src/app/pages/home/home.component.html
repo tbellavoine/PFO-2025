@@ -10,7 +10,7 @@
         <a [routerLink]="startItem.route"
            class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">
           <fa-icon [icon]="startItem.icon" class="text-light"/>
-          {{ startItem.label | translate }}
+          {{ startItem.label ?? '' | translate }}
         </a>
       }
     </div>
@@ -35,7 +35,7 @@
         [target]="'_blank'"
         class="flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary">
         <fa-icon [icon]="aboutItem.icon"/>
-        {{ aboutItem.label | translate }}
+        {{ aboutItem.label ?? '' | translate }}
       </a>
     }
   </div>

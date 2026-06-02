@@ -22,8 +22,8 @@
               <a [routerLink]="explorerItem.route"
                  [routerLinkActive]="'bg-primary'"
                  class="flex items-center transition-all text-light hover:bg-primary py-1 px-4 gap-2 w-full">
-                <fa-icon [icon]="explorerItem.icon" [size]="'sm'" [attr.class]="explorerItem.theme"/>
-                <span class="text-xs truncate">{{ explorerItem.label | translate }}</span>
+                <fa-icon [icon]="explorerItem.icon" [size]="'sm'" [attr.class]="explorerItem.theme ?? ''"/>
+                <span class="text-xs truncate">{{ explorerItem.label ?? '' | translate }}</span>
               </a>
             }
           </div>
@@ -32,6 +32,3 @@
     }
   </div>
 </div>
-
-
-
