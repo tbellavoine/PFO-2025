@@ -1,6 +1,28 @@
 # PFO2025
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
+Ce projet est un portfolio personnel présentant diverses applications et composants Angular. Il sert de terrain de jeu pour explorer les fonctionnalités modernes d'Angular, les modèles architecturaux et les implémentations UI/UX.
+
+## Fonctionnalités
+
+- **Composant Explorateur**: Une navigation de type explorateur de fichiers pour les différentes sections du portfolio.
+- **Jeu de Tic-Tac-Toe**: Un jeu classique de Tic-Tac-Toe implémenté avec les signaux Angular.
+- **Jeu du Serpent**: Un jeu rétro du Serpent construit avec les signaux Angular.
+- **Jeu 2048**: Une implémentation du jeu 2048.
+- **Section Profil**: Affiche des informations personnelles et des compétences comportementales.
+- **Section Compétences**: Présente les compétences techniques classées par frontend, backend, DevOps, UX/UI et outils.
+- **Section Projets**: Liste divers projets personnels et professionnels.
+- **Section Expériences**: Détaille les expériences professionnelles.
+- **Formulaire de Contact**: Un simple formulaire de contact.
+- **Onglets Dynamiques**: Un système d'onglets pour gérer les pages/applications ouvertes.
+- **Composant Carte JSON**: Un composant réutilisable pour afficher des données JSON avec coloration syntaxique et liens cliquables.
+
+## Technologies Utilisées
+
+- **Angular**: Framework frontend (version 20.1.6)
+- **TypeScript**: Sur-ensemble de JavaScript
+- **Tailwind CSS**: Framework CSS utilitaire
+- **Font Awesome**: Bibliothèque d'icônes
+- **ngx-translate**: Bibliothèque d'internationalisation
 
 ## Development server
 

@@ -25,9 +25,9 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faCss3, faGithub, faHtml5, faJs, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { provideTranslateService, TranslateService } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { provideHttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
+import { provideHttpClient, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,11 +37,12 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(FontAwesomeModule),
     provideHttpClient(),
     provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/translates/', '.json'),
+        deps: [HttpClient],
+      },
       defaultLanguage: 'fr'
-    }),
-    provideTranslateHttpLoader({
-      prefix: './assets/translates/',
-      suffix: '.json'
     }),
     provideAppInitializer(() => {
       inject(FaIconLibrary).addIcons(
