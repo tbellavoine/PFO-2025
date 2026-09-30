@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusBarComponent } from './status-bar.component';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { ClickOutsideDirective } from '@directive/click-outside.directive';
+import { provideTranslateService } from '@ngx-translate/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('StatusBarComponent', () => {
   let component: StatusBarComponent;
@@ -9,13 +9,8 @@ describe('StatusBarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StatusBarComponent],
-      providers: [
-        // Mock FaIconComponent si nécessaire
-        { provide: FaIconComponent, useValue: {} },
-        // Mock ClickOutsideDirective si nécessaire
-        { provide: ClickOutsideDirective, useValue: {} }
-      ]
+      imports: [StatusBarComponent, FontAwesomeTestingModule],
+      providers: [provideTranslateService()],
     });
 
     fixture = TestBed.createComponent(StatusBarComponent);
@@ -159,6 +154,31 @@ describe('StatusBarComponent', () => {
 
       expect(component['isGitbranchOpen']()).toBe(false);
       expect(component['isAlertOpen']()).toBe(false);
+    });
+  });
+
+  describe('Keyboard accessibility', () => {
+    it('should toggle the git branch dropdown from the keyboard', () => {
+      fixture.detectChanges();
+      const toggle = fixture.debugElement.query((debugEl) => debugEl.classes['git-branch-toggle']);
+
+      expect(toggle.nativeElement.getAttribute('role')).toBe('button');
+      expect(toggle.nativeElement.tabIndex).toBe(0);
+
+      toggle.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(component['isGitbranchOpen']()).toBe(true);
+    });
+
+    it('should toggle the alert dropdown from the keyboard and expose a label for its icon-only trigger', () => {
+      fixture.detectChanges();
+      const toggle = fixture.debugElement.query((debugEl) => debugEl.classes['alert-toggle']);
+
+      expect(toggle.nativeElement.getAttribute('role')).toBe('button');
+      expect(toggle.nativeElement.tabIndex).toBe(0);
+      expect(toggle.nativeElement.getAttribute('aria-label')).toBeTruthy();
+
+      toggle.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(component['isAlertOpen']()).toBe(true);
     });
   });
 });

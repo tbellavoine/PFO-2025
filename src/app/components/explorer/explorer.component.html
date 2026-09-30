@@ -9,10 +9,15 @@
   <div class="flex flex-col overflow-auto gap-3">
     @for (category of explorerMap(); track category[0]) {
       <div class="flex flex-col items-start">
-        <h3 class="flex items-center gap-2 text-xs" (click)="toggleCategory(category[0])">
-          <fa-icon [icon]="['fas', 'angle-down']" [ngClass]="{'rotate-180' : !isCategoryOpen(category[0]) }"
-                   class="transition-transform duration-200"/>
-          <span>{{ category[0] | translate }}</span>
+        <h3 class="w-full text-xs">
+          <button type="button"
+                  class="flex items-center gap-2 w-full cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit text-left"
+                  [attr.aria-expanded]="isCategoryOpen(category[0])"
+                  (click)="toggleCategory(category[0])">
+            <fa-icon [icon]="['fas', 'angle-down']" [ngClass]="{'rotate-180' : !isCategoryOpen(category[0]) }"
+                     class="transition-transform duration-200"/>
+            <span>{{ category[0] | translate }}</span>
+          </button>
         </h3>
         <div class="grid transition-all w-full"
              [style.grid-template-rows]="isCategoryOpen(category[0]) ? '1fr' : '0fr'"

@@ -44,7 +44,7 @@ describe('TabsComponent', () => {
       imports: [TabsComponent, FontAwesomeTestingModule],
       providers: [
         provideTranslateService(),
-        provideRouter([]),
+        provideRouter([{ path: '**', component: TabsComponent }]),
         { provide: TabsService, useValue: tabsService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ],
@@ -77,6 +77,22 @@ describe('TabsComponent', () => {
     it('should remove a tab', () => {
       component.removeTab(mockTabs[1]);
       expect(tabsService.tabs()).toEqual([mockTabs[0]]);
+    });
+  });
+
+  describe('Keyboard accessibility', () => {
+    it('should expose the close icon as a keyboard-operable, labelled control', () => {
+      const closeIcons = fixture.debugElement.queryAll(
+        (debugEl) => debugEl.attributes['role'] === 'button',
+      );
+      expect(closeIcons.length).toBe(mockTabs.length);
+
+      const firstClose = closeIcons[0].nativeElement;
+      expect(firstClose.tabIndex).toBe(0);
+      expect(firstClose.getAttribute('aria-label')).toBeTruthy();
+
+      firstClose.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      expect(tabsService.tabs()).toEqual([mockTabs[1]]);
     });
   });
 });

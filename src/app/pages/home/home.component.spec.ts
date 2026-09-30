@@ -173,6 +173,33 @@ describe('HomeComponent', () => {
     });
   });
 
+  describe('Keyboard accessibility', () => {
+    it('should expose the clear-history icon as a keyboard-operable, labelled control', () => {
+      fixture.detectChanges();
+      const clearTrigger = fixture.debugElement.query(
+        (debugEl) => debugEl.attributes['role'] === 'button',
+      );
+
+      expect(clearTrigger.nativeElement.tabIndex).toBe(0);
+      expect(clearTrigger.nativeElement.getAttribute('aria-label')).toBeTruthy();
+
+      clearTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(mockLastPagesService.clearHistory).toHaveBeenCalledTimes(1);
+    });
+
+    it('should open external about-menu links safely (rel=noopener noreferrer)', () => {
+      fixture.detectChanges();
+      const externalLinks = fixture.debugElement.queryAll(
+        (debugEl) => debugEl.name === 'a' && debugEl.attributes['target'] === '_blank',
+      );
+
+      expect(externalLinks.length).toBe(AboutMenu.length);
+      externalLinks.forEach((link) => {
+        expect(link.nativeElement.getAttribute('rel')).toBe('noopener noreferrer');
+      });
+    });
+  });
+
   describe('URL Processing Edge Cases', () => {
     it('should handle special characters in URLs', () => {
       expect(component.getPageName('/test_page')).toBe('test_page');

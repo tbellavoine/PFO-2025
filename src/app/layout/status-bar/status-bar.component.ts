@@ -2,13 +2,15 @@ import { Component, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'status-bar',
   imports: [
     FaIconComponent,
     NgClass,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    TranslatePipe
   ],
   templateUrl: './status-bar.component.html'
 })

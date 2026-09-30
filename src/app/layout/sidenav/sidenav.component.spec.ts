@@ -118,4 +118,16 @@ describe('SidenavComponent', () => {
       expect(component.isMobile()).toBe(true);
     });
   });
+
+  describe('Keyboard accessibility', () => {
+    it('should expose the explorer toggle as a keyboard-operable button with a label', () => {
+      const toggle = fixture.debugElement.query((debugEl) => debugEl.classes['explorer-toggle']);
+      expect(toggle.nativeElement.getAttribute('role')).toBe('button');
+      expect(toggle.nativeElement.tabIndex).toBe(0);
+      expect(toggle.nativeElement.getAttribute('aria-label')).toBeTruthy();
+
+      toggle.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(component['isExplorerOpen']()).toBe(true);
+    });
+  });
 });

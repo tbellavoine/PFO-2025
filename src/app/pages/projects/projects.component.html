@@ -9,8 +9,13 @@
   <div class="flex items-center justify-center flex-wrap gap-4">
     @for (category of ProjectCategory | keyvalue; track category) {
       <div class="flex p-2 border border-accent/50 text-xs text-light cursor-pointer transition-all hover:bg-accent hover:text-light"
+           role="button"
+           tabindex="0"
+           [attr.aria-pressed]="selectedCategory() === category.value"
            [ngClass]="{'!bg-accent !text-light': selectedCategory() === category.value}"
-           (click)="filterProjectsByCategory(category.value)">
+           (click)="filterProjectsByCategory(category.value)"
+           (keydown.enter)="filterProjectsByCategory(category.value)"
+           (keydown.space)="$event.preventDefault(); filterProjectsByCategory(category.value)">
         {{ category.value }}
       </div>
     }

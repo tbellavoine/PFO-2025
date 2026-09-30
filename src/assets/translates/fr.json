@@ -26,12 +26,17 @@
     "CONTACT_FILE": "Email.spec.ts",
     "HOME": "Bienvenue",
     "ME_FILE": "me.html",
-    "MEMORY": "Memory",
     "PROJECTS_FILE": "projects.js",
     "SKILLS_FILE": "compétences.js",
     "SNAKE": "Snake",
     "TICTACTOE_V2": "Morpion V2",
     "TWENTY_FORTY_EIGHT": "2048",
     "WORKS_FILE": "experiences.css"
+  },
+  "ARIA": {
+    "CLEAR_HISTORY": "Effacer l'historique",
+    "CLOSE_TAB": "Fermer l'onglet",
+    "TOGGLE_ALERTS": "Afficher les notifications",
+    "TOGGLE_EXPLORER": "Afficher ou masquer l'explorateur"
   }
 }

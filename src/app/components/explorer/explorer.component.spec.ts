@@ -76,4 +76,15 @@ describe('ExplorerComponent', () => {
     component.toggleCategory(category);
     expect(component.isCategoryOpen(category)).toBe(false);
   });
+
+  it('should render an accordion toggle button reflecting its expanded state', () => {
+    const toggleButton = fixture.debugElement.query((debugEl) => debugEl.name === 'button');
+    expect(toggleButton).toBeTruthy();
+    expect(toggleButton.nativeElement.getAttribute('aria-expanded')).toBe('true');
+
+    toggleButton.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(toggleButton.nativeElement.getAttribute('aria-expanded')).toBe('false');
+  });
 });

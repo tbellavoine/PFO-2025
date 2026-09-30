@@ -5,6 +5,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/ro
 import { ExplorerComponent } from '@components/explorer/explorer.component';
 import { MenuKey } from '@enums/menu-key.enum';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
@@ -17,7 +18,8 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
     RouterLinkActive,
     ExplorerComponent,
     NgClass,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    TranslatePipe
   ],
   templateUrl: './sidenav.component.html',
   host: {

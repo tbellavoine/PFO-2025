@@ -16,7 +16,13 @@
     </div>
     <div class="flex flex-col gap-2">
       <p class="text-light mb-2 text-lg">Récents -
-        <fa-icon (click)="clearHistory()" [icon]="['far', 'trash-can']" class="text-accent cursor-pointer"/>
+        <fa-icon (click)="clearHistory()"
+                 (keydown.enter)="clearHistory()"
+                 (keydown.space)="$event.preventDefault(); clearHistory()"
+                 role="button"
+                 tabindex="0"
+                 [attr.aria-label]="'ARIA.CLEAR_HISTORY' | translate"
+                 [icon]="['far', 'trash-can']" class="text-accent cursor-pointer"/>
       </p>
       @for (page of lastPages(); track page + $index) {
         <a [routerLink]="page"
@@ -33,6 +39,7 @@
       <a
         [href]="aboutItem.link"
         [target]="'_blank'"
+        rel="noopener noreferrer"
         class="flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary">
         <fa-icon [icon]="aboutItem.icon"/>
         {{ aboutItem.label ?? '' | translate }}

@@ -2,6 +2,11 @@
   <div>
     <div class="relative p-1">
       <div (click)="toggleGitBranch()"
+           (keydown.enter)="toggleGitBranch()"
+           (keydown.space)="$event.preventDefault(); toggleGitBranch()"
+           role="button"
+           tabindex="0"
+           [attr.aria-expanded]="isGitbranchOpen()"
            [ngClass]="{'bg-accent' : isGitbranchOpen()}"
            class="git-branch-toggle flex items-center gap-1 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
       >
@@ -50,6 +55,12 @@
     </div>
     <div class="relative p-1">
       <div (click)="toggleAlert()"
+           (keydown.enter)="toggleAlert()"
+           (keydown.space)="$event.preventDefault(); toggleAlert()"
+           role="button"
+           tabindex="0"
+           [attr.aria-label]="'ARIA.TOGGLE_ALERTS' | translate"
+           [attr.aria-expanded]="isAlertOpen()"
            [ngClass]="{'bg-accent' : isAlertOpen()}"
            class="alert-toggle flex items-center gap-2 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
       >

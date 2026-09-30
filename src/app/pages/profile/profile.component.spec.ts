@@ -26,6 +26,10 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -54,6 +58,24 @@ describe('ProfileComponent', () => {
     expect(document.createElement).toHaveBeenCalledWith('a');
     expect(mockLink.href).toBe('/assets/pdf/CV-Thomas-BELLAVOINE.pdf');
     expect(mockLink.target).toBe('_blank');
+    expect(mockLink.click).toHaveBeenCalled();
+  });
+
+  it('should open the CV from the keyboard', () => {
+    const mockLink = {
+      href: '',
+      target: '',
+      click: vi.fn().mockName('click'),
+    } as unknown as HTMLAnchorElement;
+    vi.spyOn(document, 'createElement').mockReturnValue(mockLink);
+
+    const cvTrigger = fixture.debugElement.query(
+      (debugEl) => debugEl.attributes['role'] === 'button',
+    );
+    expect(cvTrigger.nativeElement.tabIndex).toBe(0);
+
+    cvTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
     expect(mockLink.click).toHaveBeenCalled();
   });
 });

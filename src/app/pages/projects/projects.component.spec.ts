@@ -60,4 +60,20 @@ describe('ProjectsComponent', () => {
     const expected = component.projects.filter((p) => p.category === category);
     expect(filtered).toEqual(expected);
   });
+
+  it('should expose category filters as keyboard-operable toggle buttons', () => {
+    fixture.detectChanges();
+    const firstFilter = fixture.debugElement.query(
+      (debugEl) => debugEl.attributes['role'] === 'button',
+    );
+
+    expect(firstFilter.nativeElement.tabIndex).toBe(0);
+    expect(firstFilter.nativeElement.getAttribute('aria-pressed')).toBe('false');
+
+    firstFilter.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    expect(component.selectedCategory()).not.toBe('');
+    expect(firstFilter.nativeElement.getAttribute('aria-pressed')).toBe('true');
+  });
 });
