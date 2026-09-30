@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { Path } from '@enums/path.enum';
@@ -12,6 +12,7 @@ import { Contact } from './constact.const';
         JsonCardComponent
     ],
   templateUrl: './contact.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'w-full'
   }

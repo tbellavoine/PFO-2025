@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClickOutsideDirective } from './click-outside.directive';
 
@@ -6,6 +6,7 @@ import { ClickOutsideDirective } from './click-outside.directive';
   imports: [
     ClickOutsideDirective
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div clickOutside (clickOutside)="onClickOutside()" [excludeElements]="excludeElements">
       Inside Content

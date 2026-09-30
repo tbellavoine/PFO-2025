@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -14,6 +14,7 @@ import { TabKey } from '@enums/tab-key.enum';
     RouterLink,
     RouterLinkActive
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './tabs.component.html',
 })
 export class TabsComponent {

@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
@@ -9,6 +9,7 @@ import { ImageAssetsMap } from '@components/explorer/assets-images.const';
   selector: 'app-image-viewer',
   imports: [],
   templateUrl: './image-viewer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'h-full w-full overflow-hidden',
   }

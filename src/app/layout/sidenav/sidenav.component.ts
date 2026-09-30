@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SidenavBottom } from './sidenav.const';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -19,6 +19,7 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
     ClickOutsideDirective
   ],
   templateUrl: './sidenav.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'h-full',
   },

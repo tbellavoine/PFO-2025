@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
@@ -10,6 +10,7 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
   imports: [
     JsonCardComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './skills.component.html',
 })
 export class SkillsComponent implements OnInit {

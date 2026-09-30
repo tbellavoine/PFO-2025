@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Path } from '@enums/path.enum';
@@ -8,6 +8,7 @@ import { Path } from '@enums/path.enum';
   imports: [
     NgClass
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './json-card.component.html',
 })
 export class JsonCardComponent {

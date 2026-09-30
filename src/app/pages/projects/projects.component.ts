@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
@@ -16,6 +16,7 @@ import { KeyValuePipe, NgClass } from '@angular/common';
     KeyValuePipe,
     NgClass
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './projects.component.html',
 })
 export class ProjectsComponent implements OnInit {

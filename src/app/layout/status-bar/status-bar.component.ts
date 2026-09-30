@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
@@ -10,6 +10,7 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
     NgClass,
     ClickOutsideDirective
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './status-bar.component.html'
 })
 export class StatusBarComponent {

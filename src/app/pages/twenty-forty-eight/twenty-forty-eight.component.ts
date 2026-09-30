@@ -1,4 +1,4 @@
-import { Component, computed, effect, HostListener, signal } from '@angular/core';
+import { Component, computed, effect, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 interface Cell {
@@ -19,6 +19,7 @@ interface GameState {
   imports: [
     NgClass
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './twenty-forty-eight.component.html',
 })
 export class TwentyFortyEightComponent {
