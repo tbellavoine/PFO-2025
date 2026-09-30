@@ -47,7 +47,7 @@
         </label>
         <label class="flex flex-col gap-1 text-sm text-light/60">
           Entreprise
-          <select [formField]="projectForm.company" class="rounded border border-light/20 bg-dark p-2 text-light">
+          <select [formField]="projectForm.company" class="rounded border border-light/20 bg-primary p-2 text-light">
             @for (entry of Company | keyvalue; track entry.key) {
               <option [value]="entry.value">{{ entry.value }}</option>
             }
@@ -55,7 +55,7 @@
         </label>
         <label class="flex flex-col gap-1 text-sm text-light/60">
           Catégorie
-          <select [formField]="projectForm.category" class="rounded border border-light/20 bg-dark p-2 text-light">
+          <select [formField]="projectForm.category" class="rounded border border-light/20 bg-primary p-2 text-light">
             @for (entry of ProjectCategory | keyvalue; track entry.key) {
               <option [value]="entry.value">{{ entry.value }}</option>
             }
@@ -63,7 +63,7 @@
         </label>
         <label class="flex flex-col gap-1 text-sm text-light/60">
           Type
-          <select [formField]="projectForm.type" class="rounded border border-light/20 bg-dark p-2 text-light">
+          <select [formField]="projectForm.type" class="rounded border border-light/20 bg-primary p-2 text-light">
             @for (entry of ProjectType | keyvalue; track entry.key) {
               <option [value]="entry.value">{{ entry.value }}</option>
             }
@@ -71,7 +71,7 @@
         </label>
         <label class="flex flex-col gap-1 text-sm text-light/60">
           Statut
-          <select [formField]="projectForm.status" class="rounded border border-light/20 bg-dark p-2 text-light">
+          <select [formField]="projectForm.status" class="rounded border border-light/20 bg-primary p-2 text-light">
             @for (entry of ProjectStatus | keyvalue; track entry.key) {
               <option [value]="entry.value">{{ entry.value }}</option>
             }

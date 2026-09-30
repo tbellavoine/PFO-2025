@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { StatusBarComponent } from './status-bar.component';
 import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
@@ -10,7 +11,7 @@ describe('StatusBarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [StatusBarComponent, FontAwesomeTestingModule],
-      providers: [provideTranslateService()],
+      providers: [provideTranslateService(), provideRouter([])],
     });
 
     fixture = TestBed.createComponent(StatusBarComponent);

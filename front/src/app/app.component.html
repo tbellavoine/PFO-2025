@@ -1,7 +1,9 @@
-@if (isAdminRoute()) {
-  <router-outlet/>
-} @else {
-  <div class="flex flex-col h-screen bg-primary font-source overflow-hidden">
+<div class="flex flex-col h-screen bg-primary font-source overflow-hidden">
+  @if (isAdminRoute()) {
+    <div class="flex flex-col h-full w-full overflow-auto font-jetbrains">
+      <router-outlet/>
+    </div>
+  } @else {
     <titlebar/>
     <div class="flex items-stretch h-full w-full overflow-hidden">
       <sidenav/>
@@ -13,5 +15,5 @@
       </div>
     </div>
     <status-bar/>
-  </div>
-}
+  }
+</div>

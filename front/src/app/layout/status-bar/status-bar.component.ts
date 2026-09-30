@@ -1,8 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Path } from '@enums/path.enum';
 
 @Component({
   selector: 'status-bar',
@@ -10,11 +12,13 @@ import { TranslatePipe } from '@ngx-translate/core';
     FaIconComponent,
     NgClass,
     ClickOutsideDirective,
-    TranslatePipe
+    TranslatePipe,
+    RouterLink
   ],
   templateUrl: './status-bar.component.html'
 })
 export class StatusBarComponent {
+  protected readonly Path = Path;
   protected isGitbranchOpen = signal<boolean>(false);
   protected isAlertOpen = signal<boolean>(false);
 

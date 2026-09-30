@@ -63,7 +63,7 @@
           <label class="flex flex-col gap-1 text-sm text-light/60">
             Compétence
             <select [value]="entrySkillId()" (change)="entrySkillId.set($any($event.target).value)"
-                    class="rounded border border-light/20 bg-dark p-2 text-light">
+                    class="rounded border border-light/20 bg-primary p-2 text-light">
               <option value="" disabled>Choisir...</option>
               @for (skill of skillsResource.value() ?? []; track skill.id) {
                 <option [value]="skill.id">{{ skill.name }}</option>
@@ -74,7 +74,7 @@
           <label class="flex flex-col gap-1 text-sm text-light/60">
             Niveau
             <select [value]="entryLevel()" (change)="entryLevel.set($any($event.target).value)"
-                    class="rounded border border-light/20 bg-dark p-2 text-light">
+                    class="rounded border border-light/20 bg-primary p-2 text-light">
               @for (level of SkillLevel | keyvalue; track level.key) {
                 <option [value]="level.value">{{ level.value }}</option>
               }

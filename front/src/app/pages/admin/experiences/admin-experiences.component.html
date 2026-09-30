@@ -93,14 +93,14 @@
         }
         <div class="flex gap-2">
           <select [value]="newSkillId()" (change)="newSkillId.set($any($event.target).value)"
-                  class="flex-1 rounded border border-light/20 bg-dark p-2 text-light">
+                  class="flex-1 rounded border border-light/20 bg-primary p-2 text-light">
             <option value="" disabled>Compétence...</option>
             @for (skill of skillsResource.value() ?? []; track skill.id) {
               <option [value]="skill.id">{{ skill.name }}</option>
             }
           </select>
           <select [value]="newCategoryId()" (change)="newCategoryId.set($any($event.target).value)"
-                  class="flex-1 rounded border border-light/20 bg-dark p-2 text-light">
+                  class="flex-1 rounded border border-light/20 bg-primary p-2 text-light">
             <option value="" disabled>Catégorie...</option>
             @for (category of categoriesResource.value() ?? []; track category.id) {
               <option [value]="category.id">{{ category.label }}</option>
