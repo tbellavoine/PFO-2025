@@ -38,53 +38,38 @@ describe('ExplorerComponent', () => {
     expect(Array.isArray(map)).toBe(true);
   });
 
-  it('should initialize openCategories with all categories', () => {
+  it('should render one accordion trigger button per category, all expanded by default', () => {
     const map = component['explorerMap']();
-    const openCategories = component.openCategories();
-    const allCategories = map.map((category) => category[0]);
-    allCategories.forEach((category) => {
-      expect(openCategories.has(category)).toBe(true);
+    const triggers = fixture.debugElement.queryAll((debugEl) => debugEl.name === 'button');
+
+    expect(triggers.length).toBe(map.length);
+    triggers.forEach((trigger) => {
+      expect(trigger.nativeElement.getAttribute('aria-expanded')).toBe('true');
     });
   });
 
-  it('toggleCategory should close an open category', () => {
-    const map = component['explorerMap']();
-    const category = map[0][0];
-    component.toggleCategory(category);
-    expect(component.openCategories().has(category)).toBe(false);
-  });
-
-  it('toggleCategory should open a closed category', () => {
-    const map = component['explorerMap']();
-    const category = map[0][0];
-    // Close first
-    component.toggleCategory(category);
-    // Open again
-    component.toggleCategory(category);
-    expect(component.openCategories().has(category)).toBe(true);
-  });
-
-  it('isCategoryOpen should return true for open category', () => {
-    const map = component['explorerMap']();
-    const category = map[0][0];
-    expect(component.isCategoryOpen(category)).toBe(true);
-  });
-
-  it('isCategoryOpen should return false for closed category', () => {
-    const map = component['explorerMap']();
-    const category = map[0][0];
-    component.toggleCategory(category);
-    expect(component.isCategoryOpen(category)).toBe(false);
-  });
-
-  it('should render an accordion toggle button reflecting its expanded state', () => {
+  it('should collapse a category on click and re-expand it from the keyboard', () => {
     const toggleButton = fixture.debugElement.query((debugEl) => debugEl.name === 'button');
-    expect(toggleButton).toBeTruthy();
-    expect(toggleButton.nativeElement.getAttribute('aria-expanded')).toBe('true');
 
     toggleButton.nativeElement.click();
     fixture.detectChanges();
-
     expect(toggleButton.nativeElement.getAttribute('aria-expanded')).toBe('false');
+
+    toggleButton.nativeElement.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
+    fixture.detectChanges();
+    expect(toggleButton.nativeElement.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('should collapse only the toggled category when multiple are expanded', () => {
+    const toggleButtons = fixture.debugElement.queryAll((debugEl) => debugEl.name === 'button');
+    expect(toggleButtons.length).toBeGreaterThan(1);
+
+    toggleButtons[0].nativeElement.click();
+    fixture.detectChanges();
+
+    expect(toggleButtons[0].nativeElement.getAttribute('aria-expanded')).toBe('false');
+    expect(toggleButtons[1].nativeElement.getAttribute('aria-expanded')).toBe('true');
   });
 });
