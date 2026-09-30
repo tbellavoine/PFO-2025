@@ -83,10 +83,10 @@
         </label>
       </div>
 
-      <label class="flex flex-col gap-1 text-sm text-light/60">
-        Description
-        <textarea rows="3" [formField]="projectForm.description" class="rounded border border-light/20 bg-transparent p-2 text-light"></textarea>
-      </label>
+      <div class="flex flex-col gap-1 text-sm text-light/60">
+        <p>Description</p>
+        <rich-text-editor [formField]="projectForm.description"/>
+      </div>
 
       <label class="flex items-center gap-2 text-sm text-light/60">
         <input type="checkbox" [formField]="projectForm.published" />

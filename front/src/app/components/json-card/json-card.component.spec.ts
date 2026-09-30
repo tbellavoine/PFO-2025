@@ -51,6 +51,20 @@ describe('JsonCardComponent', () => {
       fixture.detectChanges();
     });
 
+    describe('description extraction', () => {
+      it('should extract description out of the JSON body and expose it separately', () => {
+        fixture.componentRef.setInput('jsonObject', { ...mockJsonObject, description: '<strong>Rich</strong> text' });
+        fixture.detectChanges();
+
+        expect(component.description()).toBe('<strong>Rich</strong> text');
+        expect(component.jsonLines().join('\n')).not.toContain('description');
+      });
+
+      it('should expose no description when the object has none', () => {
+        expect(component.description()).toBeUndefined();
+      });
+    });
+
     describe('highlightJsonLine', () => {
       it('should highlight property names', () => {
         const result = component.highlightJsonLine('"name": "value"');

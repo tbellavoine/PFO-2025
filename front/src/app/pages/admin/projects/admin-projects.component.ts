@@ -2,6 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { KeyValuePipe } from '@angular/common';
 import { form, required, FormField } from '@angular/forms/signals';
+import { RichTextEditorComponent } from '@components/rich-text-editor/rich-text-editor.component';
 import { ProjectApiModel } from '@models/api/project.model';
 import { SkillApiModel } from '@models/api/skill-catalog.model';
 import { MediaApiModel } from '@models/api/media.model';
@@ -42,7 +43,7 @@ const EMPTY_MODEL: ProjectFormModel = {
 
 @Component({
   selector: 'app-admin-projects',
-  imports: [FormField, KeyValuePipe],
+  imports: [FormField, KeyValuePipe, RichTextEditorComponent],
   templateUrl: './admin-projects.component.html',
 })
 export class AdminProjectsComponent {

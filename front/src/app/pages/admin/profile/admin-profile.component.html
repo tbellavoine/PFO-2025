@@ -20,9 +20,8 @@
     <div class="flex flex-col gap-2">
       <p class="text-sm text-light/60">Biographie (paragraphes HTML)</p>
       @for (paragraph of bioParagraphs(); track $index) {
-        <div class="flex gap-2">
-          <textarea rows="2" [value]="paragraph" (input)="updateBioParagraph($index, $any($event.target).value)"
-                    class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light"></textarea>
+        <div class="flex gap-2 items-start">
+          <rich-text-editor class="flex-1" [value]="paragraph" (valueChange)="updateBioParagraph($index, $event)"/>
           <button type="button" (click)="removeBioParagraph($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
         </div>
       }

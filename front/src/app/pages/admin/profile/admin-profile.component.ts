@@ -1,6 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { form, required, FormField } from '@angular/forms/signals';
+import { RichTextEditorComponent } from '@components/rich-text-editor/rich-text-editor.component';
 import { ProfileApiModel } from '@models/api/profile.model';
 import { environment } from '../../../../environments/environment';
 
@@ -12,7 +13,7 @@ interface ProfileFormModel {
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [FormField],
+  imports: [FormField, RichTextEditorComponent],
   templateUrl: './admin-profile.component.html',
 })
 export class AdminProfileComponent {

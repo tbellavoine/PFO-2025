@@ -23,9 +23,17 @@ export class JsonCardComponent {
     const value = this.jsonObject();
     return value && 'type' in value ? (value as { type: string }).type : undefined;
   });
+  // May contain HTML (rich-text-edited in the admin console) — rendered
+  // separately via [innerHTML], not dumped into the JSON body as an
+  // escaped string.
+  public readonly description = computed<string | undefined>(() => {
+    const value = this.jsonObject();
+    return value && 'description' in value ? (value as { description: string }).description : undefined;
+  });
   public readonly jsonLines = computed<string[]>(() => {
     const filteredJsonOject: Record<string, unknown> = { ...this.jsonObject() };
     delete filteredJsonOject['links'];
+    delete filteredJsonOject['description'];
 
     return JSON.stringify(filteredJsonOject, null, 2).split('\n');
   });
