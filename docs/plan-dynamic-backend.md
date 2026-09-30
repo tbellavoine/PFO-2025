@@ -1,6 +1,6 @@
 # Plan : contenu dynamique, console d'admin, backend NestJS
 
-Statut : décisions tranchées (§2), phases 1 et 2 faites sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI, auth + CRUD admin complet, upload média — voir les commits associés pour l'état exact). Reste : phase 3 (front branché sur l'API via `httpResource()`) et phase 4 (écrans admin dans `front/`).
+Statut : décisions tranchées (§2), phases 1 à 4 faites sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI, auth + CRUD admin complet, upload média, front branché sur l'API via `httpResource()`, console d'admin complète — voir les commits associés pour l'état exact). Reste : phase 5 (durcissement — sauvegardes, logs structurés, tests e2e des parcours admin).
 
 Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entraînement) : NestJS `12.1.2` (CLI `12.0.8`, requiert Node ≥20 — le projet tourne déjà en Node 24.17), TypeORM `1.1.1`, `@nestjs/config` `12.0.1`, `@nestjs/jwt` `12.0.2`, `@nestjs/passport` `12.0.0`, `@nestjs/throttler` `6.7.1`, `class-validator` `0.15.1`, `helmet` `8.3.0`.
 
@@ -170,14 +170,16 @@ Brouillon/publié : un statut `published` par entrée, pour préparer du contenu
 
 ## 7. Feuille de route (par phases, taille relative — pas d'estimation en jours, rythme solo variable)
 
-| Phase | Contenu | Taille |
-|---|---|---|
-| 0 | Trancher les 6 décisions du §2 | petite |
-| 1 | Squelette NestJS, entités + migrations, endpoints publics en lecture seule, Swagger, CI du nouveau dépôt, script de seed depuis les `*.const.ts` actuels | moyenne |
-| 2 | Auth (login, guard JWT, cookie httpOnly), endpoints admin CRUD, rate limiting, hashage argon2 | moyenne |
-| 3 | Front : remplacement des imports `*.const.ts` par `httpResource()`, décision §5.3 mise en œuvre (webhook de rebuild si option a) | moyenne |
-| 4 | Console d'admin : routes `/admin`, guard, écrans CRUD en Signal Forms, upload d'image | grande |
-| 5 | Durcissement : sauvegardes base, logs structurés, tests e2e des parcours admin, documentation | petite à moyenne |
+| Phase | Contenu | Taille | Statut |
+|---|---|---|---|
+| 0 | Trancher les 6 décisions du §2 | petite | ✅ |
+| 1 | Squelette NestJS, entités + migrations, endpoints publics en lecture seule, Swagger, CI du nouveau dépôt, script de seed depuis les `*.const.ts` actuels | moyenne | ✅ |
+| 2 | Auth (login, guard JWT, cookie httpOnly), endpoints admin CRUD, rate limiting, hashage argon2 | moyenne | ✅ |
+| 3 | Front : remplacement des imports `*.const.ts` par `httpResource()` | moyenne | ✅ |
+| 4 | Console d'admin : routes `/admin`, guard, écrans CRUD en Signal Forms, upload d'image | grande | ✅ |
+| 5 | Durcissement : sauvegardes base, logs structurés, tests e2e des parcours admin, documentation | petite à moyenne | à faire |
+
+Note phase 3 : décision §5.3 (rebuild au publish, `POST /v1/admin/publish`) **non implémentée** — pas d'hébergement choisi à ce stade pour cibler un webhook réel ; à faire une fois la plateforme de déploiement décidée (§6).
 
 Chaque phase se termine testée et déployée avant de passer à la suivante — pas de grand-bang.
 
