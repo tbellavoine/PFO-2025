@@ -7,13 +7,13 @@
       <input type="text" [value]="newSkillName()" (input)="newSkillName.set($any($event.target).value)"
              placeholder="Nom de la compétence"
              class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
-      <button type="button" (click)="addSkill()" class="rounded bg-accent px-4 py-2 text-light">Ajouter</button>
+      <button type="button" (click)="addSkill()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter</button>
     </div>
     <ul class="flex flex-wrap gap-2">
       @for (skill of skillsResource.value() ?? []; track skill.id) {
         <li class="flex items-center gap-2 rounded border border-light/20 px-3 py-1 text-sm text-light">
           {{ skill.name }}
-          <button type="button" (click)="deleteSkill(skill.id)" class="text-light/40 hover:text-red-500">✕</button>
+          <button type="button" (click)="deleteSkill(skill.id)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
         </li>
       }
     </ul>
@@ -24,7 +24,7 @@
     <div class="flex flex-wrap gap-2">
       @for (category of categoriesResource.value() ?? []; track category.id) {
         <button type="button" (click)="selectCategory(category.id)"
-                class="rounded border px-3 py-1 text-sm"
+                class="rounded border px-3 py-1 text-sm transition-all cursor-pointer hover:border-accent hover:text-accent"
                 [class.border-accent]="selectedCategoryId() === category.id"
                 [class.text-accent]="selectedCategoryId() === category.id"
                 [class.border-light/20]="selectedCategoryId() !== category.id"
@@ -52,7 +52,7 @@
                 <td class="py-1">{{ entry.level }}</td>
                 <td class="py-1">{{ entry.order }}</td>
                 <td class="py-1">
-                  <button type="button" (click)="deleteEntry(entry.skill.id)" class="text-light/40 hover:text-red-500">✕</button>
+                  <button type="button" (click)="deleteEntry(entry.skill.id)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
                 </td>
               </tr>
             }
@@ -87,7 +87,7 @@
                    class="w-20 rounded border border-light/20 bg-transparent p-2 text-light" />
           </label>
 
-          <button type="button" (click)="upsertEntry()" class="rounded bg-accent px-4 py-2 text-light">Ajouter/Maj</button>
+          <button type="button" (click)="upsertEntry()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter/Maj</button>
         </div>
       </div>
     }

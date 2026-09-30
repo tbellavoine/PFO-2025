@@ -43,6 +43,7 @@ describe('ProjectsComponent', () => {
       published: true,
       skills: [{ id: 's2', name: 'TypeScript', slug: 'typescript' }],
       links: [],
+      previewImage: { id: 'm1', filename: 'grp.jpg', url: 'http://localhost:3000/media/grp.jpg' },
     },
   ];
 
@@ -106,6 +107,31 @@ describe('ProjectsComponent', () => {
     const filtered = component.filteredProjects();
     const expected = mockProjects.filter((p) => p.category === category);
     expect(filtered).toEqual(expected);
+  });
+
+  it('should reshape projects into readable card views without internal ids', () => {
+    const [firstCard] = component.projectCards();
+
+    expect(firstCard.title).toBe('// Portfolio 2025');
+    expect(firstCard.jsonObject).toEqual({
+      date: '2025',
+      name: 'Portfolio 2025',
+      company: 'Perso',
+      category: ProjectCategory.WEBSITE,
+      type: 'PERSO',
+      status: 'IN_PROGRESS',
+      description: 'desc',
+      skills: ['Angular'],
+      links: [{ label: 'Site', url: 'http://example.com' }],
+    });
+  });
+
+  it('should append a Preview link when a project has a preview image', () => {
+    const [, grpCard] = component.projectCards();
+
+    expect(grpCard.jsonObject.links).toEqual([
+      { label: 'Preview', url: 'http://localhost:3000/media/grp.jpg' },
+    ]);
   });
 
   it('should expose category filters as keyboard-operable toggle buttons', () => {

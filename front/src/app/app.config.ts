@@ -22,6 +22,7 @@ import {
   faImage,
   faPaperPlane,
   faPlus,
+  faRightFromBracket,
   faWrench,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
@@ -73,6 +74,7 @@ export const appConfig: ApplicationConfig = {
         faMessage,
         faPaperPlane,
         faPlus,
+        faRightFromBracket,
         faTrashCan,
         faWrench,
         faXmark,

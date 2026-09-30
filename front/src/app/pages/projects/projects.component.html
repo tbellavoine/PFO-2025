@@ -21,8 +21,8 @@
     }
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    @for (project of filteredProjects(); track project.id) {
-      <json-card [jsonObject]="project" [title]="'// ' + project.name"/>
+    @for (project of projectCards(); track project.id) {
+      <json-card [jsonObject]="project.jsonObject" [title]="project.title"/>
     }
   </div>
 </div>

@@ -23,10 +23,10 @@
         <div class="flex gap-2">
           <textarea rows="2" [value]="paragraph" (input)="updateBioParagraph($index, $any($event.target).value)"
                     class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light"></textarea>
-          <button type="button" (click)="removeBioParagraph($index)" class="text-light/40 hover:text-red-500">✕</button>
+          <button type="button" (click)="removeBioParagraph($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
         </div>
       }
-      <button type="button" (click)="addBioParagraph()" class="w-fit text-sm text-accent hover:underline">+ Ajouter un paragraphe</button>
+      <button type="button" (click)="addBioParagraph()" class="w-fit text-sm text-accent transition-all hover:underline cursor-pointer">+ Ajouter un paragraphe</button>
     </div>
 
     <div class="flex flex-col gap-2">
@@ -35,17 +35,17 @@
         <div class="flex gap-2">
           <input type="text" [value]="skill" (input)="updateSoftSkill($index, $any($event.target).value)"
                  class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
-          <button type="button" (click)="removeSoftSkill($index)" class="text-light/40 hover:text-red-500">✕</button>
+          <button type="button" (click)="removeSoftSkill($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
         </div>
       }
-      <button type="button" (click)="addSoftSkill()" class="w-fit text-sm text-accent hover:underline">+ Ajouter une compétence</button>
+      <button type="button" (click)="addSoftSkill()" class="w-fit text-sm text-accent transition-all hover:underline cursor-pointer">+ Ajouter une compétence</button>
     </div>
 
     @if (statusMessage(); as message) {
       <p class="text-sm text-accent">{{ message }}</p>
     }
 
-    <button type="submit" [disabled]="saving()" class="w-fit rounded bg-accent px-4 py-2 text-light disabled:opacity-50">
+    <button type="submit" [disabled]="saving()" class="w-fit rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
       {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
     </button>
   </form>

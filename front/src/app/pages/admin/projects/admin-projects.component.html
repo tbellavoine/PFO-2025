@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between">
     <h2 class="text-2xl text-light font-semibold">Projets</h2>
     @if (editingId() === null) {
-      <button type="button" (click)="startCreate()" class="rounded bg-accent px-4 py-2 text-light">+ Nouveau projet</button>
+      <button type="button" (click)="startCreate()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">+ Nouveau projet</button>
     }
   </div>
 
@@ -25,8 +25,8 @@
             <td class="py-1">{{ project.date }}</td>
             <td class="py-1">{{ project.published ? 'Oui' : 'Non' }}</td>
             <td class="flex gap-2 py-1">
-              <button type="button" (click)="startEdit(project.id)" class="text-accent hover:underline">Éditer</button>
-              <button type="button" (click)="deleteProject(project.id)" class="text-light/40 hover:text-red-500">Supprimer</button>
+              <button type="button" (click)="startEdit(project.id)" class="text-accent transition-all hover:underline cursor-pointer">Éditer</button>
+              <button type="button" (click)="deleteProject(project.id)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">Supprimer</button>
             </td>
           </tr>
         }
@@ -98,7 +98,7 @@
         @for (link of links(); track $index) {
           <div class="flex items-center gap-2 text-sm text-light">
             <span class="flex-1">{{ link.label }} — {{ link.url }}</span>
-            <button type="button" (click)="removeLink($index)" class="text-light/40 hover:text-red-500">✕</button>
+            <button type="button" (click)="removeLink($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
           </div>
         }
         <div class="flex gap-2">
@@ -106,7 +106,7 @@
                  class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
           <input type="text" [value]="newLinkUrl()" (input)="newLinkUrl.set($any($event.target).value)" placeholder="URL"
                  class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
-          <button type="button" (click)="addLink()" class="rounded bg-accent px-3 py-1 text-light">Ajouter</button>
+          <button type="button" (click)="addLink()" class="rounded bg-accent px-3 py-1 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter</button>
         </div>
       </div>
 
@@ -138,10 +138,10 @@
       }
 
       <div class="flex gap-2">
-        <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light disabled:opacity-50">
+        <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
           {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
         </button>
-        <button type="button" (click)="cancelEdit()" class="rounded border border-light/20 px-4 py-2 text-light">Annuler</button>
+        <button type="button" (click)="cancelEdit()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Annuler</button>
       </div>
     </form>
   }

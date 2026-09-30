@@ -16,7 +16,7 @@
       <p class="text-sm text-red-500">{{ message }}</p>
     }
 
-    <button type="submit" [disabled]="submitting()" class="mt-2 rounded bg-accent p-2 text-light disabled:opacity-50">
+    <button type="submit" [disabled]="submitting()" class="mt-2 rounded bg-accent p-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
       {{ submitting() ? 'Connexion...' : 'Se connecter' }}
     </button>
   </form>
