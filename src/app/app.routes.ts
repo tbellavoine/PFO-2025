@@ -1,16 +1,6 @@
 import { Routes } from '@angular/router';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { WorksComponent } from './pages/works/works.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { SkillsComponent } from './pages/skills/skills.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
 import { Path } from '@enums/path.enum';
-import { ImageViewerComponent } from '@components/image-viewer/image-viewer.component';
-import { TicTacToeComponent } from './pages/tic-tac-toe/tic-tac-toe.component';
-import { SnakeComponent } from './pages/snake/snake.component';
-import { TwentyFortyEightComponent } from './pages/twenty-forty-eight/twenty-forty-eight.component';
 
 export const routes: Routes = [
   {
@@ -24,42 +14,42 @@ export const routes: Routes = [
   },
   {
     path: Path.PROFILE,
-    component: ProfileComponent
+    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
   },
   {
     path: Path.WORKS,
-    component: WorksComponent
+    loadComponent: () => import('./pages/works/works.component').then((m) => m.WorksComponent)
   },
   {
     path: Path.SKILLS,
-    component: SkillsComponent
+    loadComponent: () => import('./pages/skills/skills.component').then((m) => m.SkillsComponent)
   },
   {
     path: Path.PROJECTS,
-    component: ProjectsComponent
+    loadComponent: () => import('./pages/projects/projects.component').then((m) => m.ProjectsComponent)
   },
   {
     path: Path.CONTACT,
-    component: ContactComponent
+    loadComponent: () => import('./pages/contact/contact.component').then((m) => m.ContactComponent)
   },
   {
-    path: Path.PREVIEW + '/:imageName',
-    component: ImageViewerComponent
+    path: `${Path.PREVIEW}/:imageName`,
+    loadComponent: () => import('@components/image-viewer/image-viewer.component').then((m) => m.ImageViewerComponent)
   },
   {
     path: Path.TICTACTOE_V2,
-    component: TicTacToeComponent
+    loadComponent: () => import('./pages/tic-tac-toe/tic-tac-toe.component').then((m) => m.TicTacToeComponent)
   },
   {
     path: Path.SNAKE,
-    component: SnakeComponent
+    loadComponent: () => import('./pages/snake/snake.component').then((m) => m.SnakeComponent)
   },
   {
     path: Path.TWENTY_FORTY_EIGHT,
-    component: TwentyFortyEightComponent
+    loadComponent: () => import('./pages/twenty-forty-eight/twenty-forty-eight.component').then((m) => m.TwentyFortyEightComponent)
   },
   {
     path: '**',
-    component: NotFoundComponent
+    loadComponent: () => import('./pages/not-found/not-found.component').then((m) => m.NotFoundComponent)
   }
 ];
