@@ -101,4 +101,20 @@ describe('ProfileComponent', () => {
 
     expect(mockLink.click).toHaveBeenCalled();
   });
+
+  describe('Admin editing', () => {
+    it('should not show the edit pencil when not connected', () => {
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeFalsy();
+    });
+
+    it('should close the modal and reload profile data on save', () => {
+      const reloadSpy = vi.spyOn(component['profile'], 'reload');
+      component['editing'].set(true);
+
+      component['onSaved']();
+
+      expect(component['editing']()).toBe(false);
+      expect(reloadSpy).toHaveBeenCalled();
+    });
+  });
 });

@@ -20,9 +20,28 @@
       </div>
     }
   </div>
+  @if (admin()) {
+    <button type="button" (click)="editingId.set('new')" class="w-fit mx-auto rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">+ Nouveau projet</button>
+  }
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     @for (project of projectCards(); track project.id) {
-      <json-card [jsonObject]="project.jsonObject" [title]="project.title"/>
+      <div class="relative h-full">
+        <json-card [jsonObject]="project.jsonObject" [title]="project.title"/>
+        @if (admin()) {
+          <div class="absolute top-2 right-2 flex items-center gap-2">
+            @if (!project.published) {
+              <span class="text-xs text-light/40 border border-light/20 rounded-sm px-2 py-1">Brouillon</span>
+            }
+            <edit-button (edit)="editingId.set(project.id)"/>
+          </div>
+        }
+      </div>
     }
   </div>
 </div>
+
+@if (editingId()) {
+  <app-modal [title]="editingId() === 'new' ? 'Nouveau projet' : 'Modifier le projet'" (closed)="editingId.set(null)">
+    <app-project-edit-form [project]="editingProject()" (saved)="onSaved()" (deleted)="onDeleted()" (cancelled)="editingId.set(null)"/>
+  </app-modal>
+}

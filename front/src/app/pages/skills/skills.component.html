@@ -7,12 +7,42 @@
     <p class="text-accent text-lg md:text-xl italic text-center">Des compétences au top...</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <json-card [jsonObject]="frontObject()" [title]="'// Front End 🎨'" class="h-full"/>
-    <json-card [jsonObject]="backObject()" [title]="'// Back End 🛠️'" class="h-full"/>
-    <json-card [jsonObject]="qualityObject()" [title]="'// Qualité 📐'" class="h-full"/>
-    <json-card [jsonObject]="uxUiObject()" [title]="'// UX/UI 👁️'" class="h-full"/>
-    <json-card [jsonObject]="devOpsObject()" [title]="'// DevOps 📦'" class="h-full"/>
-    <json-card [jsonObject]="toolsObject()" [title]="'// Outils 🔧'" class="h-full"/>
+    <div class="relative h-full">
+      <json-card [jsonObject]="frontObject()" [title]="'// Front End 🎨'" class="h-full"/>
+      @if (admin() && categoryIdFor('front_end'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('front_end')"/></div>
+      }
+    </div>
+    <div class="relative h-full">
+      <json-card [jsonObject]="backObject()" [title]="'// Back End 🛠️'" class="h-full"/>
+      @if (admin() && categoryIdFor('back_end'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('back_end')"/></div>
+      }
+    </div>
+    <div class="relative h-full">
+      <json-card [jsonObject]="qualityObject()" [title]="'// Qualité 📐'" class="h-full"/>
+      @if (admin() && categoryIdFor('quality'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('quality')"/></div>
+      }
+    </div>
+    <div class="relative h-full">
+      <json-card [jsonObject]="uxUiObject()" [title]="'// UX/UI 👁️'" class="h-full"/>
+      @if (admin() && categoryIdFor('ux_ui'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('ux_ui')"/></div>
+      }
+    </div>
+    <div class="relative h-full">
+      <json-card [jsonObject]="devOpsObject()" [title]="'// DevOps 📦'" class="h-full"/>
+      @if (admin() && categoryIdFor('dev_ops'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('dev_ops')"/></div>
+      }
+    </div>
+    <div class="relative h-full">
+      <json-card [jsonObject]="toolsObject()" [title]="'// Outils 🔧'" class="h-full"/>
+      @if (admin() && categoryIdFor('tools'); as id) {
+        <div class="absolute top-2 right-2"><edit-button (edit)="editingCategoryKey.set('tools')"/></div>
+      }
+    </div>
   </div>
   <p class="text-accent text-xl italic text-center">Et d'autres...</p>
   <div class="flex items-center justify-center flex-wrap gap-4">
@@ -23,3 +53,11 @@
     }
   </div>
 </div>
+
+@if (editingCategoryKey(); as key) {
+  @if (categoryIdFor(key); as categoryId) {
+    <app-modal [title]="'Modifier ' + categoryLabelFor(key)" (closed)="closeCategoryEditor()">
+      <app-skill-category-edit-form [categoryId]="categoryId" [categoryLabel]="categoryLabelFor(key)" (closed)="closeCategoryEditor()"/>
+    </app-modal>
+  }
+}

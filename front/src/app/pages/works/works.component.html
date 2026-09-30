@@ -6,9 +6,28 @@
     <h3 class="text-2xl md:text-5xl text-light font-semibold text-center">Mon parcours professionnel</h3>
     <p class="text-accent text-lg md:text-xl italic text-center">Des missions de qualité premium...</p>
   </div>
+  @if (admin()) {
+    <button type="button" (click)="editingId.set('new')" class="w-fit mx-auto rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">+ Nouvelle expérience</button>
+  }
   <div class="flex flex-col gap-6 md:gap-18">
     @for (experience of experiences(); track experience.id) {
-      <json-card [jsonObject]="experience.data" [title]="experience.title" class="w-full"/>
+      <div class="relative w-full">
+        <json-card [jsonObject]="experience.data" [title]="experience.title" class="w-full"/>
+        @if (admin()) {
+          <div class="absolute top-2 right-2 flex items-center gap-2">
+            @if (!experience.published) {
+              <span class="text-xs text-light/40 border border-light/20 rounded-sm px-2 py-1">Brouillon</span>
+            }
+            <edit-button (edit)="editingId.set(experience.id)"/>
+          </div>
+        }
+      </div>
     }
   </div>
 </div>
+
+@if (editingId()) {
+  <app-modal [title]="editingId() === 'new' ? 'Nouvelle expérience' : 'Modifier l\'expérience'" (closed)="editingId.set(null)">
+    <app-experience-edit-form [experience]="editingExperience()" (saved)="onSaved()" (deleted)="onDeleted()" (cancelled)="editingId.set(null)"/>
+  </app-modal>
+}

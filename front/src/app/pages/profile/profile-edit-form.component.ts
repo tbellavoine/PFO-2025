@@ -1,9 +1,9 @@
-import { Component, effect, inject, signal } from '@angular/core';
-import { HttpClient, httpResource } from '@angular/common/http';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { form, required, FormField } from '@angular/forms/signals';
 import { RichTextEditorComponent } from '@components/rich-text-editor/rich-text-editor.component';
 import { ProfileApiModel } from '@models/api/profile.model';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface ProfileFormModel {
   name: string;
@@ -12,16 +12,16 @@ interface ProfileFormModel {
 }
 
 @Component({
-  selector: 'app-admin-profile',
+  selector: 'app-profile-edit-form',
   imports: [FormField, RichTextEditorComponent],
-  templateUrl: './admin-profile.component.html',
+  templateUrl: './profile-edit-form.component.html',
 })
-export class AdminProfileComponent {
+export class ProfileEditFormComponent {
+  public readonly profile = input.required<ProfileApiModel>();
+  public readonly saved = output<void>();
+  public readonly cancelled = output<void>();
   private readonly http = inject(HttpClient);
 
-  protected readonly profileResource = httpResource<ProfileApiModel>(
-    () => `${environment.apiBaseUrl}/v1/profile`,
-  );
   protected readonly model = signal<ProfileFormModel>({ name: '', title: '', cvUrl: '' });
   protected readonly profileForm = form(this.model, (path) => {
     required(path.name);
@@ -30,16 +30,14 @@ export class AdminProfileComponent {
   protected readonly bioParagraphs = signal<string[]>([]);
   protected readonly softSkills = signal<string[]>([]);
   protected readonly saving = signal(false);
-  protected readonly statusMessage = signal<string | null>(null);
+  protected readonly errorMessage = signal<string | null>(null);
 
   constructor() {
     effect(() => {
-      const profile = this.profileResource.value();
-      if (profile) {
-        this.model.set({ name: profile.name, title: profile.title, cvUrl: profile.cvUrl ?? '' });
-        this.bioParagraphs.set([...profile.bioParagraphs]);
-        this.softSkills.set([...profile.softSkills]);
-      }
+      const profile = this.profile();
+      this.model.set({ name: profile.name, title: profile.title, cvUrl: profile.cvUrl ?? '' });
+      this.bioParagraphs.set([...profile.bioParagraphs]);
+      this.softSkills.set([...profile.softSkills]);
     });
   }
 
@@ -74,7 +72,7 @@ export class AdminProfileComponent {
     }
 
     this.saving.set(true);
-    this.statusMessage.set(null);
+    this.errorMessage.set(null);
     const { name, title, cvUrl } = this.model();
     this.http
       .put(`${environment.apiBaseUrl}/v1/admin/profile`, {
@@ -87,11 +85,11 @@ export class AdminProfileComponent {
       .subscribe({
         next: () => {
           this.saving.set(false);
-          this.statusMessage.set('Enregistré.');
+          this.saved.emit();
         },
         error: () => {
           this.saving.set(false);
-          this.statusMessage.set("Erreur lors de l'enregistrement.");
+          this.errorMessage.set("Erreur lors de l'enregistrement.");
         },
       });
   }

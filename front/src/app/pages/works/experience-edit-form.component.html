@@ -1,0 +1,89 @@
+<form (submit)="onSubmit($event)" class="flex flex-col gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Slug
+      <input type="text" [formField]="experienceForm.slug" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Entreprise
+      <input type="text" [formField]="experienceForm.company" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Rôle
+      <input type="text" [formField]="experienceForm.role" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Période
+      <input type="text" [formField]="experienceForm.periodLabel" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Statut
+      <input type="text" [formField]="experienceForm.status" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Ordre
+      <input type="number" [formField]="experienceForm.order" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+  </div>
+
+  <label class="flex items-center gap-2 text-sm text-light/60">
+    <input type="checkbox" [formField]="experienceForm.published" />
+    Publié
+  </label>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Réalisations</p>
+    @for (achievement of achievements(); track $index) {
+      <div class="flex items-center gap-2">
+        <span class="flex-1 text-sm text-light">{{ achievement }}</span>
+        <button type="button" (click)="removeAchievement($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+      </div>
+    }
+    <div class="flex gap-2">
+      <input type="text" [value]="newAchievement()" (input)="newAchievement.set($any($event.target).value)"
+             class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
+      <button type="button" (click)="addAchievement()" class="rounded bg-accent px-3 py-1 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter</button>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Compétences</p>
+    @for (assignment of skillAssignments(); track assignment.skillId + assignment.categoryId) {
+      <div class="flex items-center gap-2 text-sm text-light">
+        <span class="flex-1">{{ skillName(assignment.skillId) }} — {{ categoryLabel(assignment.categoryId) }}</span>
+        <button type="button" (click)="removeSkillAssignment(assignment.skillId, assignment.categoryId)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+      </div>
+    }
+    <div class="flex gap-2">
+      <select [value]="newSkillId()" (change)="newSkillId.set($any($event.target).value)"
+              class="flex-1 rounded border border-light/20 bg-primary p-2 text-light">
+        <option value="" disabled>Compétence...</option>
+        @for (skill of skillsResource.value() ?? []; track skill.id) {
+          <option [value]="skill.id">{{ skill.name }}</option>
+        }
+      </select>
+      <select [value]="newCategoryId()" (change)="newCategoryId.set($any($event.target).value)"
+              class="flex-1 rounded border border-light/20 bg-primary p-2 text-light">
+        <option value="" disabled>Catégorie...</option>
+        @for (category of categoriesResource.value() ?? []; track category.id) {
+          <option [value]="category.id">{{ category.label }}</option>
+        }
+      </select>
+      <button type="button" (click)="addSkillAssignment()" class="rounded bg-accent px-3 py-1 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter</button>
+    </div>
+  </div>
+
+  @if (errorMessage(); as message) {
+    <p class="text-sm text-red-500">{{ message }}</p>
+  }
+
+  <div class="flex items-center gap-2">
+    <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
+      {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+    </button>
+    <button type="button" (click)="cancelled.emit()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Annuler</button>
+    @if (experience()) {
+      <button type="button" (click)="onDelete()" class="ml-auto rounded border border-red-500/40 px-4 py-2 text-red-500 transition-all hover:bg-red-500/10 cursor-pointer">Supprimer</button>
+    }
+  </div>
+</form>

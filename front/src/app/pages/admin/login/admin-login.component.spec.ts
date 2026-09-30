@@ -47,7 +47,7 @@ describe('AdminLoginComponent', () => {
 
     httpMock.expectOne(`${environment.apiBaseUrl}/v1/auth/login`).flush({ email: 'admin@example.com' });
 
-    expect(navigateSpy).toHaveBeenCalledWith([Path.ADMIN]);
+    expect(navigateSpy).toHaveBeenCalledWith([Path.HOME]);
     expect(component['errorMessage']()).toBeNull();
   });
 

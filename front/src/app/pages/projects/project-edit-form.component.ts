@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { KeyValuePipe } from '@angular/common';
 import { form, required, FormField } from '@angular/forms/signals';
@@ -10,7 +10,7 @@ import { Company } from '@enums/company.enum';
 import { ProjectCategory } from '@enums/project-category.enum';
 import { ProjectType } from '@enums/project-type.enum';
 import { ProjectStatus } from '@enums/project-status.enum';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface ProjectFormModel {
   date: string;
@@ -42,11 +42,16 @@ const EMPTY_MODEL: ProjectFormModel = {
 };
 
 @Component({
-  selector: 'app-admin-projects',
+  selector: 'app-project-edit-form',
   imports: [FormField, KeyValuePipe, RichTextEditorComponent],
-  templateUrl: './admin-projects.component.html',
+  templateUrl: './project-edit-form.component.html',
 })
-export class AdminProjectsComponent {
+export class ProjectEditFormComponent {
+  // null = create a new project
+  public readonly project = input.required<ProjectApiModel | null>();
+  public readonly saved = output<void>();
+  public readonly deleted = output<void>();
+  public readonly cancelled = output<void>();
   private readonly http = inject(HttpClient);
 
   protected readonly Company = Company;
@@ -54,14 +59,10 @@ export class AdminProjectsComponent {
   protected readonly ProjectType = ProjectType;
   protected readonly ProjectStatus = ProjectStatus;
 
-  protected readonly projectsResource = httpResource<ProjectApiModel[]>(
-    () => `${environment.apiBaseUrl}/v1/admin/projects`,
-  );
   protected readonly skillsResource = httpResource<SkillApiModel[]>(
     () => `${environment.apiBaseUrl}/v1/admin/skills`,
   );
 
-  protected readonly editingId = signal<string | 'new' | null>(null);
   protected readonly model = signal<ProjectFormModel>({ ...EMPTY_MODEL });
   protected readonly projectForm = form(this.model, (path) => {
     required(path.date);
@@ -75,52 +76,35 @@ export class AdminProjectsComponent {
   protected readonly newLinkUrl = signal('');
   protected readonly uploading = signal(false);
   protected readonly saving = signal(false);
-  protected readonly statusMessage = signal<string | null>(null);
+  protected readonly errorMessage = signal<string | null>(null);
 
   constructor() {
     effect(() => {
-      const id = this.editingId();
-      if (id === 'new' || id === null) {
+      const project = this.project();
+      if (!project) {
+        this.model.set({ ...EMPTY_MODEL });
+        this.links.set([]);
+        this.skillIds.set([]);
+        this.previewImage.set(null);
         return;
       }
-      const project = this.projectsResource.value()?.find((p) => p.id === id);
-      if (project) {
-        this.model.set({
-          date: project.date,
-          name: project.name,
-          company: project.company as Company,
-          category: project.category as ProjectCategory,
-          type: project.type as ProjectType,
-          status: project.status as ProjectStatus,
-          description: project.description,
-          order: project.order,
-          published: project.published,
-        });
-        this.links.set(project.links.map((l) => ({ label: l.label, url: l.url })));
-        this.skillIds.set(project.skills.map((s) => s.id));
-        this.previewImage.set(
-          project.previewImage ? { id: project.previewImage.id, filename: project.previewImage.filename, url: project.previewImage.url } : null,
-        );
-      }
+      this.model.set({
+        date: project.date,
+        name: project.name,
+        company: project.company as Company,
+        category: project.category as ProjectCategory,
+        type: project.type as ProjectType,
+        status: project.status as ProjectStatus,
+        description: project.description,
+        order: project.order,
+        published: project.published,
+      });
+      this.links.set(project.links.map((l) => ({ label: l.label, url: l.url })));
+      this.skillIds.set(project.skills.map((s) => s.id));
+      this.previewImage.set(
+        project.previewImage ? { id: project.previewImage.id, filename: project.previewImage.filename, url: project.previewImage.url } : null,
+      );
     });
-  }
-
-  protected startCreate(): void {
-    this.model.set({ ...EMPTY_MODEL });
-    this.links.set([]);
-    this.skillIds.set([]);
-    this.previewImage.set(null);
-    this.statusMessage.set(null);
-    this.editingId.set('new');
-  }
-
-  protected startEdit(id: string): void {
-    this.statusMessage.set(null);
-    this.editingId.set(id);
-  }
-
-  protected cancelEdit(): void {
-    this.editingId.set(null);
   }
 
   protected addLink(): void {
@@ -158,7 +142,7 @@ export class AdminProjectsComponent {
       },
       error: () => {
         this.uploading.set(false);
-        this.statusMessage.set("Erreur lors de l'upload de l'image.");
+        this.errorMessage.set("Erreur lors de l'upload de l'image.");
       },
     });
   }
@@ -173,7 +157,7 @@ export class AdminProjectsComponent {
       return;
     }
 
-    const id = this.editingId();
+    const existing = this.project();
     const payload = {
       ...this.model(),
       links: this.links(),
@@ -182,28 +166,30 @@ export class AdminProjectsComponent {
     };
 
     this.saving.set(true);
-    this.statusMessage.set(null);
-    const request =
-      id === 'new'
-        ? this.http.post(`${environment.apiBaseUrl}/v1/admin/projects`, payload)
-        : this.http.put(`${environment.apiBaseUrl}/v1/admin/projects/${id}`, payload);
+    this.errorMessage.set(null);
+    const request = existing
+      ? this.http.put(`${environment.apiBaseUrl}/v1/admin/projects/${existing.id}`, payload)
+      : this.http.post(`${environment.apiBaseUrl}/v1/admin/projects`, payload);
 
     request.subscribe({
       next: () => {
         this.saving.set(false);
-        this.projectsResource.reload();
-        this.editingId.set(null);
+        this.saved.emit();
       },
       error: () => {
         this.saving.set(false);
-        this.statusMessage.set("Erreur lors de l'enregistrement.");
+        this.errorMessage.set("Erreur lors de l'enregistrement.");
       },
     });
   }
 
-  protected deleteProject(id: string): void {
-    this.http.delete(`${environment.apiBaseUrl}/v1/admin/projects/${id}`).subscribe(() => {
-      this.projectsResource.reload();
+  protected onDelete(): void {
+    const existing = this.project();
+    if (!existing) {
+      return;
+    }
+    this.http.delete(`${environment.apiBaseUrl}/v1/admin/projects/${existing.id}`).subscribe(() => {
+      this.deleted.emit();
     });
   }
 }

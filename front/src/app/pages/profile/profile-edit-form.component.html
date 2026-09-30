@@ -1,0 +1,50 @@
+<form (submit)="onSubmit($event)" class="flex flex-col gap-4">
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    Nom
+    <input type="text" [formField]="profileForm.name" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    Titre
+    <input type="text" [formField]="profileForm.title" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    URL du CV
+    <input type="text" [formField]="profileForm.cvUrl" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Biographie (paragraphes HTML)</p>
+    @for (paragraph of bioParagraphs(); track $index) {
+      <div class="flex gap-2 items-start">
+        <rich-text-editor class="flex-1" [value]="paragraph" (valueChange)="updateBioParagraph($index, $event)"/>
+        <button type="button" (click)="removeBioParagraph($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+      </div>
+    }
+    <button type="button" (click)="addBioParagraph()" class="w-fit text-sm text-accent transition-all hover:underline cursor-pointer">+ Ajouter un paragraphe</button>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Savoir-être</p>
+    @for (skill of softSkills(); track $index) {
+      <div class="flex gap-2">
+        <input type="text" [value]="skill" (input)="updateSoftSkill($index, $any($event.target).value)"
+               class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
+        <button type="button" (click)="removeSoftSkill($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+      </div>
+    }
+    <button type="button" (click)="addSoftSkill()" class="w-fit text-sm text-accent transition-all hover:underline cursor-pointer">+ Ajouter une compétence</button>
+  </div>
+
+  @if (errorMessage(); as message) {
+    <p class="text-sm text-red-500">{{ message }}</p>
+  }
+
+  <div class="flex gap-2">
+    <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
+      {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+    </button>
+    <button type="button" (click)="cancelled.emit()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Annuler</button>
+  </div>
+</form>

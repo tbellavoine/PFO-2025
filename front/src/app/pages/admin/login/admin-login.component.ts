@@ -40,7 +40,7 @@ export class AdminLoginComponent {
     this.authService.login(email, password).subscribe({
       next: () => {
         this.submitting.set(false);
-        this.router.navigate([Path.ADMIN]).then();
+        this.router.navigate([Path.HOME]).then();
       },
       error: () => {
         this.submitting.set(false);

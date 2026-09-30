@@ -2,8 +2,11 @@ import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { WorksComponent } from './works.component';
 import { TabsService } from '@services/tabs.service';
+import { AuthService } from '@services/auth.service';
 import { TabKey } from '@enums/tab-key.enum';
 import { ExperienceApiModel } from '@models/api/experience.model';
 import { environment } from '../../../environments/environment';
@@ -13,6 +16,7 @@ describe('WorksComponent', () => {
   let fixture: ComponentFixture<WorksComponent>;
   let mockTabsService: MockedObject<TabsService>;
   let httpMock: HttpTestingController;
+  let adminSignal: ReturnType<typeof signal<{ email: string } | null>>;
 
   const mockExperiences: ExperienceApiModel[] = [
     {
@@ -40,13 +44,15 @@ describe('WorksComponent', () => {
     mockTabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
+    adminSignal = signal(null);
 
     TestBed.configureTestingModule({
-      imports: [WorksComponent],
+      imports: [WorksComponent, FontAwesomeTestingModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: TabsService, useValue: mockTabsService },
+        { provide: AuthService, useValue: { admin: adminSignal } },
       ],
     });
 
@@ -99,5 +105,43 @@ describe('WorksComponent', () => {
     const [experience] = component.experiences();
 
     expect(experience.data.achievements).toEqual(['First', 'Second']);
+  });
+
+  describe('Admin editing', () => {
+    it('should not show edit pencils when not connected', () => {
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeFalsy();
+    });
+
+    it('should switch to the admin endpoint once connected', async () => {
+      adminSignal.set({ email: 'admin@example.com' });
+      fixture.detectChanges();
+
+      httpMock.expectOne(`${environment.apiBaseUrl}/v1/admin/experiences`).flush(mockExperiences);
+      await fixture.whenStable();
+
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeTruthy();
+    });
+
+    it('should resolve the experience being edited by id, or null for a new one', () => {
+      component['editingId'].set('1');
+      expect(component['editingExperience']()).toEqual(mockExperiences[0]);
+
+      component['editingId'].set('new');
+      expect(component['editingExperience']()).toBeNull();
+    });
+
+    it('should close the modal and reload on save or delete', () => {
+      const reloadSpy = vi.spyOn(component['experiencesResource'], 'reload');
+      component['editingId'].set('1');
+
+      component['onSaved']();
+      expect(component['editingId']()).toBeNull();
+      expect(reloadSpy).toHaveBeenCalledTimes(1);
+
+      component['editingId'].set('1');
+      component['onDeleted']();
+      expect(component['editingId']()).toBeNull();
+      expect(reloadSpy).toHaveBeenCalledTimes(2);
+    });
   });
 });

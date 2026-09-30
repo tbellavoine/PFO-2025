@@ -1,0 +1,27 @@
+<form (submit)="onSubmit($event)" class="flex flex-col gap-4">
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    Site
+    <input type="text" [formField]="contactForm.site" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    Email
+    <input type="text" [formField]="contactForm.email" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm text-light/60">
+    LinkedIn
+    <input type="text" [formField]="contactForm.linkedin" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+  </label>
+
+  @if (errorMessage(); as message) {
+    <p class="text-sm text-red-500">{{ message }}</p>
+  }
+
+  <div class="flex gap-2">
+    <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
+      {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+    </button>
+    <button type="button" (click)="cancelled.emit()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Annuler</button>
+  </div>
+</form>

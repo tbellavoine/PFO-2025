@@ -2,8 +2,11 @@ import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { ProjectsComponent } from './projects.component';
 import { TabsService } from '@services/tabs.service';
+import { AuthService } from '@services/auth.service';
 import { TabKey } from '@enums/tab-key.enum';
 import { ProjectCategory } from '@enums/project-category.enum';
 import { ProjectApiModel } from '@models/api/project.model';
@@ -14,6 +17,7 @@ describe('ProjectsComponent', () => {
   let fixture: ComponentFixture<ProjectsComponent>;
   let mockTabsService: MockedObject<TabsService>;
   let httpMock: HttpTestingController;
+  let adminSignal: ReturnType<typeof signal<{ email: string } | null>>;
 
   const mockProjects: ProjectApiModel[] = [
     {
@@ -51,13 +55,15 @@ describe('ProjectsComponent', () => {
     mockTabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
+    adminSignal = signal(null);
 
     TestBed.configureTestingModule({
-      imports: [ProjectsComponent],
+      imports: [ProjectsComponent, FontAwesomeTestingModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: TabsService, useValue: mockTabsService },
+        { provide: AuthService, useValue: { admin: adminSignal } },
       ],
     });
 
@@ -147,5 +153,43 @@ describe('ProjectsComponent', () => {
 
     expect(component.selectedCategory()).not.toBe('');
     expect(firstFilter.nativeElement.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  describe('Admin editing', () => {
+    it('should not show edit pencils when not connected', () => {
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeFalsy();
+    });
+
+    it('should switch to the admin endpoint once connected', async () => {
+      adminSignal.set({ email: 'admin@example.com' });
+      fixture.detectChanges();
+
+      httpMock.expectOne(`${environment.apiBaseUrl}/v1/admin/projects`).flush(mockProjects);
+      await fixture.whenStable();
+
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeTruthy();
+    });
+
+    it('should resolve the project being edited by id, or null for a new one', () => {
+      component['editingId'].set('1');
+      expect(component['editingProject']()).toEqual(mockProjects[0]);
+
+      component['editingId'].set('new');
+      expect(component['editingProject']()).toBeNull();
+    });
+
+    it('should close the modal and reload on save or delete', () => {
+      const reloadSpy = vi.spyOn(component['projects'], 'reload');
+      component['editingId'].set('1');
+
+      component['onSaved']();
+      expect(component['editingId']()).toBeNull();
+      expect(reloadSpy).toHaveBeenCalledTimes(1);
+
+      component['editingId'].set('1');
+      component['onDeleted']();
+      expect(component['editingId']()).toBeNull();
+      expect(reloadSpy).toHaveBeenCalledTimes(2);
+    });
   });
 });

@@ -1,0 +1,112 @@
+<form (submit)="onSubmit($event)" class="flex flex-col gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Nom
+      <input type="text" [formField]="projectForm.name" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Date
+      <input type="text" [formField]="projectForm.date" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Entreprise
+      <select [formField]="projectForm.company" class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (entry of Company | keyvalue; track entry.key) {
+          <option [value]="entry.value">{{ entry.value }}</option>
+        }
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Catégorie
+      <select [formField]="projectForm.category" class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (entry of ProjectCategory | keyvalue; track entry.key) {
+          <option [value]="entry.value">{{ entry.value }}</option>
+        }
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Type
+      <select [formField]="projectForm.type" class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (entry of ProjectType | keyvalue; track entry.key) {
+          <option [value]="entry.value">{{ entry.value }}</option>
+        }
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Statut
+      <select [formField]="projectForm.status" class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (entry of ProjectStatus | keyvalue; track entry.key) {
+          <option [value]="entry.value">{{ entry.value }}</option>
+        }
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Ordre
+      <input type="number" [formField]="projectForm.order" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+  </div>
+
+  <div class="flex flex-col gap-1 text-sm text-light/60">
+    <p>Description</p>
+    <rich-text-editor [formField]="projectForm.description"/>
+  </div>
+
+  <label class="flex items-center gap-2 text-sm text-light/60">
+    <input type="checkbox" [formField]="projectForm.published" />
+    Publié
+  </label>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Liens</p>
+    @for (link of links(); track $index) {
+      <div class="flex items-center gap-2 text-sm text-light">
+        <span class="flex-1">{{ link.label }} — {{ link.url }}</span>
+        <button type="button" (click)="removeLink($index)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+      </div>
+    }
+    <div class="flex gap-2">
+      <input type="text" [value]="newLinkLabel()" (input)="newLinkLabel.set($any($event.target).value)" placeholder="Label"
+             class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
+      <input type="text" [value]="newLinkUrl()" (input)="newLinkUrl.set($any($event.target).value)" placeholder="URL"
+             class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
+      <button type="button" (click)="addLink()" class="rounded bg-accent px-3 py-1 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter</button>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Compétences</p>
+    <div class="flex flex-wrap gap-3">
+      @for (skill of skillsResource.value() ?? []; track skill.id) {
+        <label class="flex items-center gap-1 text-sm text-light">
+          <input type="checkbox" [checked]="skillIds().includes(skill.id)" (change)="toggleSkill(skill.id, $any($event.target).checked)" />
+          {{ skill.name }}
+        </label>
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <p class="text-sm text-light/60">Image de prévisualisation</p>
+    @if (previewImage(); as image) {
+      <img [src]="image.url" [alt]="image.filename" class="h-32 w-auto rounded border border-light/20 object-cover" />
+    }
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" class="text-sm text-light" />
+    @if (uploading()) {
+      <p class="text-sm text-light/40">Envoi en cours...</p>
+    }
+  </div>
+
+  @if (errorMessage(); as message) {
+    <p class="text-sm text-red-500">{{ message }}</p>
+  }
+
+  <div class="flex items-center gap-2">
+    <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 disabled:hover:opacity-50 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed">
+      {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+    </button>
+    <button type="button" (click)="cancelled.emit()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Annuler</button>
+    @if (project()) {
+      <button type="button" (click)="onDelete()" class="ml-auto rounded border border-red-500/40 px-4 py-2 text-red-500 transition-all hover:bg-red-500/10 cursor-pointer">Supprimer</button>
+    }
+  </div>
+</form>

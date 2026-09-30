@@ -10,6 +10,19 @@
     accompagner dans ce processus. Parlons-en !
   </div>
   @if (contact.value(); as contactData) {
-    <json-card [jsonObject]="contactData"/>
+    <div class="relative">
+      <json-card [jsonObject]="contactData"/>
+      @if (admin()) {
+        <div class="absolute top-2 right-2">
+          <edit-button (edit)="editing.set(true)"/>
+        </div>
+      }
+    </div>
   }
 </div>
+
+@if (editing() && contact.value(); as contactData) {
+  <app-modal title="Modifier le contact" (closed)="editing.set(false)">
+    <app-contact-edit-form [contact]="contactData" (saved)="onSaved()" (cancelled)="editing.set(false)"/>
+  </app-modal>
+}

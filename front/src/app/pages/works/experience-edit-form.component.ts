@@ -1,9 +1,9 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { form, required, FormField } from '@angular/forms/signals';
 import { ExperienceApiModel } from '@models/api/experience.model';
 import { SkillApiModel, SkillCategoryEntity } from '@models/api/skill-catalog.model';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface ExperienceFormModel {
   slug: string;
@@ -31,16 +31,18 @@ const EMPTY_MODEL: ExperienceFormModel = {
 };
 
 @Component({
-  selector: 'app-admin-experiences',
+  selector: 'app-experience-edit-form',
   imports: [FormField],
-  templateUrl: './admin-experiences.component.html',
+  templateUrl: './experience-edit-form.component.html',
 })
-export class AdminExperiencesComponent {
+export class ExperienceEditFormComponent {
+  // null = create a new experience
+  public readonly experience = input.required<ExperienceApiModel | null>();
+  public readonly saved = output<void>();
+  public readonly deleted = output<void>();
+  public readonly cancelled = output<void>();
   private readonly http = inject(HttpClient);
 
-  protected readonly experiencesResource = httpResource<ExperienceApiModel[]>(
-    () => `${environment.apiBaseUrl}/v1/admin/experiences`,
-  );
   protected readonly skillsResource = httpResource<SkillApiModel[]>(
     () => `${environment.apiBaseUrl}/v1/admin/skills`,
   );
@@ -48,7 +50,6 @@ export class AdminExperiencesComponent {
     () => `${environment.apiBaseUrl}/v1/admin/skills/categories`,
   );
 
-  protected readonly editingId = signal<string | 'new' | null>(null);
   protected readonly model = signal<ExperienceFormModel>({ ...EMPTY_MODEL });
   protected readonly experienceForm = form(this.model, (path) => {
     required(path.slug);
@@ -63,46 +64,29 @@ export class AdminExperiencesComponent {
   protected readonly newSkillId = signal('');
   protected readonly newCategoryId = signal('');
   protected readonly saving = signal(false);
-  protected readonly statusMessage = signal<string | null>(null);
+  protected readonly errorMessage = signal<string | null>(null);
 
   constructor() {
     effect(() => {
-      const id = this.editingId();
-      if (id === 'new' || id === null) {
+      const experience = this.experience();
+      if (!experience) {
+        this.model.set({ ...EMPTY_MODEL });
+        this.achievements.set([]);
+        this.skillAssignments.set([]);
         return;
       }
-      const experience = this.experiencesResource.value()?.find((e) => e.id === id);
-      if (experience) {
-        this.model.set({
-          slug: experience.slug,
-          company: experience.company,
-          role: experience.role,
-          periodLabel: experience.periodLabel,
-          status: experience.status,
-          order: experience.order,
-          published: experience.published,
-        });
-        this.achievements.set(experience.achievements.slice().sort((a, b) => a.order - b.order).map((a) => a.text));
-        this.skillAssignments.set(experience.skills.map((s) => ({ skillId: s.skill.id, categoryId: s.category.id })));
-      }
+      this.model.set({
+        slug: experience.slug,
+        company: experience.company,
+        role: experience.role,
+        periodLabel: experience.periodLabel,
+        status: experience.status,
+        order: experience.order,
+        published: experience.published,
+      });
+      this.achievements.set(experience.achievements.slice().sort((a, b) => a.order - b.order).map((a) => a.text));
+      this.skillAssignments.set(experience.skills.map((s) => ({ skillId: s.skill.id, categoryId: s.category.id })));
     });
-  }
-
-  protected startCreate(): void {
-    this.model.set({ ...EMPTY_MODEL });
-    this.achievements.set([]);
-    this.skillAssignments.set([]);
-    this.statusMessage.set(null);
-    this.editingId.set('new');
-  }
-
-  protected startEdit(id: string): void {
-    this.statusMessage.set(null);
-    this.editingId.set(id);
-  }
-
-  protected cancelEdit(): void {
-    this.editingId.set(null);
   }
 
   protected addAchievement(): void {
@@ -150,7 +134,7 @@ export class AdminExperiencesComponent {
       return;
     }
 
-    const id = this.editingId();
+    const existing = this.experience();
     const payload = {
       ...this.model(),
       achievements: this.achievements(),
@@ -158,28 +142,30 @@ export class AdminExperiencesComponent {
     };
 
     this.saving.set(true);
-    this.statusMessage.set(null);
-    const request =
-      id === 'new'
-        ? this.http.post(`${environment.apiBaseUrl}/v1/admin/experiences`, payload)
-        : this.http.put(`${environment.apiBaseUrl}/v1/admin/experiences/${id}`, payload);
+    this.errorMessage.set(null);
+    const request = existing
+      ? this.http.put(`${environment.apiBaseUrl}/v1/admin/experiences/${existing.id}`, payload)
+      : this.http.post(`${environment.apiBaseUrl}/v1/admin/experiences`, payload);
 
     request.subscribe({
       next: () => {
         this.saving.set(false);
-        this.experiencesResource.reload();
-        this.editingId.set(null);
+        this.saved.emit();
       },
       error: () => {
         this.saving.set(false);
-        this.statusMessage.set("Erreur lors de l'enregistrement.");
+        this.errorMessage.set("Erreur lors de l'enregistrement.");
       },
     });
   }
 
-  protected deleteExperience(id: string): void {
-    this.http.delete(`${environment.apiBaseUrl}/v1/admin/experiences/${id}`).subscribe(() => {
-      this.experiencesResource.reload();
+  protected onDelete(): void {
+    const existing = this.experience();
+    if (!existing) {
+      return;
+    }
+    this.http.delete(`${environment.apiBaseUrl}/v1/admin/experiences/${existing.id}`).subscribe(() => {
+      this.deleted.emit();
     });
   }
 }

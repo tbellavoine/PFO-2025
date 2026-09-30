@@ -2,10 +2,14 @@ import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { signal } from '@angular/core';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { SkillsComponent } from './skills.component';
 import { TabsService } from '@services/tabs.service';
+import { AuthService } from '@services/auth.service';
 import { TabKey } from '@enums/tab-key.enum';
 import { SkillCategoryApiModel } from '@models/api/skill-category.model';
+import { SkillCategoryEntity } from '@models/api/skill-catalog.model';
 import { environment } from '../../../environments/environment';
 
 describe('SkillsComponent', () => {
@@ -13,6 +17,7 @@ describe('SkillsComponent', () => {
   let fixture: ComponentFixture<SkillsComponent>;
   let mockTabsService: MockedObject<TabsService>;
   let httpMock: HttpTestingController;
+  let adminSignal: ReturnType<typeof signal<{ email: string } | null>>;
 
   const mockCategories: SkillCategoryApiModel[] = [
     { key: 'front_end', label: 'Front End', skills: [{ name: 'Angular', level: '✓' }, { name: 'TypeScript', level: '✓' }, { name: 'JavaScript', level: '✓' }] },
@@ -27,13 +32,15 @@ describe('SkillsComponent', () => {
     mockTabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
+    adminSignal = signal(null);
 
     TestBed.configureTestingModule({
-      imports: [SkillsComponent],
+      imports: [SkillsComponent, FontAwesomeTestingModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: TabsService, useValue: mockTabsService },
+        { provide: AuthService, useValue: { admin: adminSignal } },
       ],
     });
 
@@ -104,5 +111,36 @@ describe('SkillsComponent', () => {
       'salesForce-commerce-cloud',
       'office',
     ]);
+  });
+
+  describe('Admin editing', () => {
+    const mockCategoryIds: SkillCategoryEntity[] = [
+      { id: 'c1', key: 'front_end', label: 'Front End', order: 0 },
+    ];
+
+    it('should not show any edit pencil when not connected', () => {
+      expect(fixture.debugElement.query((el) => el.name === 'edit-button')).toBeFalsy();
+    });
+
+    it('should resolve a category id once connected and fetch admin categories', async () => {
+      adminSignal.set({ email: 'admin@example.com' });
+      fixture.detectChanges();
+
+      httpMock.expectOne(`${environment.apiBaseUrl}/v1/admin/skills/categories`).flush(mockCategoryIds);
+      await fixture.whenStable();
+
+      expect(component['categoryIdFor']('front_end')).toBe('c1');
+      expect(component['categoryIdFor']('back_end')).toBeUndefined();
+    });
+
+    it('should reload categories when the category editor closes', () => {
+      const reloadSpy = vi.spyOn(component['categories'], 'reload');
+      component['editingCategoryKey'].set('front_end');
+
+      component['closeCategoryEditor']();
+
+      expect(component['editingCategoryKey']()).toBeNull();
+      expect(reloadSpy).toHaveBeenCalled();
+    });
   });
 });

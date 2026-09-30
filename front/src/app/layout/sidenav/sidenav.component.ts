@@ -9,6 +9,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
+import { AuthService } from '@services/auth.service';
+import { Path } from '@enums/path.enum';
 
 @Component({
   selector: 'sidenav',
@@ -29,10 +31,13 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
 })
 export class SidenavComponent {
   private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   protected readonly SidenavBottom = SidenavBottom;
   protected isExplorerOpen = signal<boolean>(false);
   protected readonly MenuKey = MenuKey;
+  protected readonly admin = this.authService.admin;
+  protected readonly Path = Path;
   private mobileSizeLimit = 768;
   public isMobile = signal(this.isBrowser && window.innerWidth < this.mobileSizeLimit);
 
@@ -46,6 +51,14 @@ export class SidenavComponent {
         this.isExplorerOpen.set(false);
       }
     });
+  }
+
+  /**
+   * Log out when the power icon is clicked while connected
+   * @protected
+   */
+  protected onPowerClick(): void {
+    this.authService.logout().subscribe();
   }
 
   /**

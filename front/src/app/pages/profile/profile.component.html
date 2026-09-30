@@ -1,5 +1,10 @@
 @if (profile.value(); as profileData) {
-  <div class="flex flex-col p-6 md:p-20 gap-12 text-light/60">
+  <div class="relative flex flex-col p-6 md:p-20 gap-12 text-light/60">
+    @if (admin()) {
+      <div class="absolute top-4 right-4 md:top-8 md:right-8">
+        <edit-button (edit)="editing.set(true)"/>
+      </div>
+    }
     <div class="flex flex-col gap-2  justify-center items-center">
       <p class="text-xs text-accent/50 mb-4">
         &lt;about-me /&gt;
@@ -35,4 +40,10 @@
       </div>
     </div>
   </div>
+
+  @if (editing()) {
+    <app-modal title="Modifier le profil" (closed)="editing.set(false)">
+      <app-profile-edit-form [profile]="profileData" (saved)="onSaved()" (cancelled)="editing.set(false)"/>
+    </app-modal>
+  }
 }
