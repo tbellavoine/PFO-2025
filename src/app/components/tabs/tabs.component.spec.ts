@@ -6,7 +6,7 @@ import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { signal } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('TabsComponent', () => {
@@ -38,15 +38,9 @@ describe('TabsComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      imports: [TabsComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [TabsComponent,FontAwesomeTestingModule],
       providers: [
+        provideTranslateService(),
         provideRouter([]),
         { provide: TabsService, useValue: tabsService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute }      ]

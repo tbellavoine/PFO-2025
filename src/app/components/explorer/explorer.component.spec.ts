@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExplorerComponent } from './explorer.component';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
-import { of } from 'rxjs';
 
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent;
@@ -11,15 +10,9 @@ describe('ExplorerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExplorerComponent, FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [ExplorerComponent, FontAwesomeTestingModule],
       providers: [
+        provideTranslateService(),
         {
           provide: ActivatedRoute,
           useValue: {

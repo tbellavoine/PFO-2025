@@ -3,13 +3,12 @@ import { HomeComponent } from './home.component';
 import { TabsService } from '@services/tabs.service';
 import { LastPagesService } from '@services/last-pages.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, provideTranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { StartMenu } from './start-menu.const';
 import { AboutMenu } from './about-menu.const';
-import { of } from 'rxjs';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('HomeComponent', () => {
@@ -30,15 +29,9 @@ describe('HomeComponent', () => {
     mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
 
     TestBed.configureTestingModule({
-      imports: [HomeComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [HomeComponent,FontAwesomeTestingModule],
       providers: [
+        provideTranslateService(),
         { provide: TabsService, useValue: mockTabsService },
         { provide: LastPagesService, useValue: mockLastPagesService },
         { provide: FaIconComponent, useValue: {} },

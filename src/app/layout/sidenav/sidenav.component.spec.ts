@@ -4,7 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { MenuKey } from '@enums/menu-key.enum';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 @Component({
@@ -30,15 +30,9 @@ describe('SidenavComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      imports: [SidenavComponent, MockExplorerComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [SidenavComponent, MockExplorerComponent,FontAwesomeTestingModule],
       providers: [
+        provideTranslateService(),
         { provide: Router, useValue: router },
         { provide: ActivatedRoute, useValue: {} }
       ]
