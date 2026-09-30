@@ -4,12 +4,12 @@
 
     <label class="flex flex-col gap-1 text-sm text-light/60">
       Email
-      <input type="email" [formField]="loginForm.email" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+      <input type="email" autocomplete="username" [formField]="loginForm.email" class="rounded border border-light/20 bg-transparent p-2 text-light" />
     </label>
 
     <label class="flex flex-col gap-1 text-sm text-light/60">
       Mot de passe
-      <input type="password" [formField]="loginForm.password" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+      <input type="password" autocomplete="current-password" [formField]="loginForm.password" class="rounded border border-light/20 bg-transparent p-2 text-light" />
     </label>
 
     @if (errorMessage(); as message) {
