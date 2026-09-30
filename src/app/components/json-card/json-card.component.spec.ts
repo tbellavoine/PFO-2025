@@ -40,14 +40,14 @@ describe('JsonCardComponent', () => {
   });
 
   it('should create', () => {
-    Object.assign(component.jsonObject, { value: mockJsonObject });
+    fixture.componentRef.setInput('jsonObject', mockJsonObject);
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   describe('with valid input', () => {
     beforeEach(() => {
-      Object.assign(component.jsonObject, { value: mockJsonObject });
+      fixture.componentRef.setInput('jsonObject', mockJsonObject);
       fixture.detectChanges();
     });
 
@@ -96,12 +96,27 @@ describe('JsonCardComponent', () => {
       it('should open external URLs in new tab', () => {
         vi.spyOn(window, 'open').mockReturnValue(null);
         component.openUrl('https://example.com');
-        expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank');
+        expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
       });
 
       it('should navigate internally for non-http URLs', () => {
         component.openUrl('internal-path');
         expect(router.navigate).toHaveBeenCalledWith([Path.PREVIEW, 'internal-path']);
+      });
+    });
+
+    describe('Keyboard accessibility', () => {
+      it('should open a link from the keyboard', () => {
+        vi.spyOn(component, 'openUrl');
+        const linkTrigger = fixture.debugElement.query(
+          (debugEl) => debugEl.attributes['role'] === 'button',
+        );
+
+        expect(linkTrigger.nativeElement.tabIndex).toBe(0);
+
+        linkTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
+        expect(component.openUrl).toHaveBeenCalledWith(mockJsonObject.links[0].url);
       });
     });
   });
