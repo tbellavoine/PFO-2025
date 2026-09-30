@@ -1,6 +1,6 @@
 # Plan : contenu dynamique, console d'admin, backend NestJS
 
-Statut : décisions tranchées (§2), phase 1 en cours sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI — voir le commit associé pour l'état exact). Ce document reste la référence pour les phases suivantes.
+Statut : décisions tranchées (§2), phases 1 et 2 faites sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI, auth + CRUD admin complet, upload média — voir les commits associés pour l'état exact). Reste : phase 3 (front branché sur l'API via `httpResource()`) et phase 4 (écrans admin dans `front/`).
 
 Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entraînement) : NestJS `12.1.2` (CLI `12.0.8`, requiert Node ≥20 — le projet tourne déjà en Node 24.17), TypeORM `1.1.1`, `@nestjs/config` `12.0.1`, `@nestjs/jwt` `12.0.2`, `@nestjs/passport` `12.0.0`, `@nestjs/throttler` `6.7.1`, `class-validator` `0.15.1`, `helmet` `8.3.0`.
 
