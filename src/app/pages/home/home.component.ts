@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslatePipe } from '@ngx-translate/core';
 import { StartMenu } from './start-menu.const';
@@ -18,7 +18,6 @@ import { Path } from '@enums/path.enum';
     RouterLink
   ],
   templateUrl: './home.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'h-full'
   }

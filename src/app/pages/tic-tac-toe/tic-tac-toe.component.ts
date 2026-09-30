@@ -1,4 +1,4 @@
-import { Component, computed, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
@@ -8,7 +8,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     NgClass,
     FaIconComponent
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './tic-tac-toe.component.html'
 })
 export class TicTacToeComponent {

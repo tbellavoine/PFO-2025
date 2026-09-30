@@ -2,13 +2,13 @@
   <div>
     <div class="relative p-1">
       <div (click)="toggleGitBranch()"
-           [ngClass]="{'bg-accent' : isGitbranchOpen}"
+           [ngClass]="{'bg-accent' : isGitbranchOpen()}"
            class="git-branch-toggle flex items-center gap-1 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
       >
         <fa-icon [icon]="['fas','code-branch']"/>
         master
       </div>
-      @if (isGitbranchOpen) {
+      @if (isGitbranchOpen()) {
         <div
           class="absolute left-1 bottom-10 rounded-sm bg-primary w-100 border border-white/5 p-2 text-light text-xs z-200 max-w-[80vw]"
           clickOutside
@@ -16,14 +16,14 @@
           (clickOutside)="closeGitBranch()"
         >
           <div
-            (click)="isGitbranchOpen = false"
+            (click)="closeGitBranch()"
             class="flex items-center gap-1 transition-all text-light/40 cursor-not-allowed p-2 m-1 border-b border-b-white/5"
           >
             <fa-icon [icon]="['fas','plus']"/>
             <p class="flex items-center gap-1">Créer une nouvelle branche...</p>
           </div>
           <div
-            (click)="isGitbranchOpen = false"
+            (click)="closeGitBranch()"
             class="flex items-center justify-between gap-2 transition-all text-light hover:bg-accent cursor-pointer p-2 rounded-sm m-1"
           >
             <div class="flex items-center gap-1">
@@ -50,12 +50,12 @@
     </div>
     <div class="relative p-1">
       <div (click)="toggleAlert()"
-           [ngClass]="{'bg-accent' : isAlertOpen}"
+           [ngClass]="{'bg-accent' : isAlertOpen()}"
            class="alert-toggle flex items-center gap-2 transition-all text-light hover:bg-accent cursor-pointer text-xs py-1 px-2 rounded-sm "
       >
         <fa-icon [icon]="['fas','bell']"/>
       </div>
-      @if (isAlertOpen) {
+      @if (isAlertOpen()) {
         <div
           class="absolute right-1 bottom-10 rounded-sm bg-primary w-100 border border-white/5 p-2 text-light text-xs max-w-[80vw] z-200"
           clickOutside

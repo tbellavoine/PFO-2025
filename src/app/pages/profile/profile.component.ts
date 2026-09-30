@@ -1,4 +1,4 @@
-import { Component, DOCUMENT, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DOCUMENT, inject, OnInit, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
@@ -13,7 +13,6 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
     JsonCardComponent
   ],
   templateUrl: './profile.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'w-full'
   }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
@@ -10,20 +10,19 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
     NgClass,
     ClickOutsideDirective
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './status-bar.component.html'
 })
 export class StatusBarComponent {
-  protected isGitbranchOpen: boolean = false;
-  protected isAlertOpen: boolean = false;
+  protected isGitbranchOpen = signal<boolean>(false);
+  protected isAlertOpen = signal<boolean>(false);
 
   /**
    * Toggle the git branch dropdown
    * @protected
    */
   protected toggleGitBranch(): void {
-    this.isGitbranchOpen = !this.isGitbranchOpen;
-    this.isAlertOpen = false;
+    this.isGitbranchOpen.update((isOpen) => !isOpen);
+    this.isAlertOpen.set(false);
   }
 
   /**
@@ -31,8 +30,8 @@ export class StatusBarComponent {
    * @protected
    */
   protected toggleAlert(): void {
-    this.isAlertOpen = !this.isAlertOpen;
-    this.isGitbranchOpen = false;
+    this.isAlertOpen.update((isOpen) => !isOpen);
+    this.isGitbranchOpen.set(false);
   }
 
   /**
@@ -40,7 +39,7 @@ export class StatusBarComponent {
    * @protected
    */
   protected closeGitBranch(): void {
-    this.isGitbranchOpen = false;
+    this.isGitbranchOpen.set(false);
   }
 
   /**
@@ -48,6 +47,6 @@ export class StatusBarComponent {
    * @protected
    */
   protected closeAlert(): void {
-    this.isAlertOpen = false;
+    this.isAlertOpen.set(false);
   }
 }

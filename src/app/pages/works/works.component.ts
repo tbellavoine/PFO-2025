@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
@@ -11,7 +11,6 @@ import { Experiences } from './experiences.const';
   imports: [
     JsonCardComponent
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './works.component.html',
 })
 export class WorksComponent implements OnInit {

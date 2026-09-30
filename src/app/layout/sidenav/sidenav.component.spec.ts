@@ -4,14 +4,13 @@ import { SidenavComponent } from './sidenav.component';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { MenuKey } from '@enums/menu-key.enum';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 @Component({
   selector: 'app-explorer',
   template: '<div>Mock Explorer</div>',
-  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 class MockExplorerComponent {}

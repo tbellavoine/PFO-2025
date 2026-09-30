@@ -1,4 +1,4 @@
-import { Component, computed, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { ExplorerMap } from '@components/explorer/explorer.map';
 import { NgClass, UpperCasePipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -19,7 +19,6 @@ import { MenuKey } from '@enums/menu-key.enum';
     TranslatePipe,
     NgClass
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './explorer.component.html'
 })
 export class ExplorerComponent {

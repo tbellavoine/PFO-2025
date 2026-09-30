@@ -1,10 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'not-found',
   imports: [],
   templateUrl: './not-found.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'w-full h-full'
   }

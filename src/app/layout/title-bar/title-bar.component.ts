@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Menu } from './menu.const';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,7 +9,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     RouterLink,
     TranslatePipe
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './title-bar.component.html'
 })
 export class TitleBarComponent {

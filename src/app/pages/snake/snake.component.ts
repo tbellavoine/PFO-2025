@@ -1,4 +1,4 @@
-import { Component, computed, effect, HostListener, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, effect, HostListener, OnDestroy, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -13,7 +13,6 @@ interface Position {
     FormsModule,
     FaIconComponent
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './snake.component.html',
 })
 export class SnakeComponent implements OnDestroy {

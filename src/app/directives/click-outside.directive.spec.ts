@@ -1,11 +1,10 @@
 import type { Mock } from 'vitest';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClickOutsideDirective } from './click-outside.directive';
 
 @Component({
   imports: [ClickOutsideDirective],
-  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div clickOutside (clickOutside)="onClickOutside()" [excludeElements]="excludeElements">
       Inside Content
