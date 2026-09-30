@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -86,6 +107,10 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Components</li>
   <li class="breadcrumb-item"
@@ -93,10 +118,19 @@
   ExplorerComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/components/explorer/explorer.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a href="#info" class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
         <li class="nav-item">
             <a href="#source" class="nav-link"
@@ -113,14 +147,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/components/explorer/explorer.component.ts</code>
-</p>
-
-
+    <div class="tab-pane fade active in" id="info">
 
 
 
@@ -130,6 +157,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -146,18 +177,29 @@
                 <td class="col-md-9"><code>explorer</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
 
             <tr>
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
-                            <code>UpperCasePipe</code>
-                            <code>FaIconComponent</code>
-                            <code>RouterLink</code>
-                            <code>RouterLinkActive</code>
-                            <code>TranslatePipe</code>
-                            <code>NgClass</code>
+                        <div>        <code><a href="https://angular.dev/api/common/UpperCasePipe" target="_blank" >UpperCasePipe</a></code>
+</div>
+                        <div>    <code>FaIconComponent</code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+</div>
+                        <div>    <code>TranslatePipe</code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+</div>
                 </td>
             </tr>
+
 
 
 
@@ -178,27 +220,68 @@
     </table>
 </section>
 
-    <section data-compodoc="block-index">
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/SidenavComponent.html" target="_self" >SidenavComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/UpperCasePipe" target="_blank" >UpperCasePipe</a></code>
+                                </li>
+                                <li>
+                                        <code>FaIconComponent</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+                                </li>
+                                <li>
+                                        <code>TranslatePipe</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                 <a href="#explorerMap" >explorerMap</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#openCategories" >openCategories</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#Path" >Path</a>
@@ -206,33 +289,37 @@
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#isCategoryOpen" >isCategoryOpen</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#toggleCategory" >toggleCategory</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
 
@@ -389,6 +476,7 @@
         </tbody>
     </table>
 </section>
+
     <section data-compodoc="block-properties">
     
     <h3 id="inputs">
@@ -406,6 +494,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt; {
@@ -437,6 +531,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal&lt;Set&lt;string&gt;&gt;(new Set(this.explorerMap().map(category &#x3D;&gt; category[0])))</code>
                     </td>
                 </tr>
@@ -462,6 +562,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>Path</code>
@@ -567,8 +673,8 @@ export class ExplorerComponent {
               &lt;a [routerLink]&#x3D;&quot;explorerItem.route&quot;
                  [routerLinkActive]&#x3D;&quot;&#x27;bg-primary&#x27;&quot;
                  class&#x3D;&quot;flex items-center transition-all text-light hover:bg-primary py-1 px-4 gap-2 w-full&quot;&gt;
-                &lt;fa-icon [icon]&#x3D;&quot;explorerItem.icon&quot; [size]&#x3D;&quot;&#x27;sm&#x27;&quot; [attr.class]&#x3D;&quot;explorerItem.theme&quot;/&gt;
-                &lt;span class&#x3D;&quot;text-xs truncate&quot;&gt;{{ explorerItem.label | translate }}&lt;/span&gt;
+                &lt;fa-icon [icon]&#x3D;&quot;explorerItem.icon&quot; [size]&#x3D;&quot;&#x27;sm&#x27;&quot; [attr.class]&#x3D;&quot;explorerItem.theme ?? &#x27;&#x27;&quot;/&gt;
+                &lt;span class&#x3D;&quot;text-xs truncate&quot;&gt;{{ explorerItem.label ?? &#x27;&#x27; | translate }}&lt;/span&gt;
               &lt;/a&gt;
             }
           &lt;/div&gt;
@@ -577,9 +683,6 @@ export class ExplorerComponent {
     }
   &lt;/div&gt;
 &lt;/div&gt;
-
-
-
 </code></pre>
     </div>
 
@@ -605,11 +708,11 @@ export class ExplorerComponent {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col p-3 pr-0 gap-6 text-light h-full bg-primary-darker overflow-hidden">  <p class="text-sm">{{ \'Explorer\' | uppercase }}</p>  <a [routerLinkActive]="\'bg-primary\'"     [routerLink]="Path.HOME"     class="flex items-center transition-all text-light hover:bg-primary px-2 py-1 gap-2 w-full">    <fa-icon [icon]="[\'fas\', \'house-chimney\']" [size]="\'sm\'"/>    <span class="text-xs">{{ \'EXPLORER.HOME\' | translate }}</span>  </a>  <div class="flex flex-col overflow-auto gap-3">    @for (category of explorerMap(); track category[0]) {      <div class="flex flex-col items-start">        <h3 class="flex items-center gap-2 text-xs" (click)="toggleCategory(category[0])">          <fa-icon [icon]="[\'fas\', \'angle-down\']" [ngClass]="{\'rotate-180\' : !isCategoryOpen(category[0]) }"                   class="transition-transform duration-200"/>          <span>{{ category[0] | translate }}</span>        </h3>        <div class="grid transition-all w-full"             [style.grid-template-rows]="isCategoryOpen(category[0]) ? \'1fr\' : \'0fr\'"             [class.py-2]="isCategoryOpen(category[0])">          <div class="overflow-hidden">            @for (explorerItem of category[1]; track explorerItem) {              <a [routerLink]="explorerItem.route"                 [routerLinkActive]="\'bg-primary\'"                 class="flex items-center transition-all text-light hover:bg-primary py-1 px-4 gap-2 w-full">                <fa-icon [icon]="explorerItem.icon" [size]="\'sm\'" [attr.class]="explorerItem.theme"/>                <span class="text-xs truncate">{{ explorerItem.label | translate }}</span>              </a>            }          </div>        </div>      </div>    }  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col p-3 pr-0 gap-6 text-light h-full bg-primary-darker overflow-hidden">  <p class="text-sm">{{ \'Explorer\' | uppercase }}</p>  <a [routerLinkActive]="\'bg-primary\'"     [routerLink]="Path.HOME"     class="flex items-center transition-all text-light hover:bg-primary px-2 py-1 gap-2 w-full">    <fa-icon [icon]="[\'fas\', \'house-chimney\']" [size]="\'sm\'"/>    <span class="text-xs">{{ \'EXPLORER.HOME\' | translate }}</span>  </a>  <div class="flex flex-col overflow-auto gap-3">    @for (category of explorerMap(); track category[0]) {      <div class="flex flex-col items-start">        <h3 class="flex items-center gap-2 text-xs" (click)="toggleCategory(category[0])">          <fa-icon [icon]="[\'fas\', \'angle-down\']" [ngClass]="{\'rotate-180\' : !isCategoryOpen(category[0]) }"                   class="transition-transform duration-200"/>          <span>{{ category[0] | translate }}</span>        </h3>        <div class="grid transition-all w-full"             [style.grid-template-rows]="isCategoryOpen(category[0]) ? \'1fr\' : \'0fr\'"             [class.py-2]="isCategoryOpen(category[0])">          <div class="overflow-hidden">            @for (explorerItem of category[1]; track explorerItem) {              <a [routerLink]="explorerItem.route"                 [routerLinkActive]="\'bg-primary\'"                 class="flex items-center transition-all text-light hover:bg-primary py-1 px-4 gap-2 w-full">                <fa-icon [icon]="explorerItem.icon" [size]="\'sm\'" [attr.class]="explorerItem.theme ?? \'\'"/>                <span class="text-xs truncate">{{ explorerItem.label ?? \'\' | translate }}</span>              </a>            }          </div>        </div>      </div>    }  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
     var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
     var ACTUAL_COMPONENT = {'name': 'ExplorerComponent'};
@@ -664,6 +767,24 @@ export class ExplorerComponent {
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -679,7 +800,6 @@ export class ExplorerComponent {
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -80,11 +101,35 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content getting-started">
+               <div class="content readme">
                    <div class="content-data">
 
+
 <h1>PFO2025</h1>
-<p>This project was generated using <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 20.1.6.</p>
+<p>Ce projet est un portfolio personnel présentant diverses applications et composants Angular. Il sert de terrain de jeu pour explorer les fonctionnalités modernes d&#39;Angular, les modèles architecturaux et les implémentations UI/UX.</p>
+<h2>Fonctionnalités</h2>
+<ul>
+<li><strong>Composant Explorateur</strong>: Une navigation de type explorateur de fichiers pour les différentes sections du portfolio.</li>
+<li><strong>Jeu de Tic-Tac-Toe</strong>: Un jeu classique de Tic-Tac-Toe implémenté avec les signaux Angular.</li>
+<li><strong>Jeu du Serpent</strong>: Un jeu rétro du Serpent construit avec les signaux Angular.</li>
+<li><strong>Jeu 2048</strong>: Une implémentation du jeu 2048.</li>
+<li><strong>Section Profil</strong>: Affiche des informations personnelles et des compétences comportementales.</li>
+<li><strong>Section Compétences</strong>: Présente les compétences techniques classées par frontend, backend, DevOps, UX/UI et outils.</li>
+<li><strong>Section Projets</strong>: Liste divers projets personnels et professionnels.</li>
+<li><strong>Section Expériences</strong>: Détaille les expériences professionnelles.</li>
+<li><strong>Formulaire de Contact</strong>: Un simple formulaire de contact.</li>
+<li><strong>Onglets Dynamiques</strong>: Un système d&#39;onglets pour gérer les pages/applications ouvertes.</li>
+<li><strong>Composant Carte JSON</strong>: Un composant réutilisable pour afficher des données JSON avec coloration syntaxique et liens cliquables.</li>
+</ul>
+<h2>Technologies Utilisées</h2>
+<ul>
+<li><strong>Angular</strong>: Framework frontend (version 22)</li>
+<li><strong>TypeScript</strong>: Sur-ensemble de JavaScript</li>
+<li><strong>Tailwind CSS</strong>: Framework CSS utilitaire</li>
+<li><strong>Font Awesome</strong>: Bibliothèque d&#39;icônes</li>
+<li><strong>ngx-translate</strong>: Bibliothèque d&#39;internationalisation</li>
+<li><strong>Vitest</strong>: Framework de tests unitaires</li>
+</ul>
 <h2>Development server</h2>
 <p>To start a local development server, run:</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-bash">ng serve</code></pre></div><p>Once the server is running, open your browser and navigate to <code>http://localhost:4200/</code>. The application will automatically reload whenever you modify any of the source files.</p>
@@ -95,12 +140,16 @@
 <p>To build the project run:</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-bash">ng build</code></pre></div><p>This will compile your project and store the build artifacts in the <code>dist/</code> directory. By default, the production build optimizes your application for performance and speed.</p>
 <h2>Running unit tests</h2>
-<p>To execute unit tests with the <a href="https://karma-runner.github.io">Karma</a> test runner, use the following command:</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">ng test</code></pre></div><h2>Running end-to-end tests</h2>
+<p>To execute unit tests with the <a href="https://vitest.dev">Vitest</a> test runner, use the following command:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">ng test</code></pre></div><p>To generate a coverage report, run:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm run test-coverage</code></pre></div><h2>Running end-to-end tests</h2>
 <p>For end-to-end (e2e) testing, run:</p>
 <b>Example :</b><div><pre class="line-numbers"><code class="language-bash">ng e2e</code></pre></div><p>Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.</p>
 <h2>Additional Resources</h2>
 <p>For more information on using the Angular CLI, including detailed command references, visit the <a href="https://angular.dev/tools/cli">Angular CLI Overview and Command Reference</a> page.</p>
+
+
+
 
 
 
@@ -147,13 +196,31 @@
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
             var COMPODOC_CURRENT_PAGE_URL = 'index.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -169,7 +236,6 @@
        <script src="./js/libs/lit-html.js"></script>
 
        <script src="./js/menu-wc.js" defer></script>
-       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

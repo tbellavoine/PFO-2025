@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -86,6 +107,10 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Components</li>
   <li class="breadcrumb-item"
@@ -93,10 +118,19 @@
   HomeComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/home/home.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a href="#info" class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
         <li class="nav-item">
             <a href="#source" class="nav-link"
@@ -113,21 +147,14 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/pages/home/home.component.ts</code>
-</p>
-
-
+    <div class="tab-pane fade active in" id="info">
 
 
     <p class="comment">
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                <code>OnInit</code>
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
     </p>
 
 
@@ -136,6 +163,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -156,15 +187,23 @@
                 <td class="col-md-9"><code>home</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
 
             <tr>
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
-                            <code>FaIconComponent</code>
-                            <code>TranslatePipe</code>
-                            <code>RouterLink</code>
+                        <div>    <code>FaIconComponent</code>
+</div>
+                        <div>    <code>TranslatePipe</code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
                 </td>
             </tr>
+
 
 
 
@@ -185,43 +224,77 @@
     </table>
 </section>
 
-    <section data-compodoc="block-index">
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                        <code>FaIconComponent</code>
+                                </li>
+                                <li>
+                                        <code>TranslatePipe</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#AboutMenu" >AboutMenu</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                 <a href="#contactTab" >contactTab</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#lastPages" >lastPages</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#lastPagesService" >lastPagesService</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#StartMenu" >StartMenu</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#tabsService" >tabsService</a>
@@ -229,37 +302,43 @@
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#clearHistory" >clearHistory</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#getPageName" >getPageName</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#getPageUrl" >getPageUrl</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
 
@@ -487,6 +566,7 @@
         </tbody>
     </table>
 </section>
+
     <section data-compodoc="block-properties">
     
     <h3 id="inputs">
@@ -505,6 +585,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>AboutMenu</code>
@@ -566,6 +652,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>this.lastPagesService.lastPages</code>
                     </td>
                 </tr>
@@ -591,6 +683,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>inject(LastPagesService)</code>
@@ -620,6 +718,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>StartMenu</code>
                     </td>
                 </tr>
@@ -645,6 +749,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>inject(TabsService)</code>
@@ -748,7 +858,7 @@ export class HomeComponent implements OnInit {
         &lt;a [routerLink]&#x3D;&quot;startItem.route&quot;
            class&#x3D;&quot;flex items-center transition-all text-accent hover:text-light gap-2 text-sm&quot;&gt;
           &lt;fa-icon [icon]&#x3D;&quot;startItem.icon&quot; class&#x3D;&quot;text-light&quot;/&gt;
-          {{ startItem.label | translate }}
+          {{ startItem.label ?? &#x27;&#x27; | translate }}
         &lt;/a&gt;
       }
     &lt;/div&gt;
@@ -773,7 +883,7 @@ export class HomeComponent implements OnInit {
         [target]&#x3D;&quot;&#x27;_blank&#x27;&quot;
         class&#x3D;&quot;flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary&quot;&gt;
         &lt;fa-icon [icon]&#x3D;&quot;aboutItem.icon&quot;/&gt;
-        {{ aboutItem.label | translate }}
+        {{ aboutItem.label ?? &#x27;&#x27; | translate }}
       &lt;/a&gt;
     }
   &lt;/div&gt;
@@ -803,11 +913,11 @@ export class HomeComponent implements OnInit {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col md:flex-row md:items-center h-full p-8 gap-6">  <div class="flex flex-col gap-6 w-full md:w-1/2">    <div class="flex flex-col gap-4 mb-6 md:mb-14">      <h3 class="text-5xl font-semibold text-light">Thomas BELLAVOINE</h3>      <p class="text-2xl text-light/50">Développeur frontend Angular</p>    </div>    <div class="flex flex-col gap-2">      <p class="text-light mb-2 text-lg">Commencer</p>      @for (startItem of StartMenu; track startItem) {        <a [routerLink]="startItem.route"           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">          <fa-icon [icon]="startItem.icon" class="text-light"/>          {{ startItem.label | translate }}        </a>      }    </div>    <div class="flex flex-col gap-2">      <p class="text-light mb-2 text-lg">Récents -        <fa-icon (click)="clearHistory()" [icon]="[\'far\', \'trash-can\']" class="text-accent cursor-pointer"/>      </p>      @for (page of lastPages(); track page + $index) {        <a [routerLink]="page"           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">          <span class="truncate">{{ getPageName(page) | translate }}</span> <span class="text-light/50 truncate">-          {{ getPageUrl(page) }}</span>        </a>      }    </div>  </div>  <div class="flex flex-col gap-2 w-full pb-12 md:w-1/2 md:max-w-102">    <p class="text-light mb-2 text-lg">A propos</p>    @for (aboutItem of AboutMenu; track aboutItem) {      <a        [href]="aboutItem.link"        [target]="\'_blank\'"        class="flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary">        <fa-icon [icon]="aboutItem.icon"/>        {{ aboutItem.label | translate }}      </a>    }  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col md:flex-row md:items-center h-full p-8 gap-6">  <div class="flex flex-col gap-6 w-full md:w-1/2">    <div class="flex flex-col gap-4 mb-6 md:mb-14">      <h3 class="text-5xl font-semibold text-light">Thomas BELLAVOINE</h3>      <p class="text-2xl text-light/50">Développeur frontend Angular</p>    </div>    <div class="flex flex-col gap-2">      <p class="text-light mb-2 text-lg">Commencer</p>      @for (startItem of StartMenu; track startItem) {        <a [routerLink]="startItem.route"           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">          <fa-icon [icon]="startItem.icon" class="text-light"/>          {{ startItem.label ?? \'\' | translate }}        </a>      }    </div>    <div class="flex flex-col gap-2">      <p class="text-light mb-2 text-lg">Récents -        <fa-icon (click)="clearHistory()" [icon]="[\'far\', \'trash-can\']" class="text-accent cursor-pointer"/>      </p>      @for (page of lastPages(); track page + $index) {        <a [routerLink]="page"           class="flex items-center transition-all text-accent hover:text-light gap-2 text-sm">          <span class="truncate">{{ getPageName(page) | translate }}</span> <span class="text-light/50 truncate">-          {{ getPageUrl(page) }}</span>        </a>      }    </div>  </div>  <div class="flex flex-col gap-2 w-full pb-12 md:w-1/2 md:max-w-102">    <p class="text-light mb-2 text-lg">A propos</p>    @for (aboutItem of AboutMenu; track aboutItem) {      <a        [href]="aboutItem.link"        [target]="\'_blank\'"        class="flex items-center transition-all text-light gap-3 text-sm border-b-4 border-b-accent p-2 bg-primary">        <fa-icon [icon]="aboutItem.icon"/>        {{ aboutItem.label ?? \'\' | translate }}      </a>    }  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
     var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
     var ACTUAL_COMPONENT = {'name': 'HomeComponent'};
@@ -862,6 +972,24 @@ export class HomeComponent implements OnInit {
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -877,7 +1005,6 @@ export class HomeComponent implements OnInit {
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

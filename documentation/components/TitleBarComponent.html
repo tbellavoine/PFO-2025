@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -86,6 +107,10 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Components</li>
   <li class="breadcrumb-item"
@@ -93,10 +118,19 @@
   TitleBarComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/layout/title-bar/title-bar.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a href="#info" class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
         <li class="nav-item">
             <a href="#source" class="nav-link"
@@ -113,14 +147,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/layout/title-bar/title-bar.component.ts</code>
-</p>
-
-
+    <div class="tab-pane fade active in" id="info">
 
 
 
@@ -130,6 +157,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -146,14 +177,21 @@
                 <td class="col-md-9"><code>titlebar</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
 
             <tr>
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
-                            <code>RouterLink</code>
-                            <code>TranslatePipe</code>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>TranslatePipe</code>
+</div>
                 </td>
             </tr>
+
 
 
 
@@ -174,38 +212,66 @@
     </table>
 </section>
 
-    <section data-compodoc="block-index">
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/AppComponent.html" target="_self" >AppComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>TranslatePipe</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#Menu" >Menu</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#title" >title</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
 
@@ -234,6 +300,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>Menu</code>
                     </td>
                 </tr>
@@ -258,6 +330,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal&lt;string&gt;(&#x27;Thomas BELLAVOINE - Visual Studio Code&#x27;)</code>
@@ -311,7 +389,7 @@ export class TitleBarComponent {
       @for (menuItem of Menu; track menuItem) {
         &lt;a [routerLink]&#x3D;&quot;menuItem.route&quot;
            class&#x3D;&quot;relative flex items-center justify-center transition-all text-light/70 text-xs hover:!text-light&quot;&gt;
-          {{ menuItem.label | translate }}
+          {{ menuItem.label ?? &#x27;&#x27; | translate }}
         &lt;/a&gt;
       }
     &lt;/div&gt;
@@ -347,11 +425,11 @@ export class TitleBarComponent {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="flex items-center justify-between p-2 bg-primary border-b border-b-white/5 font-arial w-full">  <div class="flex items-center gap-4">    <a [routerLink]="\'/\'">      <img alt="VSCode Icon"           height="15"           src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBmaWxsPSJub25lIj4NCjxtYXNrIGlkPSJtYXNrMCIgbWFzay10eXBlPSJhbHBoYSIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPg0KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xODEuNTM0IDI1NC4yNTJDMTg1LjU2NiAyNTUuODIzIDE5MC4xNjQgMjU1LjcyMiAxOTQuMjM0IDI1My43NjRMMjQ2Ljk0IDIyOC40MDNDMjUyLjQ3OCAyMjUuNzM4IDI1NiAyMjAuMTMyIDI1NiAyMTMuOTgzVjQyLjAxODFDMjU2IDM1Ljg2ODkgMjUyLjQ3OCAzMC4yNjM4IDI0Ni45NCAyNy41OTg4TDE5NC4yMzQgMi4yMzY4MUMxODguODkzIC0wLjMzMzEzMiAxODIuNjQyIDAuMjk2MzQ0IDE3Ny45NTUgMy43MDQxOEMxNzcuMjg1IDQuMTkxIDE3Ni42NDcgNC43MzQ1NCAxNzYuMDQ5IDUuMzMzNTRMNzUuMTQ5IDk3LjM4NjJMMzEuMTk5MiA2NC4wMjQ3QzI3LjEwNzkgNjAuOTE5MSAyMS4zODUzIDYxLjE3MzUgMTcuNTg1NSA2NC42M0wzLjQ4OTM2IDc3LjQ1MjVDLTEuMTU4NTMgODEuNjgwNSAtMS4xNjM4NiA4OC45OTI2IDMuNDc3ODUgOTMuMjI3NEw0MS41OTI2IDEyOEwzLjQ3Nzg1IDE2Mi43NzNDLTEuMTYzODYgMTY3LjAwOCAtMS4xNTg1MyAxNzQuMzIgMy40ODkzNiAxNzguNTQ4TDE3LjU4NTUgMTkxLjM3QzIxLjM4NTMgMTk0LjgyNyAyNy4xMDc5IDE5NS4wODEgMzEuMTk5MiAxOTEuOTc2TDc1LjE0OSAxNTguNjE0TDE3Ni4wNDkgMjUwLjY2N0MxNzcuNjQ1IDI1Mi4yNjQgMTc5LjUxOSAyNTMuNDY3IDE4MS41MzQgMjU0LjI1MlpNMTkyLjAzOSA2OS44ODUzTDExNS40NzkgMTI4TDE5Mi4wMzkgMTg2LjExNVY2OS44ODUzWiIgZmlsbD0id2hpdGUiLz4NCjwvbWFzaz4NCjxnIG1hc2s9InVybCgjbWFzazApIj4NCjxwYXRoIGQ9Ik0yNDYuOTQgMjcuNjM4M0wxOTQuMTkzIDIuMjQxMzhDMTg4LjA4OCAtMC42OTgzMDIgMTgwLjc5MSAwLjU0MTcyMSAxNzUuOTk5IDUuMzMzMzJMMy4zMjM3MSAxNjIuNzczQy0xLjMyMDgyIDE2Ny4wMDggLTEuMzE1NDggMTc0LjMyIDMuMzM1MjMgMTc4LjU0OEwxNy40Mzk5IDE5MS4zN0MyMS4yNDIxIDE5NC44MjcgMjYuOTY4MiAxOTUuMDgxIDMxLjA2MTkgMTkxLjk3NkwyMzkuMDAzIDM0LjIyNjlDMjQ1Ljk3OSAyOC45MzQ3IDI1NS45OTkgMzMuOTEwMyAyNTUuOTk5IDQyLjY2NjdWNDIuMDU0M0MyNTUuOTk5IDM1LjkwNzggMjUyLjQ3OCAzMC4zMDQ3IDI0Ni45NCAyNy42MzgzWiIgZmlsbD0iIzAwNjVBOSIvPg0KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZCkiPg0KPHBhdGggZD0iTTI0Ni45NCAyMjguMzYyTDE5NC4xOTMgMjUzLjc1OUMxODguMDg4IDI1Ni42OTggMTgwLjc5MSAyNTUuNDU4IDE3NS45OTkgMjUwLjY2N0wzLjMyMzcxIDkzLjIyNzJDLTEuMzIwODIgODguOTkyNSAtMS4zMTU0OCA4MS42ODAyIDMuMzM1MjMgNzcuNDUyM0wxNy40Mzk5IDY0LjYyOThDMjEuMjQyMSA2MS4xNzMzIDI2Ljk2ODIgNjAuOTE4OCAzMS4wNjE5IDY0LjAyNDVMMjM5LjAwMyAyMjEuNzczQzI0NS45NzkgMjI3LjA2NSAyNTUuOTk5IDIyMi4wOSAyNTUuOTk5IDIxMy4zMzNWMjEzLjk0NkMyNTUuOTk5IDIyMC4wOTIgMjUyLjQ3OCAyMjUuNjk1IDI0Ni45NCAyMjguMzYyWiIgZmlsbD0iIzAwN0FDQyIvPg0KPC9nPg0KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjFfZCkiPg0KPHBhdGggZD0iTTE5NC4xOTYgMjUzLjc2M0MxODguMDg5IDI1Ni43IDE4MC43OTIgMjU1LjQ1OSAxNzYgMjUwLjY2N0MxODEuOTA0IDI1Ni41NzEgMTkyIDI1Mi4zODkgMTkyIDI0NC4wMzlWMTEuOTYwNkMxOTIgMy42MTA1NyAxODEuOTA0IC0wLjU3MTE3NSAxNzYgNS4zMzMyMUMxODAuNzkyIDAuNTQxMTY2IDE4OC4wODkgLTAuNzAwNjA3IDE5NC4xOTYgMi4yMzY0OEwyNDYuOTM0IDI3LjU5ODVDMjUyLjQ3NiAzMC4yNjM1IDI1NiAzNS44Njg2IDI1NiA0Mi4wMTc4VjIxMy45ODNDMjU2IDIyMC4xMzIgMjUyLjQ3NiAyMjUuNzM3IDI0Ni45MzQgMjI4LjQwMkwxOTQuMTk2IDI1My43NjNaIiBmaWxsPSIjMUY5Q0YwIi8+DQo8L2c+DQo8ZyBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6b3ZlcmxheSIgb3BhY2l0eT0iMC4yNSI+DQo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4MS4zNzggMjU0LjI1MkMxODUuNDEgMjU1LjgyMiAxOTAuMDA4IDI1NS43MjIgMTk0LjA3NyAyNTMuNzY0TDI0Ni43ODMgMjI4LjQwMkMyNTIuMzIyIDIyNS43MzcgMjU1Ljg0NCAyMjAuMTMyIDI1NS44NDQgMjEzLjk4M1Y0Mi4wMTc5QzI1NS44NDQgMzUuODY4NyAyNTIuMzIyIDMwLjI2MzYgMjQ2Ljc4NCAyNy41OTg2TDE5NC4wNzcgMi4yMzY2NUMxODguNzM3IC0wLjMzMzI5OSAxODIuNDg2IDAuMjk2MTc3IDE3Ny43OTggMy43MDQwMUMxNzcuMTI5IDQuMTkwODMgMTc2LjQ5MSA0LjczNDM3IDE3NS44OTIgNS4zMzMzN0w3NC45OTI3IDk3LjM4NkwzMS4wNDI5IDY0LjAyNDVDMjYuOTUxNyA2MC45MTg5IDIxLjIyOSA2MS4xNzM0IDE3LjQyOTIgNjQuNjI5OEwzLjMzMzExIDc3LjQ1MjNDLTEuMzE0NzggODEuNjgwMyAtMS4zMjAxMSA4OC45OTI1IDMuMzIxNiA5My4yMjczTDQxLjQzNjQgMTI4TDMuMzIxNiAxNjIuNzczQy0xLjMyMDExIDE2Ny4wMDggLTEuMzE0NzggMTc0LjMyIDMuMzMzMTEgMTc4LjU0OEwxNy40MjkyIDE5MS4zN0MyMS4yMjkgMTk0LjgyNyAyNi45NTE3IDE5NS4wODEgMzEuMDQyOSAxOTEuOTc2TDc0Ljk5MjcgMTU4LjYxNEwxNzUuODkyIDI1MC42NjdDMTc3LjQ4OCAyNTIuMjY0IDE3OS4zNjMgMjUzLjQ2NyAxODEuMzc4IDI1NC4yNTJaTTE5MS44ODMgNjkuODg1MUwxMTUuMzIzIDEyOEwxOTEuODgzIDE4Ni4xMTVWNjkuODg1MVoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiLz4NCjwvZz4NCjwvZz4NCjxkZWZzPg0KPGZpbHRlciBpZD0iZmlsdGVyMF9kIiB4PSItMjEuNDg5NiIgeT0iNDAuNTIyNSIgd2lkdGg9IjI5OC44MjIiIGhlaWdodD0iMjM2LjE0OSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPg0KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4NCjxmZUNvbG9yTWF0cml4IGluPSJTb3VyY2VBbHBoYSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDEyNyAwIi8+DQo8ZmVPZmZzZXQvPg0KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTAuNjY2NyIvPg0KPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAuMjUgMCIvPg0KPGZlQmxlbmQgbW9kZT0ib3ZlcmxheSIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93Ii8+DQo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvdyIgcmVzdWx0PSJzaGFwZSIvPg0KPC9maWx0ZXI+DQo8ZmlsdGVyIGlkPSJmaWx0ZXIxX2QiIHg9IjE1NC42NjciIHk9Ii0yMC42NzM1IiB3aWR0aD0iMTIyLjY2NyIgaGVpZ2h0PSIyOTcuMzQ3IiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0ic1JHQiI+DQo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPg0KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiLz4NCjxmZU9mZnNldC8+DQo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMC42NjY3Ii8+DQo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4yNSAwIi8+DQo8ZmVCbGVuZCBtb2RlPSJvdmVybGF5IiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJlZmZlY3QxX2Ryb3BTaGFkb3ciLz4NCjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iZWZmZWN0MV9kcm9wU2hhZG93IiByZXN1bHQ9InNoYXBlIi8+DQo8L2ZpbHRlcj4NCjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhciIgeDE9IjEyNy44NDQiIHkxPSIwLjY1OTk4OCIgeDI9IjEyNy44NDQiIHkyPSIyNTUuMzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4NCjxzdG9wIHN0b3AtY29sb3I9IndoaXRlIi8+DQo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz4NCjwvbGluZWFyR3JhZGllbnQ+DQo8L2RlZnM+DQo8L3N2Zz4="           width="15"/>    </a>    <div class="hidden md:flex items-center gap-4">      @for (menuItem of Menu; track menuItem) {        <a [routerLink]="menuItem.route"           class="relative flex items-center justify-center transition-all text-light/70 text-xs hover:!text-light">          {{ menuItem.label | translate }}        </a>      }    </div>  </div>  <div class="flex items-center gap-2">    <span class="block rounded-full h-3 w-3 bg-yellow-200"></span>    <span class="block rounded-full h-3 w-3 bg-green-400"></span>    <span class="block rounded-full h-3 w-3 bg-red-500"></span>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="flex items-center justify-between p-2 bg-primary border-b border-b-white/5 font-arial w-full">  <div class="flex items-center gap-4">    <a [routerLink]="\'/\'">      <img alt="VSCode Icon"           height="15"           src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBmaWxsPSJub25lIj4NCjxtYXNrIGlkPSJtYXNrMCIgbWFzay10eXBlPSJhbHBoYSIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPg0KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xODEuNTM0IDI1NC4yNTJDMTg1LjU2NiAyNTUuODIzIDE5MC4xNjQgMjU1LjcyMiAxOTQuMjM0IDI1My43NjRMMjQ2Ljk0IDIyOC40MDNDMjUyLjQ3OCAyMjUuNzM4IDI1NiAyMjAuMTMyIDI1NiAyMTMuOTgzVjQyLjAxODFDMjU2IDM1Ljg2ODkgMjUyLjQ3OCAzMC4yNjM4IDI0Ni45NCAyNy41OTg4TDE5NC4yMzQgMi4yMzY4MUMxODguODkzIC0wLjMzMzEzMiAxODIuNjQyIDAuMjk2MzQ0IDE3Ny45NTUgMy43MDQxOEMxNzcuMjg1IDQuMTkxIDE3Ni42NDcgNC43MzQ1NCAxNzYuMDQ5IDUuMzMzNTRMNzUuMTQ5IDk3LjM4NjJMMzEuMTk5MiA2NC4wMjQ3QzI3LjEwNzkgNjAuOTE5MSAyMS4zODUzIDYxLjE3MzUgMTcuNTg1NSA2NC42M0wzLjQ4OTM2IDc3LjQ1MjVDLTEuMTU4NTMgODEuNjgwNSAtMS4xNjM4NiA4OC45OTI2IDMuNDc3ODUgOTMuMjI3NEw0MS41OTI2IDEyOEwzLjQ3Nzg1IDE2Mi43NzNDLTEuMTYzODYgMTY3LjAwOCAtMS4xNTg1MyAxNzQuMzIgMy40ODkzNiAxNzguNTQ4TDE3LjU4NTUgMTkxLjM3QzIxLjM4NTMgMTk0LjgyNyAyNy4xMDc5IDE5NS4wODEgMzEuMTk5MiAxOTEuOTc2TDc1LjE0OSAxNTguNjE0TDE3Ni4wNDkgMjUwLjY2N0MxNzcuNjQ1IDI1Mi4yNjQgMTc5LjUxOSAyNTMuNDY3IDE4MS41MzQgMjU0LjI1MlpNMTkyLjAzOSA2OS44ODUzTDExNS40NzkgMTI4TDE5Mi4wMzkgMTg2LjExNVY2OS44ODUzWiIgZmlsbD0id2hpdGUiLz4NCjwvbWFzaz4NCjxnIG1hc2s9InVybCgjbWFzazApIj4NCjxwYXRoIGQ9Ik0yNDYuOTQgMjcuNjM4M0wxOTQuMTkzIDIuMjQxMzhDMTg4LjA4OCAtMC42OTgzMDIgMTgwLjc5MSAwLjU0MTcyMSAxNzUuOTk5IDUuMzMzMzJMMy4zMjM3MSAxNjIuNzczQy0xLjMyMDgyIDE2Ny4wMDggLTEuMzE1NDggMTc0LjMyIDMuMzM1MjMgMTc4LjU0OEwxNy40Mzk5IDE5MS4zN0MyMS4yNDIxIDE5NC44MjcgMjYuOTY4MiAxOTUuMDgxIDMxLjA2MTkgMTkxLjk3NkwyMzkuMDAzIDM0LjIyNjlDMjQ1Ljk3OSAyOC45MzQ3IDI1NS45OTkgMzMuOTEwMyAyNTUuOTk5IDQyLjY2NjdWNDIuMDU0M0MyNTUuOTk5IDM1LjkwNzggMjUyLjQ3OCAzMC4zMDQ3IDI0Ni45NCAyNy42MzgzWiIgZmlsbD0iIzAwNjVBOSIvPg0KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZCkiPg0KPHBhdGggZD0iTTI0Ni45NCAyMjguMzYyTDE5NC4xOTMgMjUzLjc1OUMxODguMDg4IDI1Ni42OTggMTgwLjc5MSAyNTUuNDU4IDE3NS45OTkgMjUwLjY2N0wzLjMyMzcxIDkzLjIyNzJDLTEuMzIwODIgODguOTkyNSAtMS4zMTU0OCA4MS42ODAyIDMuMzM1MjMgNzcuNDUyM0wxNy40Mzk5IDY0LjYyOThDMjEuMjQyMSA2MS4xNzMzIDI2Ljk2ODIgNjAuOTE4OCAzMS4wNjE5IDY0LjAyNDVMMjM5LjAwMyAyMjEuNzczQzI0NS45NzkgMjI3LjA2NSAyNTUuOTk5IDIyMi4wOSAyNTUuOTk5IDIxMy4zMzNWMjEzLjk0NkMyNTUuOTk5IDIyMC4wOTIgMjUyLjQ3OCAyMjUuNjk1IDI0Ni45NCAyMjguMzYyWiIgZmlsbD0iIzAwN0FDQyIvPg0KPC9nPg0KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjFfZCkiPg0KPHBhdGggZD0iTTE5NC4xOTYgMjUzLjc2M0MxODguMDg5IDI1Ni43IDE4MC43OTIgMjU1LjQ1OSAxNzYgMjUwLjY2N0MxODEuOTA0IDI1Ni41NzEgMTkyIDI1Mi4zODkgMTkyIDI0NC4wMzlWMTEuOTYwNkMxOTIgMy42MTA1NyAxODEuOTA0IC0wLjU3MTE3NSAxNzYgNS4zMzMyMUMxODAuNzkyIDAuNTQxMTY2IDE4OC4wODkgLTAuNzAwNjA3IDE5NC4xOTYgMi4yMzY0OEwyNDYuOTM0IDI3LjU5ODVDMjUyLjQ3NiAzMC4yNjM1IDI1NiAzNS44Njg2IDI1NiA0Mi4wMTc4VjIxMy45ODNDMjU2IDIyMC4xMzIgMjUyLjQ3NiAyMjUuNzM3IDI0Ni45MzQgMjI4LjQwMkwxOTQuMTk2IDI1My43NjNaIiBmaWxsPSIjMUY5Q0YwIi8+DQo8L2c+DQo8ZyBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6b3ZlcmxheSIgb3BhY2l0eT0iMC4yNSI+DQo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE4MS4zNzggMjU0LjI1MkMxODUuNDEgMjU1LjgyMiAxOTAuMDA4IDI1NS43MjIgMTk0LjA3NyAyNTMuNzY0TDI0Ni43ODMgMjI4LjQwMkMyNTIuMzIyIDIyNS43MzcgMjU1Ljg0NCAyMjAuMTMyIDI1NS44NDQgMjEzLjk4M1Y0Mi4wMTc5QzI1NS44NDQgMzUuODY4NyAyNTIuMzIyIDMwLjI2MzYgMjQ2Ljc4NCAyNy41OTg2TDE5NC4wNzcgMi4yMzY2NUMxODguNzM3IC0wLjMzMzI5OSAxODIuNDg2IDAuMjk2MTc3IDE3Ny43OTggMy43MDQwMUMxNzcuMTI5IDQuMTkwODMgMTc2LjQ5MSA0LjczNDM3IDE3NS44OTIgNS4zMzMzN0w3NC45OTI3IDk3LjM4NkwzMS4wNDI5IDY0LjAyNDVDMjYuOTUxNyA2MC45MTg5IDIxLjIyOSA2MS4xNzM0IDE3LjQyOTIgNjQuNjI5OEwzLjMzMzExIDc3LjQ1MjNDLTEuMzE0NzggODEuNjgwMyAtMS4zMjAxMSA4OC45OTI1IDMuMzIxNiA5My4yMjczTDQxLjQzNjQgMTI4TDMuMzIxNiAxNjIuNzczQy0xLjMyMDExIDE2Ny4wMDggLTEuMzE0NzggMTc0LjMyIDMuMzMzMTEgMTc4LjU0OEwxNy40MjkyIDE5MS4zN0MyMS4yMjkgMTk0LjgyNyAyNi45NTE3IDE5NS4wODEgMzEuMDQyOSAxOTEuOTc2TDc0Ljk5MjcgMTU4LjYxNEwxNzUuODkyIDI1MC42NjdDMTc3LjQ4OCAyNTIuMjY0IDE3OS4zNjMgMjUzLjQ2NyAxODEuMzc4IDI1NC4yNTJaTTE5MS44ODMgNjkuODg1MUwxMTUuMzIzIDEyOEwxOTEuODgzIDE4Ni4xMTVWNjkuODg1MVoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcikiLz4NCjwvZz4NCjwvZz4NCjxkZWZzPg0KPGZpbHRlciBpZD0iZmlsdGVyMF9kIiB4PSItMjEuNDg5NiIgeT0iNDAuNTIyNSIgd2lkdGg9IjI5OC44MjIiIGhlaWdodD0iMjM2LjE0OSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPg0KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4NCjxmZUNvbG9yTWF0cml4IGluPSJTb3VyY2VBbHBoYSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDEyNyAwIi8+DQo8ZmVPZmZzZXQvPg0KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTAuNjY2NyIvPg0KPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAuMjUgMCIvPg0KPGZlQmxlbmQgbW9kZT0ib3ZlcmxheSIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93Ii8+DQo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvdyIgcmVzdWx0PSJzaGFwZSIvPg0KPC9maWx0ZXI+DQo8ZmlsdGVyIGlkPSJmaWx0ZXIxX2QiIHg9IjE1NC42NjciIHk9Ii0yMC42NzM1IiB3aWR0aD0iMTIyLjY2NyIgaGVpZ2h0PSIyOTcuMzQ3IiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0ic1JHQiI+DQo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPg0KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiLz4NCjxmZU9mZnNldC8+DQo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMC42NjY3Ii8+DQo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4yNSAwIi8+DQo8ZmVCbGVuZCBtb2RlPSJvdmVybGF5IiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJlZmZlY3QxX2Ryb3BTaGFkb3ciLz4NCjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iZWZmZWN0MV9kcm9wU2hhZG93IiByZXN1bHQ9InNoYXBlIi8+DQo8L2ZpbHRlcj4NCjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhciIgeDE9IjEyNy44NDQiIHkxPSIwLjY1OTk4OCIgeDI9IjEyNy44NDQiIHkyPSIyNTUuMzQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4NCjxzdG9wIHN0b3AtY29sb3I9IndoaXRlIi8+DQo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz4NCjwvbGluZWFyR3JhZGllbnQ+DQo8L2RlZnM+DQo8L3N2Zz4="           width="15"/>    </a>    <div class="hidden md:flex items-center gap-4">      @for (menuItem of Menu; track menuItem) {        <a [routerLink]="menuItem.route"           class="relative flex items-center justify-center transition-all text-light/70 text-xs hover:!text-light">          {{ menuItem.label ?? \'\' | translate }}        </a>      }    </div>  </div>  <div class="flex items-center gap-2">    <span class="block rounded-full h-3 w-3 bg-yellow-200"></span>    <span class="block rounded-full h-3 w-3 bg-green-400"></span>    <span class="block rounded-full h-3 w-3 bg-red-500"></span>  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'ExplorerComponent', 'selector': 'explorer'},{'name': 'HomeComponent', 'selector': 'home'},{'name': 'ImageViewerComponent', 'selector': 'app-image-viewer'},{'name': 'JsonCardComponent', 'selector': 'json-card'},{'name': 'NotFoundComponent', 'selector': 'not-found'},{'name': 'ProfileComponent', 'selector': 'profile'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'SidenavComponent', 'selector': 'sidenav'},{'name': 'SkillsComponent', 'selector': 'app-skills'},{'name': 'SnakeComponent', 'selector': 'app-snake'},{'name': 'StatusBarComponent', 'selector': 'status-bar'},{'name': 'TabsComponent', 'selector': 'tabs'},{'name': 'TicTacToeComponent', 'selector': 'app-tic-tac-toe'},{'name': 'TitleBarComponent', 'selector': 'titlebar'},{'name': 'TwentyFortyEightComponent', 'selector': 'app-twenty-forty-eight'},{'name': 'WorksComponent', 'selector': 'app-works'}];
     var DIRECTIVES = [{'name': 'ClickOutsideDirective', 'selector': '[clickOutside]'}];
     var ACTUAL_COMPONENT = {'name': 'TitleBarComponent'};
@@ -406,6 +484,24 @@ export class TitleBarComponent {
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -421,7 +517,6 @@ export class TitleBarComponent {
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 
