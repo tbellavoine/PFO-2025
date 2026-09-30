@@ -1,10 +1,16 @@
-name: CI
+name: CI (front)
 
 on:
   push:
     branches: [master]
+    paths: ["front/**", ".github/workflows/ci-front.yml"]
   pull_request:
     branches: [master]
+    paths: ["front/**", ".github/workflows/ci-front.yml"]
+
+defaults:
+  run:
+    working-directory: front
 
 jobs:
   build-and-test:
@@ -16,6 +22,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: front/package-lock.json
 
       - run: npm ci
 
