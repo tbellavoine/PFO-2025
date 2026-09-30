@@ -7,7 +7,7 @@ describe('TwentyFortyEightComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TwentyFortyEightComponent]
+      imports: [TwentyFortyEightComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TwentyFortyEightComponent);
@@ -56,11 +56,11 @@ describe('TwentyFortyEightComponent', () => {
 
   it('should add random tile', () => {
     const initialBoard = component.board();
-    const emptyCount = component.flatBoard().filter(cell => cell.value === 0).length;
+    const emptyCount = component.flatBoard().filter((cell) => cell.value === 0).length;
 
     component.addRandomTile();
 
-    const newEmptyCount = component.flatBoard().filter(cell => cell.value === 0).length;
+    const newEmptyCount = component.flatBoard().filter((cell) => cell.value === 0).length;
     expect(newEmptyCount).toBe(emptyCount - 1);
   });
 
@@ -85,7 +85,7 @@ describe('TwentyFortyEightComponent', () => {
   });
 
   it('should handle keyboard input for movement', () => {
-    spyOn(component, 'move');
+    vi.spyOn(component, 'move').mockReturnValue(undefined);
     const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
 
     component.handleKeyPress(event);
@@ -94,8 +94,8 @@ describe('TwentyFortyEightComponent', () => {
   });
 
   it('should handle special keys', () => {
-    const resetSpy = spyOn(component, 'resetGame');
-    const toggleSpy = spyOn(component, 'toggleGame');
+    const resetSpy = vi.spyOn(component, 'resetGame').mockReturnValue(undefined);
+    const toggleSpy = vi.spyOn(component, 'toggleGame').mockReturnValue(undefined);
 
     component.handleKeyPress(new KeyboardEvent('keydown', { key: 'r' }));
     expect(resetSpy).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('TwentyFortyEightComponent', () => {
 
   it('should not handle input when not playing', () => {
     component.isPlaying.set(false);
-    spyOn(component, 'move');
+    vi.spyOn(component, 'move').mockReturnValue(undefined);
 
     component.handleKeyPress(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
 
@@ -115,7 +115,7 @@ describe('TwentyFortyEightComponent', () => {
 
   it('should not handle input when animating', () => {
     component.animating.set(true);
-    spyOn(component, 'move');
+    vi.spyOn(component, 'move').mockReturnValue(undefined);
 
     component.handleKeyPress(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
 
@@ -124,18 +124,26 @@ describe('TwentyFortyEightComponent', () => {
 
   it('should detect when no empty cells available', () => {
     // Fill entire board
-    const fullBoard = Array(4).fill(null).map(() =>
-      Array(4).fill(null).map(() => ({ value: 2, id: 1 }))
-    );
+    const fullBoard = Array(4)
+      .fill(null)
+      .map(() =>
+        Array(4)
+          .fill(null)
+          .map(() => ({ value: 2, id: 1 })),
+      );
     component.board.set(fullBoard);
 
     expect(component.hasEmptyCell()).toBe(false);
   });
 
   it('should calculate highest tile correctly', () => {
-    const board = Array(4).fill(null).map(() =>
-      Array(4).fill(null).map(() => ({ value: 2, id: 1 }))
-    );
+    const board = Array(4)
+      .fill(null)
+      .map(() =>
+        Array(4)
+          .fill(null)
+          .map(() => ({ value: 2, id: 1 })),
+      );
     board[0][0] = { value: 1024, id: 1 };
     component.board.set(board);
 
@@ -143,9 +151,13 @@ describe('TwentyFortyEightComponent', () => {
   });
 
   it('should detect game won when reaching 2048', () => {
-    const board = Array(4).fill(null).map(() =>
-      Array(4).fill(null).map(() => ({ value: 2, id: 1 }))
-    );
+    const board = Array(4)
+      .fill(null)
+      .map(() =>
+        Array(4)
+          .fill(null)
+          .map(() => ({ value: 2, id: 1 })),
+      );
     board[0][0] = { value: 2048, id: 1 };
     component.board.set(board);
 

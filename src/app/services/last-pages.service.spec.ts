@@ -1,3 +1,4 @@
+import type { Mock, MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,39 +9,45 @@ import { LocalStorageKey } from '@enums/localstorage-key.enum';
 describe('LastPagesService', () => {
   let service: LastPagesService;
   let routerEvents: Subject<any>;
-  let mockTranslateService: jasmine.SpyObj<TranslateService>;
-  let localStorageMock: jasmine.SpyObj<Storage>;
+  let mockTranslateService: MockedObject<TranslateService>;
+  let localStorageMock: { getItem: Mock; setItem: Mock; removeItem: Mock };
 
   beforeEach(() => {
     routerEvents = new Subject();
 
     // Mock Router
-    const mockRouter = jasmine.createSpyObj('Router', [], {
-      events: routerEvents.asObservable()
-    });
+    const mockRouter = {
+      events: routerEvents.asObservable(),
+    };
 
     // Mock TranslateService
-    mockTranslateService = jasmine.createSpyObj('TranslateService', ['instant']);
-    mockTranslateService.instant.and.returnValue('Error message');
+    mockTranslateService = {
+      instant: vi.fn().mockName('TranslateService.instant'),
+    } as unknown as MockedObject<TranslateService>;
+    mockTranslateService.instant.mockReturnValue('Error message');
 
     // Mock localStorage
-    localStorageMock = jasmine.createSpyObj('localStorage', ['getItem', 'setItem', 'removeItem']);
+    localStorageMock = {
+      getItem: vi.fn().mockName('localStorage.getItem'),
+      setItem: vi.fn().mockName('localStorage.setItem'),
+      removeItem: vi.fn().mockName('localStorage.removeItem'),
+    };
     Object.defineProperty(window, 'localStorage', {
       value: localStorageMock,
-      configurable: true
+      configurable: true,
     });
 
     TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: TranslateService, useValue: mockTranslateService }
-      ]
+        { provide: TranslateService, useValue: mockTranslateService },
+      ],
     });
   });
 
   describe('Service Creation', () => {
     it('should create service', () => {
-      localStorageMock.getItem.and.returnValue(null);
+      localStorageMock.getItem.mockReturnValue(null);
 
       service = TestBed.inject(LastPagesService);
 
@@ -50,7 +57,7 @@ describe('LastPagesService', () => {
 
     it('should load pages from localStorage', () => {
       const savedPages = ['page1', 'page2'];
-      localStorageMock.getItem.and.returnValue(JSON.stringify(savedPages));
+      localStorageMock.getItem.mockReturnValue(JSON.stringify(savedPages));
 
       service = TestBed.inject(LastPagesService);
 
@@ -58,8 +65,8 @@ describe('LastPagesService', () => {
     });
 
     it('should handle localStorage errors', () => {
-      localStorageMock.getItem.and.returnValue('invalid-json');
-      spyOn(console, 'warn');
+      localStorageMock.getItem.mockReturnValue('invalid-json');
+      vi.spyOn(console, 'warn').mockReturnValue(undefined);
 
       service = TestBed.inject(LastPagesService);
 
@@ -70,7 +77,7 @@ describe('LastPagesService', () => {
 
   describe('Navigation Tracking', () => {
     beforeEach(() => {
-      localStorageMock.getItem.and.returnValue(null);
+      localStorageMock.getItem.mockReturnValue(null);
       service = TestBed.inject(LastPagesService);
     });
 
@@ -116,7 +123,7 @@ describe('LastPagesService', () => {
 
   describe('Storage Operations', () => {
     beforeEach(() => {
-      localStorageMock.getItem.and.returnValue(null);
+      localStorageMock.getItem.mockReturnValue(null);
       service = TestBed.inject(LastPagesService);
     });
 
@@ -127,13 +134,15 @@ describe('LastPagesService', () => {
 
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         LocalStorageKey.LAST_PAGES,
-        JSON.stringify(['/test'])
+        JSON.stringify(['/test']),
       );
     });
 
     it('should handle save errors', () => {
-      localStorageMock.setItem.and.throwError('Storage full');
-      spyOn(console, 'warn');
+      localStorageMock.setItem.mockImplementation(() => {
+        throw new Error('Storage full');
+      });
+      vi.spyOn(console, 'warn').mockReturnValue(undefined);
 
       routerEvents.next(new NavigationEnd(1, '/test', '/test'));
 
@@ -155,7 +164,7 @@ describe('LastPagesService', () => {
 
   describe('Signal Behavior', () => {
     beforeEach(() => {
-      localStorageMock.getItem.and.returnValue(null);
+      localStorageMock.getItem.mockReturnValue(null);
       service = TestBed.inject(LastPagesService);
     });
 

@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectsComponent } from './projects.component';
 import { TabsService } from '@services/tabs.service';
@@ -7,16 +8,16 @@ import { ProjectCategory } from '@enums/project-category.enum';
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
   let fixture: ComponentFixture<ProjectsComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
+  let mockTabsService: MockedObject<TabsService>;
 
   beforeEach(async () => {
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
       imports: [ProjectsComponent],
-      providers: [
-        { provide: TabsService, useValue: mockTabsService }
-      ]
+      providers: [{ provide: TabsService, useValue: mockTabsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectsComponent);
@@ -34,9 +35,9 @@ describe('ProjectsComponent', () => {
   it('should add tab on init', () => {
     component.ngOnInit();
     expect(mockTabsService.addTab).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        key: TabKey.PROJECTS
-      })
+      expect.objectContaining({
+        key: TabKey.PROJECTS,
+      }),
     );
   });
 
@@ -56,7 +57,7 @@ describe('ProjectsComponent', () => {
     const category = ProjectCategory.APP;
     component.selectedCategory.set(category);
     const filtered = component.filteredProjects();
-    const expected = component.projects.filter(p => p.category === category);
+    const expected = component.projects.filter((p) => p.category === category);
     expect(filtered).toEqual(expected);
   });
 });

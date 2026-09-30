@@ -1,11 +1,10 @@
+import type { Mock } from 'vitest';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClickOutsideDirective } from './click-outside.directive';
 
 @Component({
-  imports: [
-    ClickOutsideDirective
-  ],
+  imports: [ClickOutsideDirective],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div clickOutside (clickOutside)="onClickOutside()" [excludeElements]="excludeElements">
@@ -13,7 +12,7 @@ import { ClickOutsideDirective } from './click-outside.directive';
     </div>
     <div class="outside">Outside Content</div>
     <div class="excluded">Excluded Content</div>
-  `
+  `,
 })
 class TestComponent {
   excludeElements: string[] = ['.excluded'];
@@ -23,16 +22,16 @@ class TestComponent {
 describe('ClickOutsideDirective', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
-  let onClickOutsideSpy: jasmine.Spy;
+  let onClickOutsideSpy: Mock;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: []
+      declarations: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-    onClickOutsideSpy = spyOn(component, 'onClickOutside');
+    onClickOutsideSpy = vi.spyOn(component, 'onClickOutside').mockReturnValue(undefined);
     fixture.detectChanges();
   });
 

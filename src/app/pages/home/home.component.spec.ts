@@ -1,3 +1,4 @@
+import type { Mock, MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { TabsService } from '@services/tabs.service';
@@ -14,22 +15,25 @@ import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testi
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
-  let mockLastPagesService: jasmine.SpyObj<LastPagesService>;
-  let mockLastPages: jasmine.Spy;
+  let mockTabsService: MockedObject<TabsService>;
+  let mockLastPagesService: MockedObject<LastPagesService>;
+  let mockLastPages: Mock;
 
   beforeEach(() => {
     // Mock LastPagesService
-    mockLastPages = jasmine.createSpy('lastPages').and.returnValue(['/contact', '/works']);
-    mockLastPagesService = jasmine.createSpyObj('LastPagesService', ['clearHistory'], {
-      lastPages: mockLastPages
-    });
+    mockLastPages = vi.fn().mockName('lastPages').mockReturnValue(['/contact', '/works']);
+    mockLastPagesService = {
+      clearHistory: vi.fn().mockName('LastPagesService.clearHistory'),
+      lastPages: mockLastPages,
+    } as unknown as MockedObject<LastPagesService>;
 
     // Mock TabsService
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     TestBed.configureTestingModule({
-      imports: [HomeComponent,FontAwesomeTestingModule],
+      imports: [HomeComponent, FontAwesomeTestingModule],
       providers: [
         provideTranslateService(),
         { provide: TabsService, useValue: mockTabsService },
@@ -37,8 +41,8 @@ describe('HomeComponent', () => {
         { provide: FaIconComponent, useValue: {} },
         { provide: TranslatePipe, useValue: {} },
         { provide: RouterLink, useValue: {} },
-        { provide: ActivatedRoute, useValue: {} }
-      ]
+        { provide: ActivatedRoute, useValue: {} },
+      ],
     });
 
     fixture = TestBed.createComponent(HomeComponent);
@@ -87,7 +91,7 @@ describe('HomeComponent', () => {
     it('should add tab with correct Tab instance', () => {
       component.ngOnInit();
 
-      const calledTab = mockTabsService.addTab.calls.first().args[0];
+      const calledTab = vi.mocked(mockTabsService.addTab).mock.calls[0][0];
       expect(calledTab).toBeInstanceOf(Tab);
       expect(calledTab.key).toBe(TabKey.HOME);
     });

@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WorksComponent } from './works.component';
 import { TabsService } from '@services/tabs.service';
@@ -7,16 +8,16 @@ import { Experiences } from './experiences.const';
 describe('WorksComponent', () => {
   let component: WorksComponent;
   let fixture: ComponentFixture<WorksComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
+  let mockTabsService: MockedObject<TabsService>;
 
   beforeEach(async () => {
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
       imports: [WorksComponent],
-      providers: [
-        { provide: TabsService, useValue: mockTabsService }
-      ]
+      providers: [{ provide: TabsService, useValue: mockTabsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WorksComponent);
@@ -36,9 +37,9 @@ describe('WorksComponent', () => {
     component.ngOnInit();
 
     expect(mockTabsService.addTab).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        key: TabKey.WORKS
-      })
+      expect.objectContaining({
+        key: TabKey.WORKS,
+      }),
     );
   });
 

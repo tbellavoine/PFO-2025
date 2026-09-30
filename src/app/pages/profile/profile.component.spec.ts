@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
@@ -9,15 +10,15 @@ import { Path } from '@enums/path.enum';
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-  let tabsService: jasmine.SpyObj<TabsService>;
+  let tabsService: MockedObject<TabsService>;
   beforeEach(async () => {
-    tabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    tabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
       imports: [ProfileComponent, FontAwesomeTestingModule],
-      providers: [
-        { provide: TabsService, useValue: tabsService }
-      ]
+      providers: [{ provide: TabsService, useValue: tabsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
@@ -44,9 +45,9 @@ describe('ProfileComponent', () => {
     const mockLink = {
       href: '',
       target: '',
-      click: jasmine.createSpy('click')
+      click: vi.fn().mockName('click'),
     } as unknown as HTMLAnchorElement;
-    spyOn(document, 'createElement').and.returnValue(mockLink);
+    vi.spyOn(document, 'createElement').mockReturnValue(mockLink);
 
     component.openCV();
 

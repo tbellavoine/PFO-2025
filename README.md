@@ -18,11 +18,12 @@ Ce projet est un portfolio personnel présentant diverses applications et compos
 
 ## Technologies Utilisées
 
-- **Angular**: Framework frontend (version 20.1.6)
+- **Angular**: Framework frontend (version 22)
 - **TypeScript**: Sur-ensemble de JavaScript
 - **Tailwind CSS**: Framework CSS utilitaire
 - **Font Awesome**: Bibliothèque d'icônes
 - **ngx-translate**: Bibliothèque d'internationalisation
+- **Vitest**: Framework de tests unitaires
 
 ## Development server
 
@@ -60,10 +61,16 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests with the [Vitest](https://vitest.dev) test runner, use the following command:
 
 ```bash
 ng test
+```
+
+To generate a coverage report, run:
+
+```bash
+npm run test-coverage
 ```
 
 ## Running end-to-end tests
