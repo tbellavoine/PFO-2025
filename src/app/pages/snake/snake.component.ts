@@ -32,7 +32,7 @@ export class SnakeComponent implements OnDestroy {
 
   // Propriétés du jeu
   private gameSpeed: number = this.initialSpeed;
-  private gameInterval: number | null = 0;
+  private gameInterval: ReturnType<typeof setInterval> | null = null;
 
   // Signaux computés
   gameGrid = computed(() => Array(this.gridSize * this.gridSize).fill(0));

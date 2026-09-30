@@ -1,10 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, PLATFORM_ID, signal } from '@angular/core';
 import { SidenavBottom } from './sidenav.const';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ExplorerComponent } from '@components/explorer/explorer.component';
 import { MenuKey } from '@enums/menu-key.enum';
-import { NgClass } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -29,11 +29,12 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
 })
 export class SidenavComponent {
   private readonly router = inject(Router);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   protected readonly SidenavBottom = SidenavBottom;
   protected isExplorerOpen = signal<boolean>(false);
   protected readonly MenuKey = MenuKey;
   private mobileSizeLimit = 768;
-  public isMobile = signal(window.innerWidth < this.mobileSizeLimit);
+  public isMobile = signal(this.isBrowser && window.innerWidth < this.mobileSizeLimit);
 
   constructor() {
     this.checkMobile();
@@ -76,6 +77,7 @@ export class SidenavComponent {
    * @private
    */
   protected checkMobile(): void {
+    if (!this.isBrowser) return;
     const mobile = window.innerWidth < this.mobileSizeLimit;
     this.isMobile.set(mobile);
     if (mobile) {

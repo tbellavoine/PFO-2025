@@ -1,4 +1,5 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +11,7 @@ import { LocalStorageKey } from '@enums/localstorage-key.enum';
 export class LastPagesService {
   private readonly router = inject(Router);
   private readonly translateService = inject(TranslateService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private lastPagesSignal = signal<string[]>([]);
   public readonly lastPages = computed(() => this.lastPagesSignal());
 
@@ -28,7 +30,9 @@ export class LastPagesService {
    */
   public clearHistory(): void {
     this.lastPagesSignal.set([]);
-    localStorage.removeItem(LocalStorageKey.LAST_PAGES);
+    if (this.isBrowser) {
+      localStorage.removeItem(LocalStorageKey.LAST_PAGES);
+    }
   }
 
   /**
@@ -52,6 +56,7 @@ export class LastPagesService {
    * @private
    */
   private saveToStorage(): void {
+    if (!this.isBrowser) return;
     try {
       localStorage.setItem(LocalStorageKey.LAST_PAGES, JSON.stringify(this.lastPagesSignal()));
     } catch (error) {
@@ -64,6 +69,7 @@ export class LastPagesService {
    * @private
    */
   private loadFromStorage(): void {
+    if (!this.isBrowser) return;
     try {
       const saved = localStorage.getItem(LocalStorageKey.LAST_PAGES);
       if (saved) {

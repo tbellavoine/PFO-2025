@@ -1,5 +1,5 @@
-import { Component, computed, effect, HostListener, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, computed, effect, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 
 interface Cell {
   value: number;
@@ -22,6 +22,7 @@ interface GameState {
   templateUrl: './twenty-forty-eight.component.html',
 })
 export class TwentyFortyEightComponent {
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   public board = signal<Cell[][]>(this.createEmptyBoard());
   public score = signal(0);
   public bestScore = signal(0);
@@ -564,6 +565,7 @@ export class TwentyFortyEightComponent {
    * @private
    */
   private loadBestScore() {
+    if (!this.isBrowser) return;
     const saved = localStorage.getItem('2048BestScore');
     this.bestScore.set(saved ? parseInt(saved) : 0);
   }
@@ -573,6 +575,7 @@ export class TwentyFortyEightComponent {
    * @private
    */
   private saveBestScore() {
+    if (!this.isBrowser) return;
     localStorage.setItem('2048BestScore', this.bestScore().toString());
   }
 }

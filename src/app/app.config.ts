@@ -1,4 +1,5 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, PLATFORM_ID, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -26,8 +27,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faCss3, faGithub, faHtml5, faJs, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { TranslateService, provideTranslateService } from '@ngx-translate/core';
-import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     importProvidersFrom(FontAwesomeModule),
-    provideHttpClient(withXhr()),
+    provideHttpClient(withFetch()),
     provideTranslateService({
       loader: provideTranslateHttpLoader({ prefix: './assets/translates/', suffix: '.json' }),
       fallbackLang: 'fr'
@@ -74,7 +76,10 @@ export const appConfig: ApplicationConfig = {
         faWrench,
         faXmark,
       );
-      inject(TranslateService).use(localStorage?.getItem('selectedLanguage') || 'fr');
-    }),
+      const savedLanguage = isPlatformBrowser(inject(PLATFORM_ID))
+        ? localStorage.getItem('selectedLanguage')
+        : null;
+      inject(TranslateService).use(savedLanguage || 'fr');
+    }), provideClientHydration(),
   ]
 };
