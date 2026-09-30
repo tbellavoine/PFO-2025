@@ -1,4 +1,6 @@
 export enum Path {
+  ADMIN = 'admin',
+  ADMIN_LOGIN = 'login',
   CONTACT = 'contact',
   EXPLORER = 'explorer',
   HOME = 'home',

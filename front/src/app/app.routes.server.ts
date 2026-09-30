@@ -4,6 +4,10 @@ import { ImageAssetsMap } from '@components/explorer/assets-images.const';
 
 export const serverRoutes: ServerRoute[] = [
   {
+    path: `${Path.ADMIN}/**`,
+    renderMode: RenderMode.Client,
+  },
+  {
     path: `${Path.PREVIEW}/:imageName`,
     renderMode: RenderMode.Prerender,
     getPrerenderParams: async () =>

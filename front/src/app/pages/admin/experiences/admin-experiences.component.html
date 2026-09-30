@@ -1,0 +1,125 @@
+<div class="flex flex-col gap-6 max-w-3xl">
+  <div class="flex items-center justify-between">
+    <h2 class="text-2xl text-light font-semibold">Expériences</h2>
+    @if (editingId() === null) {
+      <button type="button" (click)="startCreate()" class="rounded bg-accent px-4 py-2 text-light">+ Nouvelle expérience</button>
+    }
+  </div>
+
+  @if (editingId() === null) {
+    <table class="w-full text-left text-sm text-light">
+      <thead>
+        <tr class="text-light/40">
+          <th class="py-1">Rôle</th>
+          <th class="py-1">Entreprise</th>
+          <th class="py-1">Période</th>
+          <th class="py-1">Publié</th>
+          <th class="py-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (experience of experiencesResource.value() ?? []; track experience.id) {
+          <tr class="border-t border-light/10">
+            <td class="py-1">{{ experience.role }}</td>
+            <td class="py-1">{{ experience.company }}</td>
+            <td class="py-1">{{ experience.periodLabel }}</td>
+            <td class="py-1">{{ experience.published ? 'Oui' : 'Non' }}</td>
+            <td class="flex gap-2 py-1">
+              <button type="button" (click)="startEdit(experience.id)" class="text-accent hover:underline">Éditer</button>
+              <button type="button" (click)="deleteExperience(experience.id)" class="text-light/40 hover:text-red-500">Supprimer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (editingId() !== null) {
+    <form (submit)="onSubmit($event)" class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 gap-4">
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Slug
+          <input type="text" [formField]="experienceForm.slug" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Entreprise
+          <input type="text" [formField]="experienceForm.company" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Rôle
+          <input type="text" [formField]="experienceForm.role" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Période
+          <input type="text" [formField]="experienceForm.periodLabel" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Statut
+          <input type="text" [formField]="experienceForm.status" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+        <label class="flex flex-col gap-1 text-sm text-light/60">
+          Ordre
+          <input type="number" [formField]="experienceForm.order" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+        </label>
+      </div>
+
+      <label class="flex items-center gap-2 text-sm text-light/60">
+        <input type="checkbox" [formField]="experienceForm.published" />
+        Publié
+      </label>
+
+      <div class="flex flex-col gap-2">
+        <p class="text-sm text-light/60">Réalisations</p>
+        @for (achievement of achievements(); track $index) {
+          <div class="flex items-center gap-2">
+            <span class="flex-1 text-sm text-light">{{ achievement }}</span>
+            <button type="button" (click)="removeAchievement($index)" class="text-light/40 hover:text-red-500">✕</button>
+          </div>
+        }
+        <div class="flex gap-2">
+          <input type="text" [value]="newAchievement()" (input)="newAchievement.set($any($event.target).value)"
+                 class="flex-1 rounded border border-light/20 bg-transparent p-2 text-light" />
+          <button type="button" (click)="addAchievement()" class="rounded bg-accent px-3 py-1 text-light">Ajouter</button>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <p class="text-sm text-light/60">Compétences</p>
+        @for (assignment of skillAssignments(); track assignment.skillId + assignment.categoryId) {
+          <div class="flex items-center gap-2 text-sm text-light">
+            <span class="flex-1">{{ skillName(assignment.skillId) }} — {{ categoryLabel(assignment.categoryId) }}</span>
+            <button type="button" (click)="removeSkillAssignment(assignment.skillId, assignment.categoryId)" class="text-light/40 hover:text-red-500">✕</button>
+          </div>
+        }
+        <div class="flex gap-2">
+          <select [value]="newSkillId()" (change)="newSkillId.set($any($event.target).value)"
+                  class="flex-1 rounded border border-light/20 bg-dark p-2 text-light">
+            <option value="" disabled>Compétence...</option>
+            @for (skill of skillsResource.value() ?? []; track skill.id) {
+              <option [value]="skill.id">{{ skill.name }}</option>
+            }
+          </select>
+          <select [value]="newCategoryId()" (change)="newCategoryId.set($any($event.target).value)"
+                  class="flex-1 rounded border border-light/20 bg-dark p-2 text-light">
+            <option value="" disabled>Catégorie...</option>
+            @for (category of categoriesResource.value() ?? []; track category.id) {
+              <option [value]="category.id">{{ category.label }}</option>
+            }
+          </select>
+          <button type="button" (click)="addSkillAssignment()" class="rounded bg-accent px-3 py-1 text-light">Ajouter</button>
+        </div>
+      </div>
+
+      @if (statusMessage(); as message) {
+        <p class="text-sm text-red-500">{{ message }}</p>
+      }
+
+      <div class="flex gap-2">
+        <button type="submit" [disabled]="saving()" class="rounded bg-accent px-4 py-2 text-light disabled:opacity-50">
+          {{ saving() ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+        <button type="button" (click)="cancelEdit()" class="rounded border border-light/20 px-4 py-2 text-light">Annuler</button>
+      </div>
+    </form>
+  }
+</div>

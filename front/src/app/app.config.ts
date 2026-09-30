@@ -27,9 +27,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faCss3, faGithub, faHtml5, faJs, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { TranslateService, provideTranslateService } from '@ngx-translate/core';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideClientHydration } from '@angular/platform-browser';
+import { apiCredentialsInterceptor } from './interceptors/api-credentials.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,7 +38,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     importProvidersFrom(FontAwesomeModule),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([apiCredentialsInterceptor])),
     provideTranslateService({
       loader: provideTranslateHttpLoader({ prefix: './assets/translates/', suffix: '.json' }),
       fallbackLang: 'fr'

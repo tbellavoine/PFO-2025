@@ -1,0 +1,19 @@
+<div class="flex min-h-screen bg-dark text-light">
+  <nav class="flex w-56 flex-col gap-1 border-r border-light/20 p-4">
+    <p class="mb-4 text-xs text-light/40 uppercase">Administration</p>
+    <a [routerLink]="[Path.PROFILE]" routerLinkActive="bg-accent/20 text-accent" class="rounded px-3 py-2 text-sm hover:bg-light/5">Profil</a>
+    <a [routerLink]="[Path.CONTACT]" routerLinkActive="bg-accent/20 text-accent" class="rounded px-3 py-2 text-sm hover:bg-light/5">Contact</a>
+    <a [routerLink]="[Path.WORKS]" routerLinkActive="bg-accent/20 text-accent" class="rounded px-3 py-2 text-sm hover:bg-light/5">Expériences</a>
+    <a [routerLink]="[Path.SKILLS]" routerLinkActive="bg-accent/20 text-accent" class="rounded px-3 py-2 text-sm hover:bg-light/5">Compétences</a>
+    <a [routerLink]="[Path.PROJECTS]" routerLinkActive="bg-accent/20 text-accent" class="rounded px-3 py-2 text-sm hover:bg-light/5">Projets</a>
+    <div class="mt-auto flex flex-col gap-2 border-t border-light/20 pt-4 text-xs text-light/60">
+      @if (admin(); as session) {
+        <span>{{ session.email }}</span>
+      }
+      <button (click)="logout()" class="w-fit text-left text-accent hover:underline">Se déconnecter</button>
+    </div>
+  </nav>
+  <main class="flex-1 overflow-y-auto p-8">
+    <router-outlet/>
+  </main>
+</div>

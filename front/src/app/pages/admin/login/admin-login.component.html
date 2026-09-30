@@ -1,0 +1,23 @@
+<div class="flex min-h-screen items-center justify-center bg-dark p-6">
+  <form (submit)="onSubmit($event)" class="flex w-full max-w-sm flex-col gap-4 rounded border border-light/20 p-8">
+    <h1 class="text-xl text-light font-semibold text-center">Administration</h1>
+
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Email
+      <input type="email" [formField]="loginForm.email" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Mot de passe
+      <input type="password" [formField]="loginForm.password" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+
+    @if (errorMessage(); as message) {
+      <p class="text-sm text-red-500">{{ message }}</p>
+    }
+
+    <button type="submit" [disabled]="submitting()" class="mt-2 rounded bg-accent p-2 text-light disabled:opacity-50">
+      {{ submitting() ? 'Connexion...' : 'Se connecter' }}
+    </button>
+  </form>
+</div>

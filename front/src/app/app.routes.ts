@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { Path } from '@enums/path.enum';
+import { authGuard } from './guards/auth.guard';
 
 const TITLE_SUFFIX = 'Thomas BELLAVOINE';
 
@@ -59,6 +60,49 @@ export const routes: Routes = [
     path: Path.TWENTY_FORTY_EIGHT,
     loadComponent: () => import('./pages/twenty-forty-eight/twenty-forty-eight.component').then((m) => m.TwentyFortyEightComponent),
     title: `2048 · ${TITLE_SUFFIX}`,
+  },
+  {
+    path: Path.ADMIN,
+    children: [
+      {
+        path: Path.ADMIN_LOGIN,
+        loadComponent: () => import('./pages/admin/login/admin-login.component').then((m) => m.AdminLoginComponent),
+        title: `Administration · ${TITLE_SUFFIX}`,
+      },
+      {
+        path: '',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/admin/layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
+        children: [
+          { path: '', redirectTo: Path.PROFILE, pathMatch: 'full' },
+          {
+            path: Path.PROFILE,
+            loadComponent: () => import('./pages/admin/profile/admin-profile.component').then((m) => m.AdminProfileComponent),
+            title: `Admin · Profil · ${TITLE_SUFFIX}`,
+          },
+          {
+            path: Path.CONTACT,
+            loadComponent: () => import('./pages/admin/contact/admin-contact.component').then((m) => m.AdminContactComponent),
+            title: `Admin · Contact · ${TITLE_SUFFIX}`,
+          },
+          {
+            path: Path.WORKS,
+            loadComponent: () => import('./pages/admin/experiences/admin-experiences.component').then((m) => m.AdminExperiencesComponent),
+            title: `Admin · Expériences · ${TITLE_SUFFIX}`,
+          },
+          {
+            path: Path.SKILLS,
+            loadComponent: () => import('./pages/admin/skills/admin-skills.component').then((m) => m.AdminSkillsComponent),
+            title: `Admin · Compétences · ${TITLE_SUFFIX}`,
+          },
+          {
+            path: Path.PROJECTS,
+            loadComponent: () => import('./pages/admin/projects/admin-projects.component').then((m) => m.AdminProjectsComponent),
+            title: `Admin · Projets · ${TITLE_SUFFIX}`,
+          },
+        ],
+      },
+    ],
   },
   {
     path: '**',
