@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsComponent } from './skills.component';
 import { TabsService } from '@services/tabs.service';
@@ -6,16 +7,16 @@ import { TabKey } from '@enums/tab-key.enum';
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
+  let mockTabsService: MockedObject<TabsService>;
 
   beforeEach(async () => {
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
       imports: [SkillsComponent],
-      providers: [
-        { provide: TabsService, useValue: mockTabsService }
-      ]
+      providers: [{ provide: TabsService, useValue: mockTabsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SkillsComponent);
@@ -41,9 +42,9 @@ describe('SkillsComponent', () => {
     component.ngOnInit();
 
     expect(mockTabsService.addTab).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        key: TabKey.SKILLS
-      })
+      expect.objectContaining({
+        key: TabKey.SKILLS,
+      }),
     );
   });
 
@@ -82,7 +83,7 @@ describe('SkillsComponent', () => {
       'wordpress',
       'twig',
       'salesForce-commerce-cloud',
-      'office'
+      'office',
     ]);
   });
 });

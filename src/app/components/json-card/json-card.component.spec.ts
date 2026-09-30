@@ -9,16 +9,16 @@ describe('JsonCardComponent', () => {
   let router: Router;
 
   const mockJsonObject = {
-    name: "Test Name",
+    name: 'Test Name',
     age: 25,
     isActive: true,
-    website: "https://example.com",
-    email: "mailto:test@example.com",
+    website: 'https://example.com',
+    email: 'mailto:test@example.com',
     nullValue: null,
     links: [
-      { label: "External", url: "https://external.com" },
-      { label: "Internal", url: "internal-path" }
-    ]
+      { label: 'External', url: 'https://external.com' },
+      { label: 'Internal', url: 'internal-path' },
+    ],
   };
 
   beforeEach(async () => {
@@ -27,9 +27,9 @@ describe('JsonCardComponent', () => {
       providers: [
         {
           provide: Router,
-          useValue: { navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)) }
-        }
-      ]
+          useValue: { navigate: vi.fn().mockName('navigate').mockResolvedValue(true) },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -40,14 +40,14 @@ describe('JsonCardComponent', () => {
   });
 
   it('should create', () => {
-    Object.assign(component.jsonObject, { value: mockJsonObject });
+    fixture.componentRef.setInput('jsonObject', mockJsonObject);
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   describe('with valid input', () => {
     beforeEach(() => {
-      Object.assign(component.jsonObject, { value: mockJsonObject });
+      fixture.componentRef.setInput('jsonObject', mockJsonObject);
       fixture.detectChanges();
     });
 
@@ -59,12 +59,16 @@ describe('JsonCardComponent', () => {
 
       it('should highlight http links', () => {
         const result = component.highlightJsonLine('"url": "https://example.com"');
-        expect(result).toContain('<a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-accent cursor-pointer">');
+        expect(result).toContain(
+          '<a href="https://example.com" target="_blank" rel="noopener noreferrer" class="text-accent cursor-pointer">',
+        );
       });
 
       it('should highlight mailto links', () => {
         const result = component.highlightJsonLine('"email": "mailto:test@example.com"');
-        expect(result).toContain('<a href="mailto:test@example.com" target="_blank" class="text-accent cursor-pointer">');
+        expect(result).toContain(
+          '<a href="mailto:test@example.com" target="_blank" class="text-accent cursor-pointer">',
+        );
       });
 
       it('should highlight numbers', () => {
@@ -90,14 +94,29 @@ describe('JsonCardComponent', () => {
 
     describe('openUrl', () => {
       it('should open external URLs in new tab', () => {
-        spyOn(window, 'open');
+        vi.spyOn(window, 'open').mockReturnValue(null);
         component.openUrl('https://example.com');
-        expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank');
+        expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
       });
 
       it('should navigate internally for non-http URLs', () => {
         component.openUrl('internal-path');
         expect(router.navigate).toHaveBeenCalledWith([Path.PREVIEW, 'internal-path']);
+      });
+    });
+
+    describe('Keyboard accessibility', () => {
+      it('should open a link from the keyboard', () => {
+        vi.spyOn(component, 'openUrl');
+        const linkTrigger = fixture.debugElement.query(
+          (debugEl) => debugEl.attributes['role'] === 'button',
+        );
+
+        expect(linkTrigger.nativeElement.tabIndex).toBe(0);
+
+        linkTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
+        expect(component.openUrl).toHaveBeenCalledWith(mockJsonObject.links[0].url);
       });
     });
   });

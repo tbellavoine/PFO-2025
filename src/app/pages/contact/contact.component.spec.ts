@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContactComponent } from './contact.component';
 import { TabsService } from '@services/tabs.service';
@@ -9,17 +10,19 @@ import { Contact } from './constact.const';
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let fixture: ComponentFixture<ContactComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
+  let mockTabsService: MockedObject<TabsService>;
 
   beforeEach(() => {
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     TestBed.configureTestingModule({
       imports: [ContactComponent],
       providers: [
         { provide: TabsService, useValue: mockTabsService },
-        { provide: JsonCardComponent, useValue: {} }
-      ]
+        { provide: JsonCardComponent, useValue: {} },
+      ],
     });
 
     fixture = TestBed.createComponent(ContactComponent);
@@ -63,7 +66,7 @@ describe('ContactComponent', () => {
     it('should add tab with correct Tab instance', () => {
       component.ngOnInit();
 
-      const calledTab = mockTabsService.addTab.calls.first().args[0];
+      const calledTab = vi.mocked(mockTabsService.addTab).mock.calls[0][0];
       expect(calledTab).toBeInstanceOf(Tab);
       expect(calledTab.key).toBe(TabKey.CONTACT);
     });

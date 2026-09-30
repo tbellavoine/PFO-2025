@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -86,6 +107,10 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Components</li>
   <li class="breadcrumb-item"
@@ -93,10 +118,19 @@
   SidenavComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/layout/sidenav/sidenav.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a href="#info" class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
         <li class="nav-item">
             <a href="#source" class="nav-link"
@@ -113,14 +147,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/layout/sidenav/sidenav.component.ts</code>
-</p>
-
-
+    <div class="tab-pane fade active in" id="info">
 
 
 
@@ -130,6 +157,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -150,18 +181,29 @@
                 <td class="col-md-9"><code>sidenav</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
 
             <tr>
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
-                            <code>FaIconComponent</code>
-                            <code>RouterLink</code>
-                            <code>RouterLinkActive</code>
-                                <code><a href="../components/ExplorerComponent.html" target="_self" >ExplorerComponent</a></code>
-                            <code>NgClass</code>
-                                <code><a href="../directives/ClickOutsideDirective.html" target="_self" >ClickOutsideDirective</a></code>
+                        <div>    <code>FaIconComponent</code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+</div>
+                        <div>        <code><a href="../components/ExplorerComponent.html" target="_self" >ExplorerComponent</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+</div>
+                        <div>        <code><a href="../directives/ClickOutsideDirective.html" target="_self" >ClickOutsideDirective</a></code>
+</div>
                 </td>
             </tr>
+
 
 
 
@@ -182,41 +224,85 @@
     </table>
 </section>
 
-    <section data-compodoc="block-index">
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../components/AppComponent.html" target="_self" >AppComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                        <code>FaIconComponent</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/ExplorerComponent.html" target="_self" >ExplorerComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../directives/ClickOutsideDirective.html" target="_self" >ClickOutsideDirective</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                 <a href="#isExplorerOpen" >isExplorerOpen</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#isMobile" >isMobile</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#MenuKey" >MenuKey</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                 <a href="#mobileSizeLimit" >mobileSizeLimit</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#router" >router</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#SidenavBottom" >SidenavBottom</a>
@@ -224,41 +310,46 @@
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Protected</span>
                                 <a href="#checkMobile" >checkMobile</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Protected</span>
                                 <a href="#closePanel" >closePanel</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Protected</span>
                                 <a href="#toogleExplorer" >toogleExplorer</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
     <section data-compodoc="block-constructor">
-    <h3 id="constructor">function Object() { [native code] }</h3>
+    <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -268,7 +359,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:32</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:34</a></div>
                             </td>
                         </tr>
 
@@ -291,7 +382,7 @@
                 <td class="col-md-4">
                     <a name="checkMobile"></a>
                     <span class="name">
-                            <span class="modifier">Private</span>
+                            <span class="modifier">Protected</span>
                         <span ><b>checkMobile</b></span>
                         <a href="#checkMobile"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -307,8 +398,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="74"
-                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:74</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -351,8 +442,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -385,15 +476,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>toogleExplorer(menuItemKey: <a href="../undefineds/MenuKey.html" target="_self">MenuKey</a>)</code>
+                    <code>toogleExplorer(menuItemKey: <a href="../miscellaneous/enumerations.html#MenuKey" target="_self">MenuKey</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:61</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -442,6 +533,7 @@
         </tbody>
     </table>
 </section>
+
     <section data-compodoc="block-properties">
     
     <h3 id="inputs">
@@ -461,12 +553,18 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal&lt;boolean&gt;(false)</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -487,12 +585,18 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal(window.innerWidth &lt; this.mobileSizeLimit)</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:32</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:34</a></div>
                         </td>
                     </tr>
 
@@ -514,12 +618,18 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>MenuKey</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -551,7 +661,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -573,12 +683,18 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>inject(Router)</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -600,12 +716,18 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>SidenavBottom</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/layout/sidenav/sidenav.component.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -626,6 +748,7 @@ import { ExplorerComponent } from &#x27;@components/explorer/explorer.component&
 import { MenuKey } from &#x27;@enums/menu-key.enum&#x27;;
 import { NgClass } from &#x27;@angular/common&#x27;;
 import { filter } from &#x27;rxjs&#x27;;
+import { takeUntilDestroyed } from &#x27;@angular/core/rxjs-interop&#x27;;
 import { ClickOutsideDirective } from &#x27;@directive/click-outside.directive&#x27;;
 
 @Component({
@@ -641,6 +764,7 @@ import { ClickOutsideDirective } from &#x27;@directive/click-outside.directive&#
   templateUrl: &#x27;./sidenav.component.html&#x27;,
   host: {
     class: &#x27;h-full&#x27;,
+    &#x27;(window:resize)&#x27;: &#x27;checkMobile()&#x27;,
   },
 })
 export class SidenavComponent {
@@ -653,9 +777,9 @@ export class SidenavComponent {
 
   constructor() {
     this.checkMobile();
-    window.addEventListener(&#x27;resize&#x27;, () &#x3D;&gt; this.checkMobile());
     this.router.events.pipe(
-      filter(event &#x3D;&gt; event instanceof NavigationEnd)
+      filter(event &#x3D;&gt; event instanceof NavigationEnd),
+      takeUntilDestroyed()
     ).subscribe(() &#x3D;&gt; {
       if (this.isMobile()) {
         this.isExplorerOpen.set(false);
@@ -691,8 +815,8 @@ export class SidenavComponent {
    * Check if the screen is mobile size and update the signal
    * @private
    */
-  private checkMobile(): void {
-    const mobile &#x3D; window.innerWidth &lt; 768;
+  protected checkMobile(): void {
+    const mobile &#x3D; window.innerWidth &lt; this.mobileSizeLimit;
     this.isMobile.set(mobile);
     if (mobile) {
       this.isExplorerOpen.set(false);
@@ -762,7 +886,7 @@ export class SidenavComponent {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
@@ -821,6 +945,24 @@ export class SidenavComponent {
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -836,7 +978,6 @@ export class SidenavComponent {
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

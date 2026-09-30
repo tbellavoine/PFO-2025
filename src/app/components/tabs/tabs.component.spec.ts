@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, ParamMap, provideRouter, Router } from '@angular/router';
 import { TabsComponent } from './tabs.component';
@@ -6,50 +7,47 @@ import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { signal } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('TabsComponent', () => {
   let component: TabsComponent;
   let fixture: ComponentFixture<TabsComponent>;
-  let router: jasmine.SpyObj<Router>;
-  let tabsService: jasmine.SpyObj<TabsService>;
+  let router: MockedObject<Router>;
+  let tabsService: MockedObject<TabsService>;
 
   const mockTabs: Tab[] = [
     { key: TabKey.HOME, route: ['/'], label: 'Home' },
-    { key: TabKey.PROJECTS, route: ['/settings'], label: 'Settings' }
+    { key: TabKey.PROJECTS, route: ['/settings'], label: 'Settings' },
   ] as Tab[];
   const paramMapSubject = new BehaviorSubject<ParamMap>({
     get: (key: string) => 'test-image',
     getAll: () => [],
     has: () => true,
-    keys: [] as string[]
+    keys: [] as string[],
   });
   const mockActivatedRoute = {
     paramMap: paramMapSubject.asObservable(),
     snapshot: {
-      params: { imageName: 'test-image' }
-    }
+      params: { imageName: 'test-image' },
+    },
   };
   beforeEach(async () => {
-    router = jasmine.createSpyObj('Router', ['navigate']);
-    tabsService = jasmine.createSpyObj('TabsService', [], {
-      tabs: signal(mockTabs)
-    });
+    router = {
+      navigate: vi.fn().mockName('Router.navigate'),
+    } as unknown as MockedObject<Router>;
+    tabsService = {
+      tabs: signal(mockTabs),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
-      imports: [TabsComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [TabsComponent, FontAwesomeTestingModule],
       providers: [
-        provideRouter([]),
+        provideTranslateService(),
+        provideRouter([{ path: '**', component: TabsComponent }]),
         { provide: TabsService, useValue: tabsService },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }      ]
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TabsComponent);
@@ -67,8 +65,11 @@ describe('TabsComponent', () => {
 
   describe('removeTab', () => {
     it('should prevent event propagation', () => {
-      const event = jasmine.createSpyObj('Event', ['preventDefault', 'stopPropagation']);
-      component.removeTab(mockTabs[1], event);
+      const event = {
+        preventDefault: vi.fn().mockName('Event.preventDefault'),
+        stopPropagation: vi.fn().mockName('Event.stopPropagation'),
+      };
+      component.removeTab(mockTabs[1], event as unknown as Event);
       expect(event.preventDefault).toHaveBeenCalled();
       expect(event.stopPropagation).toHaveBeenCalled();
     });
@@ -76,6 +77,22 @@ describe('TabsComponent', () => {
     it('should remove a tab', () => {
       component.removeTab(mockTabs[1]);
       expect(tabsService.tabs()).toEqual([mockTabs[0]]);
+    });
+  });
+
+  describe('Keyboard accessibility', () => {
+    it('should expose the close icon as a keyboard-operable, labelled control', () => {
+      const closeIcons = fixture.debugElement.queryAll(
+        (debugEl) => debugEl.attributes['role'] === 'button',
+      );
+      expect(closeIcons.length).toBe(mockTabs.length);
+
+      const firstClose = closeIcons[0].nativeElement;
+      expect(firstClose.tabIndex).toBe(0);
+      expect(firstClose.getAttribute('aria-label')).toBeTruthy();
+
+      firstClose.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      expect(tabsService.tabs()).toEqual([mockTabs[1]]);
     });
   });
 });

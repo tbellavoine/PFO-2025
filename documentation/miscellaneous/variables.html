@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -82,6 +103,10 @@
                <!-- START CONTENT -->
                <div class="content miscellaneous-variables">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -113,43 +138,46 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#AboutMenu" title="src/app/components/explorer/explorer.map.ts" ><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                            <a href="#AboutMenu" title="src/app/components/explorer/explorer.map.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#AboutMenu" title="src/app/pages/home/about-menu.const.ts" ><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../about-menu.const.ts)</a>
+                            <a href="#AboutMenu" title="src/app/pages/home/about-menu.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>AboutMenu</b>&nbsp;&nbsp;&nbsp;(src/.../about-menu.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#appConfig" title="src/app/app.config.ts" ><b>appConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.ts)</a>
+                            <a href="#appConfig" title="src/app/app.config.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>appConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#Contact" title="src/app/pages/contact/constact.const.ts" ><b>Contact</b>&nbsp;&nbsp;&nbsp;(src/.../constact.const.ts)</a>
+                            <a href="#Contact" title="src/app/pages/contact/constact.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>Contact</b>&nbsp;&nbsp;&nbsp;(src/.../constact.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#ContactMenu" title="src/app/components/explorer/explorer.map.ts" ><b>ContactMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                            <a href="#ContactMenu" title="src/app/components/explorer/explorer.map.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>ContactMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#Experiences" title="src/app/pages/works/experiences.const.ts" ><b>Experiences</b>&nbsp;&nbsp;&nbsp;(src/.../experiences.const.ts)</a>
+                            <a href="#Experiences" title="src/app/pages/works/experiences.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>Experiences</b>&nbsp;&nbsp;&nbsp;(src/.../experiences.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#ExplorerMap" title="src/app/components/explorer/explorer.map.ts" ><b>ExplorerMap</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                            <a href="#ExplorerMap" title="src/app/components/explorer/explorer.map.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>ExplorerMap</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#GamesMenu" title="src/app/components/explorer/explorer.map.ts" ><b>GamesMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</a>
+                            <a href="#GamesMenu" title="src/app/components/explorer/explorer.map.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>GamesMenu</b>&nbsp;&nbsp;&nbsp;(src/.../explorer.map.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#ImageAssetsMap" title="src/app/components/explorer/assets-images.const.ts" ><b>ImageAssetsMap</b>&nbsp;&nbsp;&nbsp;(src/.../assets-images.const.ts)</a>
+                            <a href="#ImageAssetsMap" title="src/app/components/explorer/assets-images.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>ImageAssetsMap</b>&nbsp;&nbsp;&nbsp;(src/.../assets-images.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#Menu" title="src/app/layout/title-bar/menu.const.ts" ><b>Menu</b>&nbsp;&nbsp;&nbsp;(src/.../menu.const.ts)</a>
+                            <a href="#Menu" title="src/app/layout/title-bar/menu.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>Menu</b>&nbsp;&nbsp;&nbsp;(src/.../menu.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#Projects" title="src/app/pages/projects/projets.const.ts" ><b>Projects</b>&nbsp;&nbsp;&nbsp;(src/.../projets.const.ts)</a>
+                            <a href="#Projects" title="src/app/pages/projects/projets.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>Projects</b>&nbsp;&nbsp;&nbsp;(src/.../projets.const.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#SidenavBottom" title="src/app/layout/sidenav/sidenav.const.ts" ><b>SidenavBottom</b>&nbsp;&nbsp;&nbsp;(src/.../sidenav.const.ts)</a>
+                            <a href="#routes" title="src/app/app.routes.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>routes</b>&nbsp;&nbsp;&nbsp;(src/.../app.routes.ts)</span></a>
                         </li>
                         <li>
-                            <a href="#StartMenu" title="src/app/pages/home/start-menu.const.ts" ><b>StartMenu</b>&nbsp;&nbsp;&nbsp;(src/.../start-menu.const.ts)</a>
+                            <a href="#SidenavBottom" title="src/app/layout/sidenav/sidenav.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>SidenavBottom</b>&nbsp;&nbsp;&nbsp;(src/.../sidenav.const.ts)</span></a>
+                        </li>
+                        <li>
+                            <a href="#StartMenu" title="src/app/pages/home/start-menu.const.ts" class="reference-link "><span class="reference-badge reference-badge--variable" aria-hidden="true">V</span><span class="reference-link-label"><b>StartMenu</b>&nbsp;&nbsp;&nbsp;(src/.../start-menu.const.ts)</span></a>
                         </li>
                     </ul>
                 </td>
@@ -295,7 +323,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >readonly MenuItem[]</a></code>
 
                     </td>
                 </tr>
@@ -327,7 +355,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>ApplicationConfig</code>
+                        <i>Type : </i>        <code><a href="https://angular.dev/api/core/ApplicationConfig" target="_blank" >ApplicationConfig</a></code>
 
                     </td>
                 </tr>
@@ -336,16 +364,13 @@
                         <i>Default value : </i><code>{
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     importProvidersFrom(FontAwesomeModule),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideTranslateService({
-      defaultLanguage: &#x27;fr&#x27;
-    }),
-    provideTranslateHttpLoader({
-      prefix: &#x27;./assets/translates/&#x27;,
-      suffix: &#x27;.json&#x27;
+      loader: provideTranslateHttpLoader({ prefix: &#x27;./assets/translates/&#x27;, suffix: &#x27;.json&#x27; }),
+      fallbackLang: &#x27;fr&#x27;
     }),
     provideAppInitializer(() &#x3D;&gt; {
       inject(FaIconLibrary).addIcons(
@@ -560,6 +585,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>new Map&lt;string, string | undefined&gt;([
   [ImageAssets.GRP, &#x27;Gestion relation producteur.jpg&#x27;],
   [ImageAssets.PATIENCE_K_COATCHING, &#x27;Patience K Coaching.jpg&#x27;],
@@ -596,7 +627,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >readonly MenuItem[]</a></code>
 
                     </td>
                 </tr>
@@ -886,6 +917,85 @@
         </tbody>
     </table>
 </section>
+    <h3>src/app/app.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="routes"></a>
+                    <span class="name">
+                        <span ><b>routes</b></span>
+                        <a href="#routes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.dev/api/router/Routes" target="_blank" >Routes</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  {
+    path: &#x27;&#x27;,
+    redirectTo: Path.HOME,
+    pathMatch: &#x27;full&#x27;,
+  },
+  {
+    path: Path.HOME,
+    component: HomeComponent,
+  },
+  {
+    path: Path.PROFILE,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/profile/profile.component&#x27;).then((m) &#x3D;&gt; m.ProfileComponent)&quot;
+  },
+  {
+    path: Path.WORKS,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/works/works.component&#x27;).then((m) &#x3D;&gt; m.WorksComponent)&quot;
+  },
+  {
+    path: Path.SKILLS,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/skills/skills.component&#x27;).then((m) &#x3D;&gt; m.SkillsComponent)&quot;
+  },
+  {
+    path: Path.PROJECTS,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/projects/projects.component&#x27;).then((m) &#x3D;&gt; m.ProjectsComponent)&quot;
+  },
+  {
+    path: Path.CONTACT,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/contact/contact.component&#x27;).then((m) &#x3D;&gt; m.ContactComponent)&quot;
+  },
+  {
+    path: &quot;Path.PREVIEW/:imageName&quot;,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;@components/image-viewer/image-viewer.component&#x27;).then((m) &#x3D;&gt; m.ImageViewerComponent)&quot;
+  },
+  {
+    path: Path.TICTACTOE_V2,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/tic-tac-toe/tic-tac-toe.component&#x27;).then((m) &#x3D;&gt; m.TicTacToeComponent)&quot;
+  },
+  {
+    path: Path.SNAKE,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/snake/snake.component&#x27;).then((m) &#x3D;&gt; m.SnakeComponent)&quot;
+  },
+  {
+    path: Path.TWENTY_FORTY_EIGHT,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/twenty-forty-eight/twenty-forty-eight.component&#x27;).then((m) &#x3D;&gt; m.TwentyFortyEightComponent)&quot;
+  },
+  {
+    path: &#x27;**&#x27;,
+    loadComponent: () &#x3D;&gt; &quot;import(&#x27;./pages/not-found/not-found.component&#x27;).then((m) &#x3D;&gt; m.NotFoundComponent)&quot;
+  }
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
     <h3>src/app/layout/sidenav/sidenav.const.ts</h3>
     <section data-compodoc="block-properties">
     <h3></h3>    <table class="table table-sm table-bordered">
@@ -901,7 +1011,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >readonly MenuItem[]</a></code>
 
                     </td>
                 </tr>
@@ -932,7 +1042,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >MenuItem[]</a></code>
+                        <i>Type : </i>        <code><a href="../classes/MenuItem.html" target="_self" >readonly MenuItem[]</a></code>
 
                     </td>
                 </tr>
@@ -986,6 +1096,24 @@
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -1001,7 +1129,6 @@
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

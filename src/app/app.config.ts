@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -25,24 +25,20 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faCss3, faGithub, faHtml5, faJs, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { TranslateLoader, TranslateService, provideTranslateService } from '@ngx-translate/core';
-import { provideHttpClient, HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateService, provideTranslateService } from '@ngx-translate/core';
+import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     importProvidersFrom(FontAwesomeModule),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideTranslateService({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/translates/', '.json'),
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'fr'
+      loader: provideTranslateHttpLoader({ prefix: './assets/translates/', suffix: '.json' }),
+      fallbackLang: 'fr'
     }),
     provideAppInitializer(() => {
       inject(FaIconLibrary).addIcons(

@@ -66,7 +66,7 @@ export class JsonCardComponent {
    */
   public openUrl(url: string): void {
     if (url.startsWith('http')) {
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
 
       return;
     }

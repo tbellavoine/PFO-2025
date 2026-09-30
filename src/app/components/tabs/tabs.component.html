@@ -9,7 +9,14 @@
       @if (!!tab.label) {
         <span class="text-xs whitespace-nowrap">{{ tab.label | translate }}</span>
       }
-      <fa-icon [icon]="['fas', 'xmark']" (click)="removeTab(tab, $event)" class="text-light/50 ml-4"/>
+      <fa-icon [icon]="['fas', 'xmark']"
+               role="button"
+               tabindex="0"
+               [attr.aria-label]="'ARIA.CLOSE_TAB' | translate"
+               (click)="removeTab(tab, $event)"
+               (keydown.enter)="removeTab(tab, $event)"
+               (keydown.space)="$event.preventDefault(); removeTab(tab, $event)"
+               class="text-light/50 ml-4"/>
     </a>
   }
 </div>

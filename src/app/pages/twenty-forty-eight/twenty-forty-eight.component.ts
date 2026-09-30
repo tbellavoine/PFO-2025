@@ -35,7 +35,7 @@ export class TwentyFortyEightComponent {
   public readonly winTile = 2048;
   private readonly animationDuration = 150;
   private readonly newTileDelay = 100;
-  private previousState: GameState | null = null;
+  private previousState = signal<GameState | null>(null);
   private cellIdCounter = 0;
   public flatBoard = computed(() => this.board().flat());
   public hasEmptyCell = computed(() =>
@@ -120,7 +120,7 @@ export class TwentyFortyEightComponent {
     this.moves.set(0);
     this.gameOver.set(false);
     this.gameWon.set(false);
-    this.previousState = null;
+    this.previousState.set(null);
     this.cellIdCounter = 0;
     this.initializeGame();
   }
@@ -150,12 +150,13 @@ export class TwentyFortyEightComponent {
    * Annuler le dernier mouvement
    */
   public undoMove(): void {
-    if (!this.previousState || this.animating()) return;
+    const previousState = this.previousState();
+    if (!previousState || this.animating()) return;
 
-    this.board.set(this.copyBoard(this.previousState.board));
-    this.score.set(this.previousState.score);
-    this.moves.set(this.previousState.moves);
-    this.previousState = null;
+    this.board.set(this.copyBoard(previousState.board));
+    this.score.set(previousState.score);
+    this.moves.set(previousState.moves);
+    this.previousState.set(null);
   }
 
   /**
@@ -209,7 +210,7 @@ export class TwentyFortyEightComponent {
    * @returns
    */
   public canUndo(): boolean {
-    return this.previousState !== null && !this.animating();
+    return this.previousState() !== null && !this.animating();
   }
 
   /**
@@ -542,12 +543,12 @@ export class TwentyFortyEightComponent {
    * @private
    */
   private saveCurrentState(): void {
-    this.previousState = {
+    this.previousState.set({
       board: this.copyBoard(this.board()),
       score: this.score(),
       moves: this.moves(),
       canUndo: true
-    };
+    });
   }
 
   /**

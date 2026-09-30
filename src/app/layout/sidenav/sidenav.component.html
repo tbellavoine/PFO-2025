@@ -2,6 +2,12 @@
   <div class="flex flex-col justify-between bg-primary h-full border-r border-r-white/5">
     <div
       (click)="toogleExplorer(MenuKey.EXPLORER)"
+      (keydown.enter)="toogleExplorer(MenuKey.EXPLORER)"
+      (keydown.space)="$event.preventDefault(); toogleExplorer(MenuKey.EXPLORER)"
+      role="button"
+      tabindex="0"
+      [attr.aria-label]="'ARIA.TOGGLE_EXPLORER' | translate"
+      [attr.aria-expanded]="isExplorerOpen()"
       [ngClass]="{'before:!bg-accent': isExplorerOpen()}"
       class="relative explorer-toggle flex items-center justify-center transition-all text-light cursor-pointer before:transition-all before:content-[''] before:absolute before:w-1 before:top-0 before:bottom-0 before:left-0 before:bg-transparent hover:bg-primary-darker">
 

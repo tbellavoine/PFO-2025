@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
@@ -9,20 +10,24 @@ import { Path } from '@enums/path.enum';
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-  let tabsService: jasmine.SpyObj<TabsService>;
+  let tabsService: MockedObject<TabsService>;
   beforeEach(async () => {
-    tabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    tabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     await TestBed.configureTestingModule({
       imports: [ProfileComponent, FontAwesomeTestingModule],
-      providers: [
-        { provide: TabsService, useValue: tabsService }
-      ]
+      providers: [{ provide: TabsService, useValue: tabsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('should create', () => {
@@ -44,15 +49,33 @@ describe('ProfileComponent', () => {
     const mockLink = {
       href: '',
       target: '',
-      click: jasmine.createSpy('click')
+      click: vi.fn().mockName('click'),
     } as unknown as HTMLAnchorElement;
-    spyOn(document, 'createElement').and.returnValue(mockLink);
+    vi.spyOn(document, 'createElement').mockReturnValue(mockLink);
 
     component.openCV();
 
     expect(document.createElement).toHaveBeenCalledWith('a');
     expect(mockLink.href).toBe('/assets/pdf/CV-Thomas-BELLAVOINE.pdf');
     expect(mockLink.target).toBe('_blank');
+    expect(mockLink.click).toHaveBeenCalled();
+  });
+
+  it('should open the CV from the keyboard', () => {
+    const mockLink = {
+      href: '',
+      target: '',
+      click: vi.fn().mockName('click'),
+    } as unknown as HTMLAnchorElement;
+    vi.spyOn(document, 'createElement').mockReturnValue(mockLink);
+
+    const cvTrigger = fixture.debugElement.query(
+      (debugEl) => debugEl.attributes['role'] === 'button',
+    );
+    expect(cvTrigger.nativeElement.tabIndex).toBe(0);
+
+    cvTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
     expect(mockLink.click).toHaveBeenCalled();
   });
 });

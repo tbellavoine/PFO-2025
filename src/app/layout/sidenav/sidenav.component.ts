@@ -5,7 +5,9 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/ro
 import { ExplorerComponent } from '@components/explorer/explorer.component';
 import { MenuKey } from '@enums/menu-key.enum';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 
 @Component({
@@ -16,11 +18,13 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
     RouterLinkActive,
     ExplorerComponent,
     NgClass,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    TranslatePipe
   ],
   templateUrl: './sidenav.component.html',
   host: {
     class: 'h-full',
+    '(window:resize)': 'checkMobile()',
   },
 })
 export class SidenavComponent {
@@ -33,9 +37,9 @@ export class SidenavComponent {
 
   constructor() {
     this.checkMobile();
-    window.addEventListener('resize', () => this.checkMobile());
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntilDestroyed()
     ).subscribe(() => {
       if (this.isMobile()) {
         this.isExplorerOpen.set(false);
@@ -71,8 +75,8 @@ export class SidenavComponent {
    * Check if the screen is mobile size and update the signal
    * @private
    */
-  private checkMobile(): void {
-    const mobile = window.innerWidth < 768;
+  protected checkMobile(): void {
+    const mobile = window.innerWidth < this.mobileSizeLimit;
     this.isMobile.set(mobile);
     if (mobile) {
       this.isExplorerOpen.set(false);

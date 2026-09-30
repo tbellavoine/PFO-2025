@@ -21,7 +21,11 @@
     @for (link of jsonLinks(); track link) {
       <div
         class="flex items-center justify-center flex-1 py-2 px-4 cursor-pointer transition-all rounded-sm border-b border-b-transparent border-t border-t-white/5 lg:border-t-none hover:border-b-accent hover:bg-primary text-center"
-        (click)="openUrl(link.url)">
+        role="button"
+        tabindex="0"
+        (click)="openUrl(link.url)"
+        (keydown.enter)="openUrl(link.url)"
+        (keydown.space)="$event.preventDefault(); openUrl(link.url)">
         {{ link.label }}
       </div>
     }

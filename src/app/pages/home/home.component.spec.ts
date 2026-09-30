@@ -1,51 +1,48 @@
+import type { Mock, MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { TabsService } from '@services/tabs.service';
 import { LastPagesService } from '@services/last-pages.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, provideTranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { StartMenu } from './start-menu.const';
 import { AboutMenu } from './about-menu.const';
-import { of } from 'rxjs';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let mockTabsService: jasmine.SpyObj<TabsService>;
-  let mockLastPagesService: jasmine.SpyObj<LastPagesService>;
-  let mockLastPages: jasmine.Spy;
+  let mockTabsService: MockedObject<TabsService>;
+  let mockLastPagesService: MockedObject<LastPagesService>;
+  let mockLastPages: Mock;
 
   beforeEach(() => {
     // Mock LastPagesService
-    mockLastPages = jasmine.createSpy('lastPages').and.returnValue(['/contact', '/works']);
-    mockLastPagesService = jasmine.createSpyObj('LastPagesService', ['clearHistory'], {
-      lastPages: mockLastPages
-    });
+    mockLastPages = vi.fn().mockName('lastPages').mockReturnValue(['/contact', '/works']);
+    mockLastPagesService = {
+      clearHistory: vi.fn().mockName('LastPagesService.clearHistory'),
+      lastPages: mockLastPages,
+    } as unknown as MockedObject<LastPagesService>;
 
     // Mock TabsService
-    mockTabsService = jasmine.createSpyObj('TabsService', ['addTab']);
+    mockTabsService = {
+      addTab: vi.fn().mockName('TabsService.addTab'),
+    } as unknown as MockedObject<TabsService>;
 
     TestBed.configureTestingModule({
-      imports: [HomeComponent,FontAwesomeTestingModule,TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useValue: {
-            getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-          }
-        }
-      })],
+      imports: [HomeComponent, FontAwesomeTestingModule],
       providers: [
+        provideTranslateService(),
         { provide: TabsService, useValue: mockTabsService },
         { provide: LastPagesService, useValue: mockLastPagesService },
         { provide: FaIconComponent, useValue: {} },
         { provide: TranslatePipe, useValue: {} },
         { provide: RouterLink, useValue: {} },
-        { provide: ActivatedRoute, useValue: {} }
-      ]
+        { provide: ActivatedRoute, useValue: {} },
+      ],
     });
 
     fixture = TestBed.createComponent(HomeComponent);
@@ -94,7 +91,7 @@ describe('HomeComponent', () => {
     it('should add tab with correct Tab instance', () => {
       component.ngOnInit();
 
-      const calledTab = mockTabsService.addTab.calls.first().args[0];
+      const calledTab = vi.mocked(mockTabsService.addTab).mock.calls[0][0];
       expect(calledTab).toBeInstanceOf(Tab);
       expect(calledTab.key).toBe(TabKey.HOME);
     });
@@ -173,6 +170,33 @@ describe('HomeComponent', () => {
       expect(component['StartMenu']).not.toBeNull();
       expect(component['AboutMenu']).not.toBeNull();
       expect(component['lastPages']).not.toBeNull();
+    });
+  });
+
+  describe('Keyboard accessibility', () => {
+    it('should expose the clear-history icon as a keyboard-operable, labelled control', () => {
+      fixture.detectChanges();
+      const clearTrigger = fixture.debugElement.query(
+        (debugEl) => debugEl.attributes['role'] === 'button',
+      );
+
+      expect(clearTrigger.nativeElement.tabIndex).toBe(0);
+      expect(clearTrigger.nativeElement.getAttribute('aria-label')).toBeTruthy();
+
+      clearTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(mockLastPagesService.clearHistory).toHaveBeenCalledTimes(1);
+    });
+
+    it('should open external about-menu links safely (rel=noopener noreferrer)', () => {
+      fixture.detectChanges();
+      const externalLinks = fixture.debugElement.queryAll(
+        (debugEl) => debugEl.name === 'a' && debugEl.attributes['target'] === '_blank',
+      );
+
+      expect(externalLinks.length).toBe(AboutMenu.length);
+      externalLinks.forEach((link) => {
+        expect(link.nativeElement.getAttribute('rel')).toBe('noopener noreferrer');
+      });
     });
   });
 

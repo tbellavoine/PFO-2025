@@ -62,6 +62,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -71,7 +85,14 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -86,6 +107,10 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Components</li>
   <li class="breadcrumb-item"
@@ -93,10 +118,19 @@
   TwentyFortyEightComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a href="#info" class="nav-link active"
                 role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
         <li class="nav-item">
             <a href="#source" class="nav-link"
@@ -113,14 +147,7 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts</code>
-</p>
-
-
+    <div class="tab-pane fade active in" id="info">
 
 
 
@@ -130,6 +157,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -146,13 +177,19 @@
                 <td class="col-md-9"><code>app-twenty-forty-eight</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
 
             <tr>
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
-                            <code>NgClass</code>
+                        <div>        <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+</div>
                 </td>
             </tr>
+
 
 
 
@@ -173,98 +210,137 @@
     </table>
 </section>
 
-    <section data-compodoc="block-index">
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/common/NgClass" target="_blank" >NgClass</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#animating" >animating</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#animationDuration" >animationDuration</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#bestScore" >bestScore</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#board" >board</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#canMove" >canMove</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                 <a href="#cellIdCounter" >cellIdCounter</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#flatBoard" >flatBoard</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#gameOver" >gameOver</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#gameWon" >gameWon</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#gridSize" >gridSize</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#hasEmptyCell" >hasEmptyCell</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#highestTile" >highestTile</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#isGameOver" >isGameOver</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#isPlaying" >isPlaying</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#moves" >moves</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#newTileDelay" >newTileDelay</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Private</span>
                                 <a href="#previousState" >previousState</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#score" >score</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                 <a href="#showDebug" >showDebug</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#winTile" >winTile</a>
@@ -272,172 +348,208 @@
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#addRandomTile" >addRandomTile</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#canUndo" >canUndo</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#copyBoard" >copyBoard</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#createEmptyBoard" >createEmptyBoard</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#filterNonEmptyCells" >filterNonEmptyCells</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#formatScore" >formatScore</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#getEmptyCells" >getEmptyCells</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#getNextCellId" >getNextCellId</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#getTileColor" >getTileColor</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#handleGameControls" >handleGameControls</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                 <a href="#handleKeyPress" >handleKeyPress</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#handleSpecialKeys" >handleSpecialKeys</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#hasAvailableMoves" >hasAvailableMoves</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#hasRowChanged" >hasRowChanged</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#initializeGame" >initializeGame</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#loadBestScore" >loadBestScore</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#mergeRow" >mergeRow</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#move" >move</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#moveDown" >moveDown</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#moveLeft" >moveLeft</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#moveRight" >moveRight</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#moveUp" >moveUp</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#padRowWithEmptyCells" >padRowWithEmptyCells</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#performMove" >performMove</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#processRow" >processRow</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#resetGame" >resetGame</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#reverseRows" >reverseRows</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#saveBestScore" >saveBestScore</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#saveCurrentState" >saveCurrentState</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#toggleGame" >toggleGame</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Private</span>
                                 <a href="#transpose" >transpose</a>
                             </li>
                             <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
                                     <span class="modifier">Public</span>
                                 <a href="#undoMove" >undoMove</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>HostListeners</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                <a href="#window:keydown" >window:keydown</a>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">HL</span><a href="#window:keydown" >window:keydown</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
 </section>
 
     <section data-compodoc="block-constructor">
-    <h3 id="constructor">function Object() { [native code] }</h3>
+    <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -523,6 +635,7 @@
         </tbody>
     </table>
 </section>
+
     <section data-compodoc="block-methods">
     
     <h3 id="methods">
@@ -550,8 +663,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="164"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:164</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:165</a></div>
                         </td>
                     </tr>
 
@@ -591,8 +704,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="211"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:211</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="212"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:212</a></div>
                         </td>
                     </tr>
 
@@ -635,8 +748,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="488"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:488</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="489"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:489</a></div>
                         </td>
                     </tr>
 
@@ -706,8 +819,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="474"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:474</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="475"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:475</a></div>
                         </td>
                     </tr>
 
@@ -750,8 +863,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="374"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:374</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="375"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:375</a></div>
                         </td>
                     </tr>
 
@@ -821,8 +934,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="219"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:219</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:220</a></div>
                         </td>
                     </tr>
 
@@ -892,8 +1005,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="192"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:192</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:193</a></div>
                         </td>
                     </tr>
 
@@ -936,8 +1049,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="557"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:557</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="558"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:558</a></div>
                         </td>
                     </tr>
 
@@ -980,8 +1093,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="228"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:228</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="229"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:229</a></div>
                         </td>
                     </tr>
 
@@ -1051,8 +1164,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="253"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:253</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="254"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:254</a></div>
                         </td>
                     </tr>
 
@@ -1201,8 +1314,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="280"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:280</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="281"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:281</a></div>
                         </td>
                     </tr>
 
@@ -1272,8 +1385,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="498"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:498</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="499"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:499</a></div>
                         </td>
                     </tr>
 
@@ -1316,8 +1429,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="427"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:427</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="428"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:428</a></div>
                         </td>
                     </tr>
 
@@ -1440,8 +1553,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="565"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:565</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="566"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:566</a></div>
                         </td>
                     </tr>
 
@@ -1484,8 +1597,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="383"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:383</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="384"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:384</a></div>
                         </td>
                     </tr>
 
@@ -1523,7 +1636,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>        <code><a href="../interfaces/Cell.html" target="_self" >{ mergedRow: Cell[]; scoreGain: number }</a></code>
 
                         </div>
                             <div class="io-description">
@@ -1626,8 +1739,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="461"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:461</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="462"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:462</a></div>
                         </td>
                     </tr>
 
@@ -1665,7 +1778,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>    <code>{ moved: boolean; scoreGain: number }</code>
 
                         </div>
                             <div class="io-description">
@@ -1697,8 +1810,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="334"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:334</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="335"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:335</a></div>
                         </td>
                     </tr>
 
@@ -1736,7 +1849,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>    <code>{ moved: boolean; scoreGain: number }</code>
 
                         </div>
                             <div class="io-description">
@@ -1768,8 +1881,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="436"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:436</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="437"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:437</a></div>
                         </td>
                     </tr>
 
@@ -1807,7 +1920,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>    <code>{ moved: boolean; scoreGain: number }</code>
 
                         </div>
                             <div class="io-description">
@@ -1839,8 +1952,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="449"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:449</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="450"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:450</a></div>
                         </td>
                     </tr>
 
@@ -1878,7 +1991,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>    <code>{ moved: boolean; scoreGain: number }</code>
 
                         </div>
                             <div class="io-description">
@@ -1910,8 +2023,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="413"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:413</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="414"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:414</a></div>
                         </td>
                     </tr>
 
@@ -1981,8 +2094,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="308"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:308</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="309"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:309</a></div>
                         </td>
                     </tr>
 
@@ -2052,8 +2165,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="357"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:357</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="358"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:358</a></div>
                         </td>
                     </tr>
 
@@ -2091,7 +2204,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>        <code><a href="../interfaces/Cell.html" target="_self" >{ newRow: Cell[]; moved: boolean; scoreGain: number }</a></code>
 
                         </div>
                             <div class="io-description">
@@ -2164,8 +2277,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="536"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:536</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="537"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:537</a></div>
                         </td>
                     </tr>
 
@@ -2235,8 +2348,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="574"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:574</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="575"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:575</a></div>
                         </td>
                     </tr>
 
@@ -2279,8 +2392,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="544"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:544</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="545"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:545</a></div>
                         </td>
                     </tr>
 
@@ -2364,8 +2477,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="523"
-                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:523</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="524"
+                                    class="link-to-prism">src/app/pages/twenty-forty-eight/twenty-forty-eight.component.ts:524</a></div>
                         </td>
                     </tr>
 
@@ -2455,6 +2568,7 @@
         </tbody>
     </table>
 </section>
+
     <section data-compodoc="block-properties">
     
     <h3 id="inputs">
@@ -2472,6 +2586,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal(false)</code>
@@ -2533,6 +2653,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal(0)</code>
                     </td>
                 </tr>
@@ -2559,6 +2685,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal&lt;Cell[][]&gt;(this.createEmptyBoard())</code>
                     </td>
                 </tr>
@@ -2583,6 +2715,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt; {
@@ -2646,6 +2784,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt; this.board().flat())</code>
                     </td>
                 </tr>
@@ -2672,6 +2816,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal(false)</code>
                     </td>
                 </tr>
@@ -2696,6 +2846,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal(false)</code>
@@ -2757,6 +2913,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt;
     this.flatBoard().some(cell &#x3D;&gt; cell.value &#x3D;&#x3D;&#x3D; 0)
   )</code>
@@ -2783,6 +2945,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt;
@@ -2813,6 +2981,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>computed(() &#x3D;&gt;
     !this.canMove() &amp;&amp; !this.gameWon()
   )</code>
@@ -2841,6 +3015,12 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>signal(false)</code>
                     </td>
                 </tr>
@@ -2865,6 +3045,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal(0)</code>
@@ -2926,13 +3112,13 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/GameState.html" target="_self" >GameState | null</a></code>
+                        <i>Type : </i>    <code>unknown</code>
 
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>null</code>
+                        <i>Default value : </i><code>signal&lt;GameState | null&gt;(null)</code>
                     </td>
                 </tr>
                     <tr>
@@ -2956,6 +3142,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal(0)</code>
@@ -2982,6 +3174,12 @@
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal(false)</code>
@@ -3072,7 +3270,7 @@ export class TwentyFortyEightComponent {
   public readonly winTile &#x3D; 2048;
   private readonly animationDuration &#x3D; 150;
   private readonly newTileDelay &#x3D; 100;
-  private previousState: GameState | null &#x3D; null;
+  private previousState &#x3D; signal&lt;GameState | null&gt;(null);
   private cellIdCounter &#x3D; 0;
   public flatBoard &#x3D; computed(() &#x3D;&gt; this.board().flat());
   public hasEmptyCell &#x3D; computed(() &#x3D;&gt;
@@ -3157,7 +3355,7 @@ export class TwentyFortyEightComponent {
     this.moves.set(0);
     this.gameOver.set(false);
     this.gameWon.set(false);
-    this.previousState &#x3D; null;
+    this.previousState.set(null);
     this.cellIdCounter &#x3D; 0;
     this.initializeGame();
   }
@@ -3187,12 +3385,13 @@ export class TwentyFortyEightComponent {
    * Annuler le dernier mouvement
    */
   public undoMove(): void {
-    if (!this.previousState || this.animating()) return;
+    const previousState &#x3D; this.previousState();
+    if (!previousState || this.animating()) return;
 
-    this.board.set(this.copyBoard(this.previousState.board));
-    this.score.set(this.previousState.score);
-    this.moves.set(this.previousState.moves);
-    this.previousState &#x3D; null;
+    this.board.set(this.copyBoard(previousState.board));
+    this.score.set(previousState.score);
+    this.moves.set(previousState.moves);
+    this.previousState.set(null);
   }
 
   /**
@@ -3246,7 +3445,7 @@ export class TwentyFortyEightComponent {
    * @returns
    */
   public canUndo(): boolean {
-    return this.previousState !&#x3D;&#x3D; null &amp;&amp; !this.animating();
+    return this.previousState() !&#x3D;&#x3D; null &amp;&amp; !this.animating();
   }
 
   /**
@@ -3579,12 +3778,12 @@ export class TwentyFortyEightComponent {
    * @private
    */
   private saveCurrentState(): void {
-    this.previousState &#x3D; {
+    this.previousState.set({
       board: this.copyBoard(this.board()),
       score: this.score(),
       moves: this.moves(),
       canUndo: true
-    };
+    });
   }
 
   /**
@@ -3699,7 +3898,7 @@ export class TwentyFortyEightComponent {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
@@ -3758,6 +3957,24 @@ export class TwentyFortyEightComponent {
 
        <script>
                $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
                checkToggle(darkModeState);
                if ($darkModeToggleSwitchers.length > 0) {
                     for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
@@ -3773,7 +3990,6 @@ export class TwentyFortyEightComponent {
        <script src="../js/libs/lit-html.js"></script>
 
        <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { TitleBarComponent } from './title-bar.component';
 import { Menu } from './menu.const';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 
 describe('TitleBarComponent', () => {
   let component: TitleBarComponent;
@@ -11,18 +10,8 @@ describe('TitleBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TitleBarComponent,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useValue: {
-              getTranslation: (lang: string) => of({}) // Retourne un Observable vide
-            }
-          }
-        })
-      ],
-      providers: [{provide: ActivatedRoute, useValue: {}}],
+      imports: [TitleBarComponent],
+      providers: [provideTranslateService(), { provide: ActivatedRoute, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TitleBarComponent);
