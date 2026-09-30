@@ -1,4 +1,5 @@
-import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, DestroyRef, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
@@ -44,9 +45,10 @@ export class ImageViewerComponent implements OnInit {
     [Path.PREVIEW, this.activatedRoute.snapshot.params['imageName']]
   ));
   private readonly tabsService = inject(TabsService);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       this.imageName.set(ImageAssetsMap.get(params.get('imageName') as string));
       this.imageTab.set(new Tab(
         this.imageName(),

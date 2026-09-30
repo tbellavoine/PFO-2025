@@ -97,5 +97,25 @@ describe('SidenavComponent', () => {
       routerEvents.next(new NavigationEnd(1, 'test', 'test'));
       expect(component['isExplorerOpen']()).toBe(true);
     });
+
+    it('should update mobile state on window resize', () => {
+      vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
+      window.dispatchEvent(new Event('resize'));
+      expect(component.isMobile()).toBe(true);
+    });
+
+    it('should stop listening to window resize and router events after destroy', () => {
+      vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
+      component['checkMobile']();
+      fixture.destroy();
+
+      component['isExplorerOpen'].set(true);
+      routerEvents.next(new NavigationEnd(1, 'test', 'test'));
+      expect(component['isExplorerOpen']()).toBe(true);
+
+      vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(1024);
+      window.dispatchEvent(new Event('resize'));
+      expect(component.isMobile()).toBe(true);
+    });
   });
 });
