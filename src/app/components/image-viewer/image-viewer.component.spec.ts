@@ -2,7 +2,7 @@ import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImageViewerComponent } from './image-viewer.component';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TabsService } from '@services/tabs.service';
 import { ImageAssetsMap } from '@components/explorer/assets-images.const';
 
@@ -21,7 +21,7 @@ describe('ImageViewerComponent', () => {
     } as unknown as MockedObject<TabsService>;
 
     paramMapSubject = new BehaviorSubject<ParamMap>({
-      get: (key: string) => 'test-image',
+      get: (_key: string) => 'test-image',
       getAll: () => [],
       has: () => true,
       keys: [] as string[],
@@ -117,7 +117,7 @@ describe('ImageViewerComponent', () => {
 
   it('should update route parameters', () => {
     paramMapSubject.next({
-      get: (key: string) => 'new-image',
+      get: (_key: string) => 'new-image',
       getAll: () => [],
       has: () => true,
       keys: [] as string[],

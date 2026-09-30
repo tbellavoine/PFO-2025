@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateService, provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { TitleBarComponent } from './title-bar.component';
-import { Menu } from './menu.const';
 import { ActivatedRoute } from '@angular/router';
 
 describe('TitleBarComponent', () => {

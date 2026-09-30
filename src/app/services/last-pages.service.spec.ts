@@ -8,7 +8,7 @@ import { LocalStorageKey } from '@enums/localstorage-key.enum';
 
 describe('LastPagesService', () => {
   let service: LastPagesService;
-  let routerEvents: Subject<any>;
+  let routerEvents: Subject<NavigationEnd>;
   let mockTranslateService: MockedObject<TranslateService>;
   let localStorageMock: { getItem: Mock; setItem: Mock; removeItem: Mock };
 

@@ -13,12 +13,12 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
   templateUrl: './skills.component.html',
 })
 export class SkillsComponent implements OnInit {
-  public frontObject = signal<unknown>('');
-  public backObject = signal<unknown>('');
-  public uxUiObject = signal<unknown>('');
-  public devOpsObject = signal<unknown>('');
-  public toolsObject = signal<unknown>('');
-  public qualityObject = signal<unknown>('');
+  public frontObject = signal<Record<string, unknown>>({});
+  public backObject = signal<Record<string, unknown>>({});
+  public uxUiObject = signal<Record<string, unknown>>({});
+  public devOpsObject = signal<Record<string, unknown>>({});
+  public toolsObject = signal<Record<string, unknown>>({});
+  public qualityObject = signal<Record<string, unknown>>({});
   public moreSkills: string[] = ['material-design', 'responsive-design', 'seo', 'wordpress', 'twig', 'salesForce-commerce-cloud', 'office'];
   private readonly tabsService = inject(TabsService);
   private skillsTab: Tab = new Tab(TabKey.SKILLS, ['fab', 'js'], 'text-yellow-500', 'EXPLORER.SKILLS_FILE', [Path.SKILLS]);

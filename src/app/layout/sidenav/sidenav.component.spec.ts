@@ -1,8 +1,8 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { Router, NavigationEnd, ActivatedRoute, UrlTree } from '@angular/router';
+import { Subject } from 'rxjs';
 import { MenuKey } from '@enums/menu-key.enum';
 import { Component } from '@angular/core';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -26,8 +26,8 @@ describe('SidenavComponent', () => {
     router = {
       navigate: vi.fn().mockName('Router.navigate'),
       events: routerEvents.asObservable(),
-      createUrlTree: () => ({}) as any,
-      serializeUrl: () => ({}) as any,
+      createUrlTree: () => ({}) as unknown as UrlTree,
+      serializeUrl: () => ({}) as unknown as string,
     } as unknown as MockedObject<Router>;
 
     await TestBed.configureTestingModule({

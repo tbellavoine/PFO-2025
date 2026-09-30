@@ -10,6 +10,10 @@
       <div class="grid grid-cols-3 gap-3 items-center justify-center w-full max-w-100 self-end">
         @for (cell of board(); track $index) {
           <div (click)="makeMove($index)"
+               (keydown.enter)="makeMove($index)"
+               (keydown.space)="$event.preventDefault(); makeMove($index)"
+               role="button"
+               tabindex="0"
                class="aspect-square border-1 border-accent
                     flex items-center justify-center text-4xl font-bold cursor-not-allowed
                     transition-all duration-200

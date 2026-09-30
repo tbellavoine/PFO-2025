@@ -22,6 +22,10 @@
         >
           <div
             (click)="closeGitBranch()"
+            (keydown.enter)="closeGitBranch()"
+            (keydown.space)="$event.preventDefault(); closeGitBranch()"
+            role="button"
+            tabindex="0"
             class="flex items-center gap-1 transition-all text-light/40 cursor-not-allowed p-2 m-1 border-b border-b-white/5"
           >
             <fa-icon [icon]="['fas','plus']"/>
@@ -29,6 +33,10 @@
           </div>
           <div
             (click)="closeGitBranch()"
+            (keydown.enter)="closeGitBranch()"
+            (keydown.space)="$event.preventDefault(); closeGitBranch()"
+            role="button"
+            tabindex="0"
             class="flex items-center justify-between gap-2 transition-all text-light hover:bg-accent cursor-pointer p-2 rounded-sm m-1"
           >
             <div class="flex items-center gap-1">

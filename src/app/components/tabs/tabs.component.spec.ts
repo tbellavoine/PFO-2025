@@ -1,27 +1,26 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, ParamMap, provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, provideRouter } from '@angular/router';
 import { TabsComponent } from './tabs.component';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { signal } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('TabsComponent', () => {
   let component: TabsComponent;
   let fixture: ComponentFixture<TabsComponent>;
-  let router: MockedObject<Router>;
   let tabsService: MockedObject<TabsService>;
 
   const mockTabs: Tab[] = [
     { key: TabKey.HOME, route: ['/'], label: 'Home' },
     { key: TabKey.PROJECTS, route: ['/settings'], label: 'Settings' },
-  ] as Tab[];
+  ] as unknown as Tab[];
   const paramMapSubject = new BehaviorSubject<ParamMap>({
-    get: (key: string) => 'test-image',
+    get: (_key: string) => 'test-image',
     getAll: () => [],
     has: () => true,
     keys: [] as string[],
@@ -33,9 +32,6 @@ describe('TabsComponent', () => {
     },
   };
   beforeEach(async () => {
-    router = {
-      navigate: vi.fn().mockName('Router.navigate'),
-    } as unknown as MockedObject<Router>;
     tabsService = {
       tabs: signal(mockTabs),
     } as unknown as MockedObject<TabsService>;

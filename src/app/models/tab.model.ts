@@ -6,9 +6,9 @@ export class Tab {
   private readonly _icon: IconProp | undefined;
   private readonly _iconTheme: string | undefined;
   private readonly _label: string | undefined;
-  private readonly _route: any[];
+  private readonly _route: readonly unknown[];
 
-  constructor(key: TabKey | string | undefined, icon: IconProp | undefined, iconTheme: string | undefined, label: string | undefined, route: any[]) {
+  constructor(key: TabKey | string | undefined, icon: IconProp | undefined, iconTheme: string | undefined, label: string | undefined, route: readonly unknown[]) {
     this._key = key;
     this._icon = icon;
     this._iconTheme = iconTheme;
@@ -32,7 +32,7 @@ export class Tab {
     return this._label;
   }
 
-  get route(): any[] {
+  get route(): readonly unknown[] {
     return this._route;
   }
 }

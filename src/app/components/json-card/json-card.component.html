@@ -2,9 +2,9 @@
   @if(title()) {
     <div class="flex items-center justify-between w-full border-b border-b-white/5 p-4 text-grey gap-2">
       {{ title() }}
-      @if (jsonObject().type) {
+      @if (type()) {
         <div class="flex p-2 border border-accent/50 text-xs text-light">
-          {{ jsonObject().type }}
+          {{ type() }}
         </div>
       }
     </div>

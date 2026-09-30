@@ -228,7 +228,7 @@ export class TwentyFortyEightComponent {
    * @returns
    */
   public getTileColor(value: number): string {
-    const colors: { [key: number]: string } = {
+    const colors: Record<number, string> = {
       0: 'bg-primary',
       2: 'bg-primary-darken text-light',
       4: 'bg-grey text-light',

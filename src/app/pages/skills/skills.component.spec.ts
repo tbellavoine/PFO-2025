@@ -51,7 +51,7 @@ describe('SkillsComponent', () => {
   it('should initialize front skills correctly', () => {
     component.ngOnInit();
 
-    const frontSkills = component.frontObject() as any;
+    const frontSkills = component.frontObject() as { angular: string; typescript: string; javascript: string };
     expect(frontSkills.angular).toBe('✓');
     expect(frontSkills.typescript).toBe('✓');
     expect(frontSkills.javascript).toBe('✓');
@@ -60,7 +60,7 @@ describe('SkillsComponent', () => {
   it('should initialize back skills correctly', () => {
     component.ngOnInit();
 
-    const backSkills = component.backObject() as any;
+    const backSkills = component.backObject() as { php: string; symfony: string; phpmyadmin: string };
     expect(backSkills.php).toBe('~');
     expect(backSkills.symfony).toBe('~');
     expect(backSkills.phpmyadmin).toBe('✓');
@@ -69,7 +69,7 @@ describe('SkillsComponent', () => {
   it('should initialize quality skills correctly', () => {
     component.ngOnInit();
 
-    const qualitySkills = component.qualityObject() as any;
+    const qualitySkills = component.qualityObject() as { sonarqube: string; tests: { jasmine: string; jest: string } };
     expect(qualitySkills.sonarqube).toBe('✓');
     expect(qualitySkills.tests.jasmine).toBe('✓');
     expect(qualitySkills.tests.jest).toBe('✓');

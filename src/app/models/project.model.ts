@@ -24,8 +24,7 @@ export class Project {
   }
 }
 
-export type ProjectLink = {
+export interface ProjectLink {
   label: string;
   url?: string;
-  imgUrl?: string;
 }

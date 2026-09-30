@@ -55,7 +55,6 @@ describe('TwentyFortyEightComponent', () => {
   });
 
   it('should add random tile', () => {
-    const initialBoard = component.board();
     const emptyCount = component.flatBoard().filter((cell) => cell.value === 0).length;
 
     component.addRandomTile();

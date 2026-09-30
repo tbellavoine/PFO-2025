@@ -3,9 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TabsService } from '@services/tabs.service';
-import { TabKey } from '@enums/tab-key.enum';
-import { Tab } from '@models/tab.model';
-import { Path } from '@enums/path.enum';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

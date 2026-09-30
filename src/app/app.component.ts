@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleBarComponent } from './layout/title-bar/title-bar.component';
 import { SidenavComponent } from './layout/sidenav/sidenav.component';

@@ -19,7 +19,7 @@ const ContactMenu: MenuItem[] = [
   new MenuItem(MenuKey.CONTACT, ['fas', 'envelope'], 'EXPLORER.CONTACT_FILE', Path.CONTACT, undefined, 'text-accent')
 ];
 
-export const ExplorerMap: Map<string, MenuItem[]> = new Map([
+export const ExplorerMap = new Map<string, MenuItem[]>([
   ['MENUS.ABOUT', AboutMenu],
   ['MENUS.GAMES', GamesMenu],
   ['MENUS.CONTACT', ContactMenu]

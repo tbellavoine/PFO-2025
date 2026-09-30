@@ -18,7 +18,7 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
   }
 })
 export class ProfileComponent implements OnInit {
-  public softSkillsObject = signal<unknown>('');
+  public softSkillsObject = signal<Record<string, unknown>>({});
   private readonly tabsService = inject(TabsService);
   private profileTab: Tab = new Tab(TabKey.PROFILE, ['fab', 'html5'], 'text-orange-500', 'EXPLORER.ME_FILE', [Path.PROFILE]);
   private readonly document = inject(DOCUMENT);
