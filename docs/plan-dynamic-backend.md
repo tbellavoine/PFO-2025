@@ -1,6 +1,6 @@
 # Plan : contenu dynamique, console d'admin, backend NestJS
 
-Statut : proposition, rien n'est implémenté. Ce document sert de référence pour cadrer le travail avant de commencer, et de checklist pendant l'implémentation.
+Statut : décisions tranchées (§2), phase 1 en cours sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI — voir le commit associé pour l'état exact). Ce document reste la référence pour les phases suivantes.
 
 Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entraînement) : NestJS `12.1.2` (CLI `12.0.8`, requiert Node ≥20 — le projet tourne déjà en Node 24.17), TypeORM `1.1.1`, `@nestjs/config` `12.0.1`, `@nestjs/jwt` `12.0.2`, `@nestjs/passport` `12.0.0`, `@nestjs/throttler` `6.7.1`, `class-validator` `0.15.1`, `helmet` `8.3.0`.
 
@@ -20,44 +20,45 @@ Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entra�
 - Le multi-langue : `fallbackLang: 'fr'` et un seul fichier `fr.json` existent déjà ; les rendre dynamiques est un chantier séparé, mentionné en piste d'extension (§8) mais pas dans les phases 1 à 5.
 - Le multi-admin / gestion de rôles : un seul compte admin (le propriétaire du site) suffit au départ. Prévu extensible, pas construit dès le jour 1.
 
-## 2. Décisions à valider avant de commencer
+## 2. Décisions (tranchées)
 
-Ce sont des choix qui changent la suite du plan — à trancher explicitement, pas par défaut implicite.
+1. **Stratégie de rendu du site public** (voir §5.3) : **(a) rebuild au publish** — on garde le prerendering SSG actuel, l'admin déclenche un rebuild+déploiement à chaque publication.
+2. **Topologie de l'admin** (voir §6.1) : **(a) route `/admin` intégrée à l'app Angular existante**, rendue uniquement côté client (`RenderMode.Client` sur ces routes dans `app.routes.server.ts`).
+3. **Stockage** : **PostgreSQL managé, Supabase**.
+4. **Stockage des images uploadées** : **disque du serveur** (pas de bucket S3-compatible pour l'instant — implique que l'hébergeur du back doit fournir un disque/volume persistant, pas un filesystem éphémère ; à revisiter si l'hébergeur choisi ne le permet pas).
+5. **Modèle de compétences** : **unifié** en une seule entité `Skill` référencée partout (§4.2) — remplace les 3 représentations parallèles qui existaient côté front (enum `Skill`, tableaux texte libre des expériences, dictionnaires de `SkillsComponent`).
+6. **ORM** : **TypeORM `1.x`**, intégration native avec NestJS (`@nestjs/typeorm`).
 
-1. **Stratégie de rendu du site public** (voir §5.3) :
-   - (a) *rebuild au publish* — on garde le prerendering SSG actuel, l'admin déclenche un rebuild+déploiement à chaque publication ;
-   - (b) *fetch live* — le site public appelle l'API à l'exécution, plus de prerendering de contenu.
-   Recommandation : (a), pour ne pas perdre le travail SSR/SEO déjà fait ce jour.
-2. **Topologie de l'admin** (voir §6.1) :
-   - (a) route `/admin` intégrée à l'app Angular existante, rendue uniquement côté client ;
-   - (b) application Angular séparée.
-   Recommandation : (a), vu l'échelle (un seul admin, peu d'écrans).
-3. **Stockage** : PostgreSQL managé (Neon/Supabase/Railway, tous ont un plan gratuit) vs SQLite. Recommandation : PostgreSQL dès le départ — un SQLite sur disque perd ses données à chaque redéploiement sur la plupart des hébergeurs sans volume persistant configuré.
-4. **Stockage des images uploadées** : disque du serveur (simple, mais lié à l'hébergeur) vs bucket S3-compatible (Cloudflare R2, Backblaze B2 — portable, découplé du serveur). Recommandation : bucket S3-compatible dès le départ, migration plus dure à faire après coup.
-5. **Modèle de compétences** : garder tel quel (3 représentations parallèles : enum `Skill` pour les projets, tableaux texte libre dans les expériences, dictionnaires dans Skills) vs unifier en une seule entité `Skill` référencée partout. Recommandation : unifier (§4.2) — construire un nouveau système en reconduisant une duplication existante n'a pas de sens.
-6. **ORM** : TypeORM `1.x` (première version stable majeure depuis 5 ans, cf. intro) vs Prisma (son tag `latest` pointe actuellement sur un `8.0.0-rc`, pas une version stable — à éviter pour l'instant si le critère est "stable") vs Drizzle (`0.45.3`, léger, bon support TypeScript). Recommandation : TypeORM, intégration native avec NestJS (`@nestjs/typeorm`), l'équipe vient de livrer une vraie version stable majeure.
+**Architecture des dépôts** (décidée après la rédaction initiale de ce document, remplace la proposition de dépôt séparé du §3 d'origine) : monorepo — `front/` et `back/` dans `PFO-2025`, pas deux dépôts. Voir §3.
 
 ## 3. Vue d'ensemble de l'architecture cible
 
+Monorepo (décision post-rédaction initiale — un seul dépôt, pas deux) :
+
 ```
-PFO-2025/                    (dépôt actuel, front Angular, reste statique/prerenderé)
-PFO-2025-api/                (nouveau dépôt séparé — cycle de déploiement indépendant)
-  ├── src/
-  │   ├── modules/
-  │   │   ├── auth/          JWT, guard, login
-  │   │   ├── profile/       singleton
-  │   │   ├── experiences/   CRUD
-  │   │   ├── projects/      CRUD
-  │   │   ├── skills/        CRUD (catégories + niveau)
-  │   │   ├── contact/       singleton
-  │   │   └── media/         upload images (S3-compatible)
-  │   ├── common/            guards, interceptors, filters partagés
-  │   └── main.ts
-  ├── test/                  e2e (Vitest + supertest)
-  └── .github/workflows/ci.yml
+PFO-2025/
+  front/                     Angular, reste statique/prerenderé (ci-front.yml)
+  back/                      NestJS (ci-back.yml)
+    ├── src/
+    │   ├── modules/
+    │   │   ├── auth/          JWT, guard, login (phase 2)
+    │   │   ├── profile/       singleton
+    │   │   ├── experiences/   lecture publique en place ; écriture admin en phase 2
+    │   │   ├── projects/      idem
+    │   │   ├── skills/        idem (catégories + niveau)
+    │   │   ├── contact/       singleton
+    │   │   └── media/         upload disque (phase 2)
+    │   ├── common/entities/   BaseEntity partagée
+    │   ├── migrations/
+    │   ├── data-source.ts     DataSource pour le CLI TypeORM (migrations)
+    │   ├── seed.ts            import idempotent du contenu actuel de front/
+    │   └── main.ts
+    ├── test/                  e2e (Vitest + supertest, contre un vrai Postgres)
+    └── .env.example
+  docs/plan-dynamic-backend.md
 ```
 
-Pourquoi un dépôt séparé plutôt qu'un monorepo : le front est 100% statique et n'a besoin d'aucun serveur Node pour tourner (travail fait cette session) ; coupler son cycle de déploiement à celui d'une API qui, elle, tourne en continu, romprait cette propriété pour rien. Un monorepo (Nx) reste une option si la coordination entre les deux devient pénible, mais ce n'est pas le point de départ le plus simple.
+Chaque app a son propre `package.json`/`node_modules`/pipeline CI (`ci-front.yml` scope `front/**`, `ci-back.yml` scope `back/**`), pour garder les deux cycles de build/déploiement indépendants malgré le dépôt commun.
 
 ## 4. Backend NestJS
 

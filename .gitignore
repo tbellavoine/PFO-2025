@@ -4,6 +4,7 @@
 front/dist
 front/out-tsc
 back/dist
+back/*.tsbuildinfo
 /tmp
 /bazel-out
 
@@ -36,6 +37,7 @@ front/.angular/cache
 /connect.lock
 front/coverage
 back/coverage
+back/uploads
 /libpeerconnection.log
 testem.log
 /typings
