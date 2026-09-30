@@ -1,13 +1,14 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { Path } from '@enums/path.enum';
 import { JsonCardComponent } from '@components/json-card/json-card.component';
-import { Projects } from './projets.const';
-import { Project } from '@models/project.model';
+import { ProjectApiModel } from '@models/api/project.model';
 import { ProjectCategory } from '@enums/project-category.enum';
 import { KeyValuePipe, NgClass } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-projects',
@@ -20,10 +21,14 @@ import { KeyValuePipe, NgClass } from '@angular/common';
 })
 export class ProjectsComponent implements OnInit {
   public selectedCategory = signal<string>('');
-  public readonly projects: Project[] = Projects;
   public readonly ProjectCategory = ProjectCategory;
+  protected readonly projects = httpResource<ProjectApiModel[]>(
+    () => `${environment.apiBaseUrl}/v1/projects`,
+  );
   public readonly filteredProjects = computed(() => {
-    return this.selectedCategory() ? [...this.projects].filter(project => this.selectedCategory() === project.category) : this.projects;
+    const projects = this.projects.value() ?? [];
+
+    return this.selectedCategory() ? projects.filter(project => this.selectedCategory() === project.category) : projects;
   });
   private readonly tabsService = inject(TabsService);
   private projectsTab: Tab = new Tab(TabKey.PROJECTS, ['fas', 'code'], 'text-blue-500', 'EXPLORER.PROJECTS_FILE', [Path.PROJECTS]);

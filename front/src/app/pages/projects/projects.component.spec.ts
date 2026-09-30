@@ -1,27 +1,75 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ProjectsComponent } from './projects.component';
 import { TabsService } from '@services/tabs.service';
 import { TabKey } from '@enums/tab-key.enum';
 import { ProjectCategory } from '@enums/project-category.enum';
+import { ProjectApiModel } from '@models/api/project.model';
+import { environment } from '../../../environments/environment';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
   let fixture: ComponentFixture<ProjectsComponent>;
   let mockTabsService: MockedObject<TabsService>;
+  let httpMock: HttpTestingController;
 
-  beforeEach(async () => {
+  const mockProjects: ProjectApiModel[] = [
+    {
+      id: '1',
+      date: '2025',
+      name: 'Portfolio 2025',
+      company: 'Perso',
+      category: ProjectCategory.WEBSITE,
+      type: 'PERSO',
+      status: 'IN_PROGRESS',
+      description: 'desc',
+      order: 0,
+      published: true,
+      skills: [{ id: 's1', name: 'Angular', slug: 'angular' }],
+      links: [{ id: 'l1', label: 'Site', url: 'http://example.com', order: 0 }],
+    },
+    {
+      id: '2',
+      date: '2020 - 2025',
+      name: 'GRP',
+      company: 'Web Atrio',
+      category: ProjectCategory.APP,
+      type: 'PRO',
+      status: 'IN_PROGRESS',
+      description: 'desc',
+      order: 1,
+      published: true,
+      skills: [{ id: 's2', name: 'TypeScript', slug: 'typescript' }],
+      links: [],
+    },
+  ];
+
+  beforeEach(() => {
     mockTabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [ProjectsComponent],
-      providers: [{ provide: TabsService, useValue: mockTabsService }],
-    }).compileComponents();
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: TabsService, useValue: mockTabsService },
+      ],
+    });
 
+    httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(ProjectsComponent);
     component = fixture.componentInstance;
+
+    fixture.detectChanges();
+    httpMock.expectOne(`${environment.apiBaseUrl}/v1/projects`).flush(mockProjects);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should create', () => {
@@ -33,7 +81,6 @@ describe('ProjectsComponent', () => {
   });
 
   it('should add tab on init', () => {
-    component.ngOnInit();
     expect(mockTabsService.addTab).toHaveBeenCalledWith(
       expect.objectContaining({
         key: TabKey.PROJECTS,
@@ -50,19 +97,18 @@ describe('ProjectsComponent', () => {
   it('should return all projects when no category selected', () => {
     component.selectedCategory.set('');
     const filtered = component.filteredProjects();
-    expect(filtered).toEqual(component.projects);
+    expect(filtered).toEqual(mockProjects);
   });
 
   it('should filter projects when category is selected', () => {
     const category = ProjectCategory.APP;
     component.selectedCategory.set(category);
     const filtered = component.filteredProjects();
-    const expected = component.projects.filter((p) => p.category === category);
+    const expected = mockProjects.filter((p) => p.category === category);
     expect(filtered).toEqual(expected);
   });
 
   it('should expose category filters as keyboard-operable toggle buttons', () => {
-    fixture.detectChanges();
     const firstFilter = fixture.debugElement.query(
       (debugEl) => debugEl.attributes['role'] === 'button',
     );

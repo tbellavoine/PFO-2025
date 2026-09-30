@@ -1,9 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { httpResource } from '@angular/common/http';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
 import { TabKey } from '@enums/tab-key.enum';
 import { Path } from '@enums/path.enum';
 import { JsonCardComponent } from '@components/json-card/json-card.component';
+import { SkillCategoryApiModel } from '@models/api/skill-category.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-skills',
@@ -13,126 +16,30 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
   templateUrl: './skills.component.html',
 })
 export class SkillsComponent implements OnInit {
-  public frontObject = signal<Record<string, unknown>>({});
-  public backObject = signal<Record<string, unknown>>({});
-  public uxUiObject = signal<Record<string, unknown>>({});
-  public devOpsObject = signal<Record<string, unknown>>({});
-  public toolsObject = signal<Record<string, unknown>>({});
-  public qualityObject = signal<Record<string, unknown>>({});
+  protected readonly categories = httpResource<SkillCategoryApiModel[]>(
+    () => `${environment.apiBaseUrl}/v1/skills`,
+  );
+  public readonly frontObject = computed(() => this.categorySkills('front_end'));
+  public readonly backObject = computed(() => this.categorySkills('back_end'));
+  public readonly uxUiObject = computed(() => this.categorySkills('ux_ui'));
+  public readonly devOpsObject = computed(() => this.categorySkills('dev_ops'));
+  public readonly toolsObject = computed(() => this.categorySkills('tools'));
+  public readonly qualityObject = computed(() => this.categorySkills('quality'));
   public moreSkills: string[] = ['material-design', 'responsive-design', 'seo', 'wordpress', 'twig', 'salesForce-commerce-cloud', 'office'];
   private readonly tabsService = inject(TabsService);
   private skillsTab: Tab = new Tab(TabKey.SKILLS, ['fab', 'js'], 'text-yellow-500', 'EXPLORER.SKILLS_FILE', [Path.SKILLS]);
 
   ngOnInit() {
-    this.initFrontObject();
-    this.initBackObject();
-    this.initUxUiObject();
-    this.initDevOpsObject();
-    this.initToolsObject();
-    this.initQualityObject();
     this.tabsService.addTab(this.skillsTab);
   }
 
   /**
-   * Initialize the front object
+   * Reshape a category's {name, level}[] entries into a plain object for json-card
+   * @param key
    * @private
    */
-  private initFrontObject(): void {
-    this.frontObject.set(
-      {
-        angular: '✓',
-        typescript: '✓',
-        html: '✓',
-        css_scss_less: '✓',
-        javascript: '✓',
-        tailwindcss: '✓',
-        bootstrap: '✓',
-      }
-    );
-  }
-
-  /**
-   * Initialize the back object
-   * @private
-   */
-  private initBackObject(): void {
-    this.backObject.set({
-        php: '~',
-        symfony: '~',
-        doctrine: '~',
-        nodejs: '~',
-        nestjs: '~',
-        express: '~',
-        phpmyadmin: '✓',
-      }
-    );
-  }
-
-  /**
-   * Initialize the quality object
-   * @private
-   */
-  private initQualityObject(): void {
-    this.qualityObject.set(
-      {
-        sonarqube: '✓',
-        tests: {
-          jasmine: '✓',
-          jest: '✓',
-          phpunit: '~',
-        }
-      }
-    );
-  }
-
-  /**
-   * Initialize the UX/UI object
-   * @private
-   */
-  private initUxUiObject(): void {
-    this.uxUiObject.set(
-      {
-        material_ui: '✓',
-        figma: '✓',
-        adobexd: '✓',
-        photoshop: '✓',
-        illustator: '✓',
-        powerpoint: '🛇'
-      }
-    );
-  }
-
-  /**
-   * Initialize the DevOps object
-   * @private
-   */
-  private initDevOpsObject(): void {
-    this.devOpsObject.set(
-      {
-        github: '✓',
-        gitlab: '✓',
-        docker: '✓',
-        aws: '~',
-        firebase: '✓',
-        ci_cd: '✓',
-      }
-    );
-  }
-
-  /**
-   * Initialize the tools object
-   * @private
-   */
-  private initToolsObject(): void {
-    this.toolsObject.set(
-      {
-        jira: '✓',
-        postman: '✓',
-        webstorm: '✓',
-        phpstorm: '~',
-        visual_studio_code: '✓',
-        cross_plateform: '✓',
-      }
-    );
+  private categorySkills(key: string): Record<string, string> {
+    const category = (this.categories.value() ?? []).find((c) => c.key === key);
+    return Object.fromEntries((category?.skills ?? []).map((s) => [s.name, s.level]));
   }
 }

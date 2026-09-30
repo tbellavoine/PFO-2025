@@ -1,29 +1,53 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ProfileComponent } from './profile.component';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 import { TabsService } from '@services/tabs.service';
+import { ProfileApiModel } from '@models/api/profile.model';
+import { environment } from '../../../environments/environment';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let tabsService: MockedObject<TabsService>;
-  beforeEach(async () => {
+  let httpMock: HttpTestingController;
+
+  const mockProfile: ProfileApiModel = {
+    id: '1',
+    name: 'Thomas BELLAVOINE',
+    title: 'Développeur frontend Angular',
+    bioParagraphs: ['Salut, moi c’est Thomas 👋'],
+    softSkills: ['teamwork', 'proactive', 'adaptability', 'creativity', 'critical thinking', 'autonomy'],
+    cvUrl: '/assets/pdf/CV-Thomas-BELLAVOINE.pdf',
+  };
+
+  beforeEach(() => {
     tabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [ProfileComponent, FontAwesomeTestingModule],
-      providers: [{ provide: TabsService, useValue: tabsService }],
-    }).compileComponents();
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: TabsService, useValue: tabsService },
+      ],
+    });
 
+    httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
+
+    fixture.detectChanges();
+    httpMock.expectOne(`${environment.apiBaseUrl}/v1/profile`).flush(mockProfile);
     fixture.detectChanges();
   });
 
   afterEach(() => {
+    httpMock.verify();
     vi.restoreAllMocks();
   });
 
@@ -31,7 +55,7 @@ describe('ProfileComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize soft skills object on init', () => {
+  it('should reshape soft skills into a display object', () => {
     expect(component.softSkillsObject()).toEqual({
       teamwork: '✓',
       proactive: '✓',
@@ -59,6 +83,8 @@ describe('ProfileComponent', () => {
   });
 
   it('should open the CV from the keyboard', () => {
+    fixture.detectChanges();
+
     const mockLink = {
       href: '',
       target: '',

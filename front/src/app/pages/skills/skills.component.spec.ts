@@ -1,35 +1,59 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { SkillsComponent } from './skills.component';
 import { TabsService } from '@services/tabs.service';
 import { TabKey } from '@enums/tab-key.enum';
+import { SkillCategoryApiModel } from '@models/api/skill-category.model';
+import { environment } from '../../../environments/environment';
 
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
   let mockTabsService: MockedObject<TabsService>;
+  let httpMock: HttpTestingController;
 
-  beforeEach(async () => {
+  const mockCategories: SkillCategoryApiModel[] = [
+    { key: 'front_end', label: 'Front End', skills: [{ name: 'Angular', level: '✓' }, { name: 'TypeScript', level: '✓' }, { name: 'JavaScript', level: '✓' }] },
+    { key: 'back_end', label: 'Back End', skills: [{ name: 'Php', level: '~' }, { name: 'Symfony', level: '~' }, { name: 'Phpmyadmin', level: '✓' }] },
+    { key: 'ux_ui', label: 'UX/UI', skills: [{ name: 'Figma', level: '✓' }] },
+    { key: 'dev_ops', label: 'DevOps', skills: [{ name: 'Docker', level: '✓' }] },
+    { key: 'tools', label: 'Outils', skills: [{ name: 'Jira', level: '✓' }] },
+    { key: 'quality', label: 'Qualité', skills: [{ name: 'Sonarqube', level: '✓' }, { name: 'Jasmine', level: '✓' }, { name: 'Jest', level: '✓' }] },
+  ];
+
+  beforeEach(() => {
     mockTabsService = {
       addTab: vi.fn().mockName('TabsService.addTab'),
     } as unknown as MockedObject<TabsService>;
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [SkillsComponent],
-      providers: [{ provide: TabsService, useValue: mockTabsService }],
-    }).compileComponents();
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: TabsService, useValue: mockTabsService },
+      ],
+    });
 
+    httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(SkillsComponent);
     component = fixture.componentInstance;
+
+    fixture.detectChanges();
+    httpMock.expectOne(`${environment.apiBaseUrl}/v1/skills`).flush(mockCategories);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize all skill objects on ngOnInit', () => {
-    component.ngOnInit();
-
+  it('should expose all skill category objects', () => {
     expect(component.frontObject()).toBeTruthy();
     expect(component.backObject()).toBeTruthy();
     expect(component.uxUiObject()).toBeTruthy();
@@ -39,8 +63,6 @@ describe('SkillsComponent', () => {
   });
 
   it('should add skills tab on init', () => {
-    component.ngOnInit();
-
     expect(mockTabsService.addTab).toHaveBeenCalledWith(
       expect.objectContaining({
         key: TabKey.SKILLS,
@@ -48,31 +70,28 @@ describe('SkillsComponent', () => {
     );
   });
 
-  it('should initialize front skills correctly', () => {
-    component.ngOnInit();
-
-    const frontSkills = component.frontObject() as { angular: string; typescript: string; javascript: string };
-    expect(frontSkills.angular).toBe('✓');
-    expect(frontSkills.typescript).toBe('✓');
-    expect(frontSkills.javascript).toBe('✓');
+  it('should reshape front skills correctly', () => {
+    expect(component.frontObject()).toEqual({
+      Angular: '✓',
+      TypeScript: '✓',
+      JavaScript: '✓',
+    });
   });
 
-  it('should initialize back skills correctly', () => {
-    component.ngOnInit();
-
-    const backSkills = component.backObject() as { php: string; symfony: string; phpmyadmin: string };
-    expect(backSkills.php).toBe('~');
-    expect(backSkills.symfony).toBe('~');
-    expect(backSkills.phpmyadmin).toBe('✓');
+  it('should reshape back skills correctly', () => {
+    expect(component.backObject()).toEqual({
+      Php: '~',
+      Symfony: '~',
+      Phpmyadmin: '✓',
+    });
   });
 
-  it('should initialize quality skills correctly', () => {
-    component.ngOnInit();
-
-    const qualitySkills = component.qualityObject() as { sonarqube: string; tests: { jasmine: string; jest: string } };
-    expect(qualitySkills.sonarqube).toBe('✓');
-    expect(qualitySkills.tests.jasmine).toBe('✓');
-    expect(qualitySkills.tests.jest).toBe('✓');
+  it('should reshape quality skills correctly', () => {
+    expect(component.qualityObject()).toEqual({
+      Sonarqube: '✓',
+      Jasmine: '✓',
+      Jest: '✓',
+    });
   });
 
   it('should have moreSkills array defined', () => {

@@ -9,5 +9,7 @@
     Chaque projet est une nouvelle aventure. Si vous souhaitez donner vie à vos idées, collaborer ou simplement échanger, je serai heureux de vous
     accompagner dans ce processus. Parlons-en !
   </div>
-  <json-card [jsonObject]="Contact"/>
+  @if (contact.value(); as contactData) {
+    <json-card [jsonObject]="contactData"/>
+  }
 </div>
