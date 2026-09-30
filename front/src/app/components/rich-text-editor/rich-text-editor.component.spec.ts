@@ -37,4 +37,25 @@ describe('RichTextEditorComponent', () => {
 
     expect(component.value()).toBe('<em>World</em>');
   });
+
+  it('should refresh activeFormats without throwing when the selection changes', () => {
+    fixture.detectChanges();
+    const editable = fixture.nativeElement.querySelector('[contenteditable]');
+    Object.defineProperty(document, 'activeElement', { value: editable, configurable: true });
+
+    expect(() => component['updateActiveFormats']()).not.toThrow();
+    expect(component['activeFormats']()).toEqual(
+      expect.objectContaining({ bold: expect.any(Boolean), italic: expect.any(Boolean) }),
+    );
+  });
+
+  it('should not update activeFormats when the editor is not focused', () => {
+    fixture.detectChanges();
+    Object.defineProperty(document, 'activeElement', { value: document.body, configurable: true });
+
+    component['activeFormats'].set({ bold: true, italic: true, underline: true, insertUnorderedList: true });
+    component['updateActiveFormats']();
+
+    expect(component['activeFormats']()).toEqual({ bold: true, italic: true, underline: true, insertUnorderedList: true });
+  });
 });

@@ -23,6 +23,7 @@
     }
   },
   "EXPLORER": {
+    "CONSOLE_FILE": "console.ts",
     "CONTACT_FILE": "Email.spec.ts",
     "HOME": "Bienvenue",
     "ME_FILE": "me.html",

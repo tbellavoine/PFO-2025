@@ -1,37 +1,22 @@
-<div class="flex flex-col h-full w-full bg-primary text-light overflow-hidden">
-  <div class="flex items-center justify-between p-2 bg-primary border-b border-b-white/5 font-arial w-full">
-    <div class="flex items-center gap-2 text-light/70 text-xs">
-      <fa-icon [icon]="['fas','wrench']" class="text-accent"/>
-      <span>Console d'administration</span>
+<div class="flex items-stretch w-full min-h-full text-light">
+  <nav class="flex flex-col gap-1 w-56 shrink-0 bg-primary-darker border-r border-white/5 p-3">
+    <p class="mb-2 px-2 text-xs text-light/40 uppercase tracking-wide">Administration</p>
+    <a [routerLink]="[Path.PROFILE]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Profil</a>
+    <a [routerLink]="[Path.CONTACT]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Contact</a>
+    <a [routerLink]="[Path.WORKS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Expériences</a>
+    <a [routerLink]="[Path.SKILLS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Compétences</a>
+    <a [routerLink]="[Path.PROJECTS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Projets</a>
+    <div class="mt-auto flex flex-col gap-2 border-t border-white/5 pt-3 text-xs text-light/60">
+      @if (admin(); as session) {
+        <span>{{ session.email }}</span>
+      }
+      <button (click)="logout()" class="flex items-center gap-1 w-fit transition-all text-light/60 hover:text-accent cursor-pointer">
+        <fa-icon [icon]="['fas','right-from-bracket']"/>
+        Se déconnecter
+      </button>
     </div>
-    <div class="flex items-center gap-2">
-      <span class="block rounded-full h-3 w-3 bg-yellow-200"></span>
-      <span class="block rounded-full h-3 w-3 bg-green-400"></span>
-      <span class="block rounded-full h-3 w-3 bg-red-500"></span>
-    </div>
-  </div>
-
-  <div class="flex items-stretch flex-1 overflow-hidden">
-    <nav class="flex flex-col gap-1 w-56 bg-primary-darker border-r border-white/5 p-3 text-light">
-      <p class="mb-2 px-2 text-xs text-light/40 uppercase tracking-wide">Administration</p>
-      <a [routerLink]="[Path.PROFILE]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Profil</a>
-      <a [routerLink]="[Path.CONTACT]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Contact</a>
-      <a [routerLink]="[Path.WORKS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Expériences</a>
-      <a [routerLink]="[Path.SKILLS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Compétences</a>
-      <a [routerLink]="[Path.PROJECTS]" routerLinkActive="bg-accent text-light" class="flex items-center transition-all px-2 py-1.5 rounded-sm text-sm hover:bg-primary">Projets</a>
-    </nav>
-    <main class="flex-1 overflow-y-auto p-8">
-      <router-outlet/>
-    </main>
-  </div>
-
-  <div class="flex items-center justify-between bg-primary border-t border-t-white/5 font-consolas p-1 px-2 text-xs text-light/60">
-    @if (admin(); as session) {
-      <span>{{ session.email }}</span>
-    }
-    <button (click)="logout()" class="flex items-center gap-1 transition-all text-light/60 hover:text-accent hover:bg-primary-darker cursor-pointer text-xs py-1 px-2 rounded-sm">
-      <fa-icon [icon]="['fas','right-from-bracket']"/>
-      Se déconnecter
-    </button>
-  </div>
+  </nav>
+  <main class="flex-1 p-6 md:p-20">
+    <router-outlet/>
+  </main>
 </div>

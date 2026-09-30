@@ -1,4 +1,5 @@
 export enum TabKey {
+  ADMIN,
   CONTACT,
   HOME,
   PROFILE,
