@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Media } from './entities/media.entity.js';
+import { MediaService } from './media.service.js';
+import { AdminMediaController } from './admin-media.controller.js';
 
-/**
- * Upload endpoint (multer, local disk — decision §2.4) lands in phase 2
- * alongside auth, since only the admin can upload. For now this only
- * exposes the repository so ProjectsModule can resolve previewImage.
- */
 @Module({
   imports: [TypeOrmModule.forFeature([Media])],
-  exports: [TypeOrmModule],
+  controllers: [AdminMediaController],
+  providers: [MediaService],
+  exports: [TypeOrmModule, MediaService],
 })
 export class MediaModule {}

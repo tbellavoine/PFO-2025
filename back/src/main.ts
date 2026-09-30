@@ -1,12 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import { mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { AppModule } from './app.module.js';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(helmet());
   app.use(cookieParser());
@@ -21,6 +24,13 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  // Decision §2.4: local server disk, not an S3-compatible bucket — the
+  // upload endpoint (AdminMediaController) writes here, this just serves
+  // it back out at MEDIA_PUBLIC_URL's path.
+  const uploadDir = resolve(process.env.MEDIA_UPLOAD_DIR ?? './uploads');
+  mkdirSync(uploadDir, { recursive: true });
+  app.useStaticAssets(uploadDir, { prefix: '/media' });
 
   if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()

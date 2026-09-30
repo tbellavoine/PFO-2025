@@ -5,11 +5,12 @@ import { Achievement } from './entities/achievement.entity.js';
 import { ExperienceSkill } from './entities/experience-skill.entity.js';
 import { ExperiencesService } from './experiences.service.js';
 import { ExperiencesController } from './experiences.controller.js';
+import { AdminExperiencesController } from './admin-experiences.controller.js';
 import { SkillsModule } from '../skills/skills.module.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Experience, Achievement, ExperienceSkill]), SkillsModule],
-  controllers: [ExperiencesController],
+  controllers: [ExperiencesController, AdminExperiencesController],
   providers: [ExperiencesService],
   exports: [ExperiencesService],
 })

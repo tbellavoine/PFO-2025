@@ -3,10 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContactInfo } from './entities/contact-info.entity.js';
 import { ContactService } from './contact.service.js';
 import { ContactController } from './contact.controller.js';
+import { AdminContactController } from './admin-contact.controller.js';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ContactInfo])],
-  controllers: [ContactController],
+  controllers: [ContactController, AdminContactController],
   providers: [ContactService],
   exports: [ContactService],
 })

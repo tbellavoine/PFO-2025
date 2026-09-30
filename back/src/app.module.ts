@@ -24,6 +24,7 @@ import { ExperiencesModule } from './modules/experiences/experiences.module.js';
 import { ProjectsModule } from './modules/projects/projects.module.js';
 import { ContactModule } from './modules/contact/contact.module.js';
 import { MediaModule } from './modules/media/media.module.js';
+import { AuthModule } from './modules/auth/auth.module.js';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { MediaModule } from './modules/media/media.module.js';
     ProjectsModule,
     ContactModule,
     MediaModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

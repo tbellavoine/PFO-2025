@@ -62,7 +62,6 @@ async function main() {
   console.log('Connected. Seeding...');
 
   const skillRepo = AppDataSource.getRepository(Skill);
-  const categoryRepo = AppDataSource.getRepository(SkillCategory);
   const entryRepo = AppDataSource.getRepository(SkillCategoryEntry);
   const profileRepo = AppDataSource.getRepository(Profile);
   const contactRepo = AppDataSource.getRepository(ContactInfo);
