@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabsService } from '@services/tabs.service';
 import { Tab } from '@models/tab.model';
@@ -11,9 +11,10 @@ import { ImageAssetsMap } from '@components/explorer/assets-images.const';
   templateUrl: './image-viewer.component.html',
   host: {
     class: 'h-full w-full overflow-hidden',
+    '(document:keydown)': 'onKeyDown($event)',
   }
 })
-export class ImageViewerComponent implements OnInit, OnDestroy {
+export class ImageViewerComponent implements OnInit {
   private static readonly INITIAL_ZOOM = 1;
   private static readonly MIN_ZOOM_ABSOLUTE = 0.1;
   private static readonly MAX_ZOOM = 5;
@@ -57,14 +58,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
       this.tabsService.addTab(this.imageTab());
       this.resetView();
     });
-    document.addEventListener('keydown', this.onKeyDown.bind(this));
-  }
-
-  /**
-   * Cleans up event listeners when the component is destroyed.
-   */
-  ngOnDestroy() {
-    document.removeEventListener('keydown', this.onKeyDown.bind(this));
   }
 
   /**

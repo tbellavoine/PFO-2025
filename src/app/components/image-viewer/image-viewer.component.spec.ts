@@ -128,11 +128,14 @@ describe('ImageViewerComponent', () => {
     expect(tabsService.addTab).toHaveBeenCalled();
   });
 
-  it('should cleanup event listeners on destroy', () => {
-    const removeEventListenerSpy = vi
-      .spyOn(document, 'removeEventListener')
-      .mockReturnValue(undefined);
-    component.ngOnDestroy();
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
+  it('should handle keydown events on document', () => {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
+    expect(component.showOverlay()).toBe(true);
+  });
+
+  it('should stop handling keydown events on document after destroy', () => {
+    fixture.destroy();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
+    expect(component.showOverlay()).toBe(false);
   });
 });
