@@ -1,6 +1,5 @@
 import { Component, computed, effect, HostListener, OnDestroy, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 interface Position {
   x: number;
@@ -10,7 +9,6 @@ interface Position {
   selector: 'app-snake',
   imports: [
     NgClass,
-    FormsModule,
     FaIconComponent
   ],
   templateUrl: './snake.component.html',
