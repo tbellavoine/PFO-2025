@@ -24,7 +24,8 @@ describe('WorksComponent', () => {
       slug: 'grdf',
       company: 'Web atrio',
       role: 'Développeur Front-End Angular',
-      periodLabel: 'Oct 2020',
+      startDate: '2020-10-01',
+      endDate: null,
       status: 'En cours',
       order: 0,
       published: true,
@@ -89,7 +90,7 @@ describe('WorksComponent', () => {
 
     expect(experience.id).toBe('1');
     expect(experience.title).toBe('// Développeur Front-End Angular - Web atrio');
-    expect(experience.data.period).toBe('Oct 2020');
+    expect(experience.data.period).toBe('Octobre 2020 - présent');
   });
 
   it('should group skills by category key', () => {

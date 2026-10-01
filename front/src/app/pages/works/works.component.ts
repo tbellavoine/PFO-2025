@@ -9,6 +9,7 @@ import { JsonCardComponent } from '@components/json-card/json-card.component';
 import { EditButtonComponent } from '@components/edit-button/edit-button.component';
 import { ModalComponent } from '@components/modal/modal.component';
 import { ExperienceApiModel } from '@models/api/experience.model';
+import { formatDateRange } from '@components/month-year-picker/format-date-range';
 import { ExperienceEditFormComponent } from './experience-edit-form.component';
 import { environment } from '../../../environments/environment';
 
@@ -56,7 +57,7 @@ export class WorksComponent implements OnInit {
       data: {
         company: experience.company,
         role: experience.role,
-        period: experience.periodLabel,
+        period: formatDateRange(experience.startDate, experience.endDate),
         status: experience.status,
         skills: this.groupSkillsByCategory(experience),
         achievements: experience.achievements

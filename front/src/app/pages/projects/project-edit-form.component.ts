@@ -3,6 +3,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { KeyValuePipe } from '@angular/common';
 import { form, required, FormField } from '@angular/forms/signals';
 import { RichTextEditorComponent } from '@components/rich-text-editor/rich-text-editor.component';
+import { MonthYearPickerComponent } from '@components/month-year-picker/month-year-picker.component';
 import { ProjectApiModel } from '@models/api/project.model';
 import { SkillApiModel } from '@models/api/skill-catalog.model';
 import { MediaApiModel } from '@models/api/media.model';
@@ -13,7 +14,8 @@ import { ProjectStatus } from '@enums/project-status.enum';
 import { environment } from '../../../environments/environment';
 
 interface ProjectFormModel {
-  date: string;
+  startDate: string;
+  endDate: string | null;
   name: string;
   company: Company;
   category: ProjectCategory;
@@ -30,7 +32,8 @@ interface ProjectLinkModel {
 }
 
 const EMPTY_MODEL: ProjectFormModel = {
-  date: '',
+  startDate: `${new Date().toISOString().slice(0, 7)}-01`,
+  endDate: null,
   name: '',
   company: Company.PERSO,
   category: ProjectCategory.WEBSITE,
@@ -43,7 +46,7 @@ const EMPTY_MODEL: ProjectFormModel = {
 
 @Component({
   selector: 'app-project-edit-form',
-  imports: [FormField, KeyValuePipe, RichTextEditorComponent],
+  imports: [FormField, KeyValuePipe, RichTextEditorComponent, MonthYearPickerComponent],
   templateUrl: './project-edit-form.component.html',
 })
 export class ProjectEditFormComponent {
@@ -65,7 +68,7 @@ export class ProjectEditFormComponent {
 
   protected readonly model = signal<ProjectFormModel>({ ...EMPTY_MODEL });
   protected readonly projectForm = form(this.model, (path) => {
-    required(path.date);
+    required(path.startDate);
     required(path.name);
     required(path.description);
   });
@@ -89,7 +92,8 @@ export class ProjectEditFormComponent {
         return;
       }
       this.model.set({
-        date: project.date,
+        startDate: project.startDate,
+        endDate: project.endDate,
         name: project.name,
         company: project.company as Company,
         category: project.category as ProjectCategory,

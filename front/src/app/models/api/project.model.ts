@@ -1,7 +1,8 @@
 /** Matches back/src/modules/projects/entities/*.ts's public shape (GET /v1/projects). */
 export interface ProjectApiModel {
   id: string;
-  date: string;
+  startDate: string;
+  endDate: string | null;
   name: string;
   company: string;
   category: string;

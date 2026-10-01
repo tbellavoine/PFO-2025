@@ -10,6 +10,7 @@ import { EditButtonComponent } from '@components/edit-button/edit-button.compone
 import { ModalComponent } from '@components/modal/modal.component';
 import { ProjectApiModel } from '@models/api/project.model';
 import { ProjectEditFormComponent } from './project-edit-form.component';
+import { formatDateRange } from '@components/month-year-picker/format-date-range';
 import { ProjectCategory } from '@enums/project-category.enum';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { environment } from '../../../environments/environment';
@@ -69,7 +70,7 @@ export class ProjectsComponent implements OnInit {
       title: `// ${project.name}`,
       published: project.published,
       jsonObject: {
-        date: project.date,
+        date: formatDateRange(project.startDate, project.endDate),
         name: project.name,
         company: project.company,
         category: project.category,

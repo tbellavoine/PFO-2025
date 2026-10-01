@@ -22,7 +22,8 @@ describe('ProjectsComponent', () => {
   const mockProjects: ProjectApiModel[] = [
     {
       id: '1',
-      date: '2025',
+      startDate: '2025-01-01',
+      endDate: null,
       name: 'Portfolio 2025',
       company: 'Perso',
       category: ProjectCategory.WEBSITE,
@@ -36,7 +37,8 @@ describe('ProjectsComponent', () => {
     },
     {
       id: '2',
-      date: '2020 - 2025',
+      startDate: '2020-01-01',
+      endDate: null,
       name: 'GRP',
       company: 'Web Atrio',
       category: ProjectCategory.APP,
@@ -120,7 +122,7 @@ describe('ProjectsComponent', () => {
 
     expect(firstCard.title).toBe('// Portfolio 2025');
     expect(firstCard.jsonObject).toEqual({
-      date: '2025',
+      date: 'Janvier 2025 - présent',
       name: 'Portfolio 2025',
       company: 'Perso',
       category: ProjectCategory.WEBSITE,

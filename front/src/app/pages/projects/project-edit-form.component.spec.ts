@@ -14,7 +14,8 @@ describe('ProjectEditFormComponent', () => {
 
   const mockProject: ProjectApiModel = {
     id: '1',
-    date: '2025',
+    startDate: '2025-01-01',
+    endDate: null,
     name: 'Portfolio 2025',
     company: 'Perso',
     category: ProjectCategory.WEBSITE,
@@ -53,7 +54,8 @@ describe('ProjectEditFormComponent', () => {
 
     it('should prefill the form from the project input', () => {
       expect(component['model']()).toEqual({
-        date: '2025',
+        startDate: '2025-01-01',
+        endDate: null,
         name: 'Portfolio 2025',
         company: 'Perso',
         category: ProjectCategory.WEBSITE,
@@ -124,7 +126,7 @@ describe('ProjectEditFormComponent', () => {
     });
 
     it('should POST on submit', () => {
-      component['model'].update((m) => ({ ...m, name: 'New project', date: '2026', description: 'desc' }));
+      component['model'].update((m) => ({ ...m, name: 'New project', startDate: '2026-01-01', description: 'desc' }));
 
       component['onSubmit'](new Event('submit'));
 

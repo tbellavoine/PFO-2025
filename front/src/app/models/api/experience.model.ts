@@ -4,7 +4,8 @@ export interface ExperienceApiModel {
   slug: string;
   company: string;
   role: string;
-  periodLabel: string;
+  startDate: string;
+  endDate: string | null;
   status: string;
   order: number;
   published: boolean;

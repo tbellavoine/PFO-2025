@@ -4,10 +4,14 @@
       Nom
       <input type="text" [formField]="projectForm.name" class="rounded border border-light/20 bg-transparent p-2 text-light" />
     </label>
-    <label class="flex flex-col gap-1 text-sm text-light/60">
-      Date
-      <input type="text" [formField]="projectForm.date" class="rounded border border-light/20 bg-transparent p-2 text-light" />
-    </label>
+    <div class="flex flex-col gap-1 text-sm text-light/60">
+      <p>Début</p>
+      <app-month-year-picker [formField]="projectForm.startDate" />
+    </div>
+    <div class="flex flex-col gap-1 text-sm text-light/60">
+      <p>Fin</p>
+      <app-month-year-picker [formField]="projectForm.endDate" [allowOngoing]="true" />
+    </div>
     <label class="flex flex-col gap-1 text-sm text-light/60">
       Entreprise
       <select [formField]="projectForm.company" class="rounded border border-light/20 bg-primary p-2 text-light">

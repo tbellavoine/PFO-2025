@@ -5,13 +5,15 @@ import { form, required, FormField } from '@angular/forms/signals';
 import { ExperienceApiModel } from '@models/api/experience.model';
 import { SkillApiModel, SkillCategoryEntity } from '@models/api/skill-catalog.model';
 import { ExperienceStatus } from '@enums/experience-status.enum';
+import { MonthYearPickerComponent } from '@components/month-year-picker/month-year-picker.component';
 import { environment } from '../../../environments/environment';
 
 interface ExperienceFormModel {
   slug: string;
   company: string;
   role: string;
-  periodLabel: string;
+  startDate: string;
+  endDate: string | null;
   status: ExperienceStatus;
   order: number;
   published: boolean;
@@ -26,7 +28,8 @@ const EMPTY_MODEL: ExperienceFormModel = {
   slug: '',
   company: '',
   role: '',
-  periodLabel: '',
+  startDate: `${new Date().toISOString().slice(0, 7)}-01`,
+  endDate: null,
   status: ExperienceStatus.IN_PROGRESS,
   order: 0,
   published: false,
@@ -34,7 +37,7 @@ const EMPTY_MODEL: ExperienceFormModel = {
 
 @Component({
   selector: 'app-experience-edit-form',
-  imports: [FormField, KeyValuePipe],
+  imports: [FormField, KeyValuePipe, MonthYearPickerComponent],
   templateUrl: './experience-edit-form.component.html',
 })
 export class ExperienceEditFormComponent {
@@ -58,7 +61,7 @@ export class ExperienceEditFormComponent {
     required(path.slug);
     required(path.company);
     required(path.role);
-    required(path.periodLabel);
+    required(path.startDate);
     required(path.status);
   });
   protected readonly achievements = signal<string[]>([]);
@@ -82,7 +85,8 @@ export class ExperienceEditFormComponent {
         slug: experience.slug,
         company: experience.company,
         role: experience.role,
-        periodLabel: experience.periodLabel,
+        startDate: experience.startDate,
+        endDate: experience.endDate,
         status: experience.status as ExperienceStatus,
         order: experience.order,
         published: experience.published,
