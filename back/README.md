@@ -18,10 +18,10 @@ docker run -d --name pfo2025-pg-dev \
 
 ```bash
 cp .env.example .env   # ajuster si besoin ; ADMIN_PASSWORD_HASH doit être généré, voir le commentaire dans le fichier
-npm ci
-npm run migration:run
-npm run seed            # importe le contenu actuel de front/ (idempotent, sûr à relancer)
-npm run start:dev
+pnpm install
+pnpm run migration:run
+pnpm run seed            # importe le contenu actuel de front/ (idempotent, sûr à relancer)
+pnpm run start:dev
 ```
 
 - API : http://localhost:3000/v1/...
@@ -31,15 +31,15 @@ npm run start:dev
 
 | Commande | Effet |
 |---|---|
-| `npm run start:dev` | serveur en mode watch |
-| `npm run build` | compilation TypeScript (`dist/`) |
-| `npm run lint` | oxlint |
-| `npm test` | tests unitaires (Vitest) |
-| `npm run test:e2e` | tests e2e (nécessite Postgres) |
-| `npm run migration:generate -- src/migrations/Nom` | génère une migration à partir des entités |
-| `npm run migration:run` | applique les migrations en attente |
-| `npm run migration:revert` | annule la dernière migration |
-| `npm run seed` | importe/synchronise le contenu depuis front/ (idempotent) |
+| `pnpm run start:dev` | serveur en mode watch |
+| `pnpm run build` | compilation TypeScript (`dist/`) |
+| `pnpm run lint` | oxlint |
+| `pnpm test` | tests unitaires (Vitest) |
+| `pnpm run test:e2e` | tests e2e (nécessite Postgres) |
+| `pnpm run migration:generate -- src/migrations/Nom` | génère une migration à partir des entités |
+| `pnpm run migration:run` | applique les migrations en attente |
+| `pnpm run migration:revert` | annule la dernière migration |
+| `pnpm run seed` | importe/synchronise le contenu depuis front/ (idempotent) |
 
 ## Migrations
 

@@ -9,10 +9,10 @@ back/*.tsbuildinfo
 /bazel-out
 
 # Node
-front/node_modules
-back/node_modules
+node_modules
 npm-debug.log
 yarn-error.log
+pnpm-debug.log
 
 # IDEs and editors
 .idea/

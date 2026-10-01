@@ -1,0 +1,17 @@
+{
+  "name": "pfo-2025",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "back": "pnpm --filter ./back",
+    "front": "pnpm --filter ./front",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "build": "pnpm -r build"
+  }
+}

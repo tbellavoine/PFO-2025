@@ -70,7 +70,7 @@ ng test
 To generate a coverage report, run:
 
 ```bash
-npm run test-coverage
+pnpm run test-coverage
 ```
 
 ## Running end-to-end tests
