@@ -54,6 +54,10 @@ import { AuthModule } from './modules/auth/auth.module.js';
         ],
         // Schema changes go through migrations, never synchronize (even in dev).
         synchronize: false,
+        // A managed DB can take a moment to accept connections on cold start;
+        // retry instead of crashing on the first attempt.
+        retryAttempts: 10,
+        retryDelay: 3000,
       }),
     }),
     SkillsModule,
