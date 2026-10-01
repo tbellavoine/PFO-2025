@@ -1,6 +1,6 @@
 # Plan : contenu dynamique, console d'admin, backend NestJS
 
-Statut : décisions tranchées (§2), phases 1 à 4 faites sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI, auth + CRUD admin complet, upload média, front branché sur l'API via `httpResource()`, console d'admin complète — voir les commits associés pour l'état exact). Reste : phase 5 (durcissement — sauvegardes, logs structurés, tests e2e des parcours admin).
+Statut : décisions tranchées (§2), phases 1 à 4 faites sur `feature/nestjs-backend` (squelette NestJS, entités + migrations, endpoints publics en lecture seule, seed, Swagger, CI, auth + CRUD admin complet, upload média, front branché sur l'API via `httpResource()` — voir les commits associés pour l'état exact). La phase 4 a changé de forme en cours de route : la console d'admin dédiée (`/admin/**`) a été supprimée et remplacée par de l'édition inline (crayon + modale sur chaque page publique, connexion via une icône dans la barre latérale) — voir §5.4. Reste : phase 5 (durcissement — sauvegardes, logs structurés, tests e2e des parcours admin).
 
 Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entraînement) : NestJS `12.1.2` (CLI `12.0.8`, requiert Node ≥20 — le projet tourne déjà en Node 24.17), TypeORM `1.1.1`, `@nestjs/config` `12.0.1`, `@nestjs/jwt` `12.0.2`, `@nestjs/passport` `12.0.0`, `@nestjs/throttler` `6.7.1`, `class-validator` `0.15.1`, `helmet` `8.3.0`.
 
@@ -23,7 +23,7 @@ Versions vérifiées sur le registre npm le 30/09/2026 (pas de mémoire d'entra�
 ## 2. Décisions (tranchées)
 
 1. **Stratégie de rendu du site public** (voir §5.3) : **(a) rebuild au publish** — on garde le prerendering SSG actuel, l'admin déclenche un rebuild+déploiement à chaque publication.
-2. **Topologie de l'admin** (voir §6.1) : **(a) route `/admin` intégrée à l'app Angular existante**, rendue uniquement côté client (`RenderMode.Client` sur ces routes dans `app.routes.server.ts`).
+2. **Topologie de l'admin** (voir §5.4) : ~~route `/admin` dédiée~~ — **révisé en cours de route** : édition inline par crayon + modale sur chaque page publique, connexion via une icône power dans la barre latérale ; seule la page de connexion reste une route séparée (`/console/login`). Voir §5.4 pour le détail de ce qui a remplacé la console dédiée.
 3. **Stockage** : **PostgreSQL managé, Supabase**.
 4. **Stockage des images uploadées** : **disque du serveur** (pas de bucket S3-compatible pour l'instant — implique que l'hébergeur du back doit fournir un disque/volume persistant, pas un filesystem éphémère ; à revisiter si l'hébergeur choisi ne le permet pas).
 5. **Modèle de compétences** : **unifié** en une seule entité `Skill` référencée partout (§4.2) — remplace les 3 représentations parallèles qui existaient côté front (enum `Skill`, tableaux texte libre des expériences, dictionnaires de `SkillsComponent`).
@@ -150,15 +150,21 @@ Son entrée est déjà typée `object` avec narrowing au runtime sur `type`/`lin
 
 Un entre-deux existe (regénérer uniquement à la demande, façon ISR) mais demande une infrastructure de cache/révalidation que `@angular/ssr` ne fournit pas nativement aujourd'hui — pas retenu comme point de départ.
 
-### 5.4 Console d'admin
+### 5.4 Édition inline (remplace la console d'admin dédiée)
 
-Décision §2.2 : nouvelle section `/admin/**`, lazy-loaded, marquée `RenderMode.Client` dans `app.routes.server.ts` (le mécanisme de rendu par route mis en place cette session permet justement de mélanger pages statiques et section dynamique dans la même app). Un `authGuard` (`CanActivateFn`) vérifie la présence d'une session valide (appel à `/api/v1/auth/me` ou décodage du cookie) avant d'autoriser l'accès.
+**Historique** : une première version construisait une section `/admin/**` séparée (layout propre, nav latérale, un écran liste + formulaire par ressource). Elle a été **entièrement supprimée** après retour explicite : perçue comme un site à part plutôt qu'une partie du projet. Remplacée par l'approche actuelle :
 
-Écrans, un par ressource (Profil, Expériences, Compétences, Projets, Contact) : liste + formulaire création/édition + confirmation de suppression. Les formulaires utilisent Signal Forms (stable depuis Angular 22, identifié plus tôt cette session comme candidat naturel pour exactement ce cas d'usage : formulaires CRUD orientés signal, cohérent avec le reste de l'app qui est déjà 100% signals). Les composants d'interaction complexes (sélecteur de catégorie, liste réordonnable) peuvent réutiliser `@angular/aria` (déjà adopté pour l'accordéon de l'explorer cette session) plutôt que réinventer l'accessibilité clavier à la main.
+- **Connexion** : une icône power dans la barre latérale (`sidenav`), au-dessus de l'icône profil, alignée en bas. Éteinte/grisée si non connecté (clic → `/console/login`, seule route restante sous `/console`) ; allumée en orange accent si connecté (clic → déconnexion immédiate, sans navigation). `AuthService.checkSession()` tourne une fois au bootstrap (`AppComponent`) pour restaurer cet état depuis le cookie httpOnly existant.
+- **Édition** : chaque bloc/entité éditable affiche un bouton crayon (`EditButtonComponent`), visible uniquement si connecté. Au clic, une modale générique (`ModalComponent` — overlay + panneau, ferme sur Échap/clic-dehors/croix) s'ouvre avec le formulaire de cette entité. Un formulaire par ressource (Profil, Contact, chaque Expérience, chaque Projet, chaque catégorie de Compétences), colocalisé avec la page publique correspondante (ex. `project-edit-form.component.ts` à côté de `projects.component.ts`) plutôt que regroupé dans une section admin séparée.
+- **Brouillons et création** : Projets et Expériences basculent sur l'endpoint admin (`/v1/admin/projects`, `/v1/admin/experiences`) dès que connecté — ce qui révèle aussi les entrées non publiées (badge "Brouillon"), puisqu'il n'existe plus de liste admin séparée pour les atteindre autrement. Un bouton "+ Nouveau..." ouvre la même modale en mode création (entité `null`).
+- **Compétences** : cas particulier — la vue publique (`/v1/skills`) n'expose pas les id de catégorie nécessaires à l'édition ; un appel admin-only supplémentaire (`GET /v1/admin/skills/categories`) résout `clé → id` une fois connecté.
+- Les formulaires utilisent Signal Forms (stable depuis Angular 22), comme prévu initialement. `@angular/aria` n'a finalement pas été nécessaire pour ce cas d'usage.
 
-Upload d'image : un composant dédié, `multipart/form-data` vers `/api/v1/admin/media`, aperçu avant envoi.
+Upload d'image : un composant dédié, `multipart/form-data` vers `/api/v1/admin/media`, aperçu avant envoi. Le remplacement ou la suppression d'une image de prévisualisation nettoie maintenant l'ancien fichier/ligne `Media` (avant : fuite silencieuse, fichiers orphelins accumulés sur disque).
 
 Brouillon/publié : un statut `published` par entrée, pour préparer du contenu sans l'exposer tout de suite sur le site public.
+
+**WYSIWYG** : les champs description/biographie utilisent un éditeur riche maison (`RichTextEditorComponent`, contenteditable, gras/italique/souligné/liste) plutôt qu'une librairie tierce — décision explicite pour éviter une dépendance et son propre CSS à réhabiller pour coller au thème sombre. Implémente le contrat `FormValueControl` de Signal Forms, donc se branche via `[formField]` comme un input natif.
 
 ## 6. Déploiement
 
@@ -176,7 +182,7 @@ Brouillon/publié : un statut `published` par entrée, pour préparer du contenu
 | 1 | Squelette NestJS, entités + migrations, endpoints publics en lecture seule, Swagger, CI du nouveau dépôt, script de seed depuis les `*.const.ts` actuels | moyenne | ✅ |
 | 2 | Auth (login, guard JWT, cookie httpOnly), endpoints admin CRUD, rate limiting, hashage argon2 | moyenne | ✅ |
 | 3 | Front : remplacement des imports `*.const.ts` par `httpResource()` | moyenne | ✅ |
-| 4 | Console d'admin : routes `/admin`, guard, écrans CRUD en Signal Forms, upload d'image | grande | ✅ |
+| 4 | Édition admin : ~~routes `/admin` dédiées~~ → remplacé par crayon + modale inline sur chaque page, icône de connexion dans la barre latérale (§5.4), upload d'image | grande | ✅ |
 | 5 | Durcissement : sauvegardes base, logs structurés, tests e2e des parcours admin, documentation | petite à moyenne | à faire |
 
 Note phase 3 : décision §5.3 (rebuild au publish, `POST /v1/admin/publish`) **non implémentée** — pas d'hébergement choisi à ce stade pour cibler un webhook réel ; à faire une fois la plateforme de déploiement décidée (§6).
