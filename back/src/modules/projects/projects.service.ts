@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 import { Project } from './entities/project.entity.js';
 import { ProjectLink } from './entities/project-link.entity.js';
 import { Skill } from '../skills/entities/skill.entity.js';
+import { MediaService } from '../media/media.service.js';
 import { CreateProjectDto } from './dto/create-project.dto.js';
 import { UpdateProjectDto } from './dto/update-project.dto.js';
 
@@ -18,6 +19,7 @@ export class ProjectsService {
     private readonly linkRepository: Repository<ProjectLink>,
     @InjectRepository(Skill)
     private readonly skillRepository: Repository<Skill>,
+    private readonly mediaService: MediaService,
   ) {}
 
   findAllPublished(): Promise<Project[]> {
@@ -88,6 +90,7 @@ export class ProjectsService {
     if (dto.skillIds !== undefined) {
       project.skills = await this.resolveSkills(dto.skillIds);
     }
+    const previousPreviewImageId = project.previewImage?.id;
     if (dto.previewImageId !== undefined) {
       project.previewImage = { id: dto.previewImageId } as Project['previewImage'];
     }
@@ -96,12 +99,29 @@ export class ProjectsService {
     if (dto.links !== undefined) {
       await this.replaceLinks(id, dto.links);
     }
+    // The old preview image is replaced, not reused — clean it up so
+    // uploads don't pile up on disk every time an admin swaps a picture.
+    if (
+      dto.previewImageId !== undefined &&
+      previousPreviewImageId &&
+      previousPreviewImageId !== dto.previewImageId
+    ) {
+      await this.mediaService.remove(previousPreviewImageId).catch(() => {
+        // Best-effort: a cleanup failure shouldn't fail the project update.
+      });
+    }
     return this.findOneForAdmin(id);
   }
 
   async remove(id: string): Promise<void> {
-    await this.findOneForAdmin(id);
+    const project = await this.findOneForAdmin(id);
+    const previewImageId = project.previewImage?.id;
     await this.repository.delete(id);
+    if (previewImageId) {
+      await this.mediaService.remove(previewImageId).catch(() => {
+        // Best-effort: the project is already gone either way.
+      });
+    }
   }
 
   private async resolveSkills(skillIds: string[]): Promise<Skill[]> {
