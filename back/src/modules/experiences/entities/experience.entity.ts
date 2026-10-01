@@ -16,12 +16,12 @@ export class Experience extends BaseEntity {
   @Column({ type: 'varchar' })
   role!: string;
 
-  /**
-   * Free text, as in the current static data ("Oct 2020",
-   * "Mai 2020 - Juin 2020") — not every entry has clean start/end dates.
-   */
-  @Column({ type: 'varchar' })
-  periodLabel!: string;
+  // Month+year granularity (day is always 1st). endDate null = ongoing.
+  @Column({ type: 'date' })
+  startDate!: string;
+
+  @Column({ type: 'date', nullable: true })
+  endDate!: string | null;
 
   @Column({ type: 'enum', enum: ExperienceStatus })
   status!: ExperienceStatus;

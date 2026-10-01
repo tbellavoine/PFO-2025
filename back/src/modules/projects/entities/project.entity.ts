@@ -19,9 +19,12 @@ import { ProjectStatus } from '../enums/project-status.enum.js';
 
 @Entity({ name: 'projects' })
 export class Project extends BaseEntity {
-  // Free text: not every project has a single clean year ("2020 - 2025").
-  @Column({ type: 'varchar' })
-  date!: string;
+  // Month+year granularity (day is always 1st). endDate null = ongoing.
+  @Column({ type: 'date' })
+  startDate!: string;
+
+  @Column({ type: 'date', nullable: true })
+  endDate!: string | null;
 
   @Column({ type: 'varchar' })
   name!: string;

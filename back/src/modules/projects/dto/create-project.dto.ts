@@ -4,6 +4,7 @@ import {
   ArrayUnique,
   IsArray,
   IsBoolean,
+  IsDateString,
   IsEnum,
   IsInt,
   IsOptional,
@@ -18,9 +19,14 @@ import { ProjectStatus } from '../enums/project-status.enum.js';
 import { ProjectLinkDto } from './project-link.dto.js';
 
 export class CreateProjectDto {
-  @ApiProperty({ description: 'Free text, e.g. "2020" or "2020 - 2025"' })
-  @IsString()
-  date!: string;
+  @ApiProperty({ description: 'First day of the start month, e.g. "2020-10-01"' })
+  @IsDateString()
+  startDate!: string;
+
+  @ApiProperty({ required: false, description: 'First day of the end month, or omitted if ongoing' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string | null;
 
   @ApiProperty()
   @IsString()

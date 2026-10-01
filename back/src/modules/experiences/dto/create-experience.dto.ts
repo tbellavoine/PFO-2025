@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsDateString,
   IsEnum,
   IsInt,
   IsOptional,
@@ -25,9 +26,14 @@ export class CreateExperienceDto {
   @IsString()
   role!: string;
 
-  @ApiProperty({ description: 'Free text, e.g. "Oct 2020" or "Mai 2020 - Juin 2020"' })
-  @IsString()
-  periodLabel!: string;
+  @ApiProperty({ description: 'First day of the start month, e.g. "2020-10-01"' })
+  @IsDateString()
+  startDate!: string;
+
+  @ApiProperty({ required: false, description: 'First day of the end month, or omitted if ongoing' })
+  @IsOptional()
+  @IsDateString()
+  endDate?: string | null;
 
   @ApiProperty({ enum: ExperienceStatus })
   @IsEnum(ExperienceStatus)

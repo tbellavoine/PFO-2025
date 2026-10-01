@@ -209,7 +209,8 @@ async function main() {
     slug: string;
     company: string;
     role: string;
-    periodLabel: string;
+    startDate: string;
+    endDate: string | null;
     status: ExperienceStatus;
     skills: Partial<Record<keyof typeof categories, string[]>>;
     achievements: string[];
@@ -219,7 +220,8 @@ async function main() {
       slug: 'front-end-developer-grdf',
       company: 'Web atrio',
       role: 'Développeur Front-End Angular',
-      periodLabel: 'Oct 2020',
+      startDate: '2020-10-01',
+      endDate: null,
       status: ExperienceStatus.IN_PROGRESS,
       skills: {
         front_end: ['Angular', 'TypeScript', 'HTML', 'Tailwindcss (skills page)'],
@@ -241,7 +243,8 @@ async function main() {
       slug: 'front-end-developer-svp',
       company: 'Web atrio',
       role: 'Développeur Front-End',
-      periodLabel: 'Mai 2020 - Juin 2020',
+      startDate: '2020-05-01',
+      endDate: '2020-06-01',
       status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['HTML', 'Scss', 'Javascript'], // "Webpack" has no catalog equivalent yet
@@ -259,7 +262,8 @@ async function main() {
       slug: 'front-end-developer-longchamp',
       company: 'Web atrio',
       role: 'Développeur Front-End',
-      periodLabel: 'Avril 2020',
+      startDate: '2020-04-01',
+      endDate: '2020-04-01',
       status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['Angular', 'TypeScript', 'Isml', 'Scss', 'Javascript'], // "RGAA"/"performance" are qualities, not tools
@@ -277,7 +281,8 @@ async function main() {
       slug: 'front-end-developer-adveris',
       company: 'Adveris',
       role: 'Développeur Front-End',
-      periodLabel: 'Novembre 2018 - Avril 2019',
+      startDate: '2018-11-01',
+      endDate: '2019-04-01',
       status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['Angular', 'TypeScript', 'HTML', 'Scss', 'Jquery', 'TreeJs', 'Twig', 'Bootstrap'],
@@ -296,7 +301,8 @@ async function main() {
       slug: 'web-integrator-plaza',
       company: 'Adveris',
       role: 'Intégrateur Web',
-      periodLabel: 'janvier 2014 - Décembre 2018',
+      startDate: '2014-01-01',
+      endDate: '2018-12-01',
       status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['HTML', 'Sass', 'Jquery'],
@@ -319,7 +325,8 @@ async function main() {
           slug: exp.slug,
           company: exp.company,
           role: exp.role,
-          periodLabel: exp.periodLabel,
+          startDate: exp.startDate,
+          endDate: exp.endDate,
           status: exp.status,
           order: index,
           published: true,
@@ -341,13 +348,13 @@ async function main() {
   // --- Projects ---
   // `preview`: front/src/assets/images/* filename for the previewImage.
   type SeedProject = {
-    date: string; name: string; company: Company; category: ProjectCategory; type: ProjectType;
+    startDate: string; endDate: string | null; name: string; company: Company; category: ProjectCategory; type: ProjectType;
     status: ProjectStatus; description: string; skills: string[];
     links: { label: string; url: string }[]; preview?: string;
   };
   const projects: SeedProject[] = [
     {
-      date: '2025', name: 'Porfolio 2025', company: Company.PERSO, category: ProjectCategory.WEBSITE,
+      startDate: '2025-01-01', endDate: null, name: 'Porfolio 2025', company: Company.PERSO, category: ProjectCategory.WEBSITE,
       type: ProjectType.PERSO, status: ProjectStatus.IN_PROGRESS,
       description: 'Conception et réalisation d\'un portefolio pour mettre en avant mes dernière informations (compétences, project, experiences, ect...)',
       skills: ['Angular', 'Typescript', 'Jasmine', 'Html', 'Css', 'Tailwindcss', 'Github'],
@@ -357,7 +364,7 @@ async function main() {
       ],
     },
     {
-      date: '2020 - 2025', name: 'GRP: Gestion de la Relation Producteur', company: Company.WEB_ATRIO,
+      startDate: '2020-01-01', endDate: null, name: 'GRP: Gestion de la Relation Producteur', company: Company.WEB_ATRIO,
       category: ProjectCategory.APP, type: ProjectType.PRO, status: ProjectStatus.IN_PROGRESS,
       description: 'Conception et développement de l’interface utilisateur pour la gestion des relations producteurs bio-méthane, pilotage de l’architecture front-end Angular (migration progressive v8 à v19), mise en place de tests unitaires et d’intégration (Jasmine/Jest), développement back-end avec Symfony et API-Platform, déploiement sur AWS Cloud, ainsi que formation et encadrement technique des nouveaux collaborateurs.',
       skills: ['Angular', 'Typescript', 'Jest', 'Sonarqube', 'Html', 'Css', 'Tailwindcss', 'Docker', 'Aws', 'Adobe Xd', 'CI/CD', 'Symfony', 'Doctrine', 'Phpunit', 'Jira', 'Gitlab'],
@@ -365,7 +372,7 @@ async function main() {
       preview: 'Gestion relation producteur.jpg',
     },
     {
-      date: '2022', name: 'Patience .K - coaching', company: Company.PERSO, category: ProjectCategory.APP,
+      startDate: '2022-01-01', endDate: '2022-01-01', name: 'Patience .K - coaching', company: Company.PERSO, category: ProjectCategory.APP,
       type: ProjectType.PERSO, status: ProjectStatus.ENDED,
       description: 'Site vitrine WordPress pour coach sportif à domicile spécialisé dans la remise en forme et perte de poids, avec design personnalisé créé sur maquettes validées et formation back-office pour une gestion autonome du contenu.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -373,7 +380,7 @@ async function main() {
       preview: 'Patience K Coaching.jpg',
     },
     {
-      date: '2020', name: 'HORA ASOCIADOS - Estudio Juririco Empresarial', company: Company.PERSO,
+      startDate: '2020-01-01', endDate: '2020-01-01', name: 'HORA ASOCIADOS - Estudio Juririco Empresarial', company: Company.PERSO,
       category: ProjectCategory.WEBSITE, type: ProjectType.PERSO, status: ProjectStatus.ENDED,
       description: 'Site vitrine WordPress pour cabinet d\'avocats spécialisé en droit du travail, fiscal et corporatif, avec design sur maquettes validées et formation back-office pour une gestion autonome du contenu professionnel.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -381,7 +388,7 @@ async function main() {
       preview: 'Hora Asociados.jpg',
     },
     {
-      date: '2020', name: 'SVP.com', company: Company.WEB_ATRIO, category: ProjectCategory.BLOG,
+      startDate: '2020-01-01', endDate: '2020-01-01', name: 'SVP.com', company: Company.WEB_ATRIO, category: ProjectCategory.BLOG,
       type: ProjectType.PRO, status: ProjectStatus.ENDED,
       description: 'Mission de refonte technique front-end en urgence : transformation complète des maquettes Zeplin en interfaces HTML5/SCSS compatibles cross-browser (IE11) avec templating Laravel Blade, incluant la réduction de la dette technique avant mise en production.',
       skills: ['Html', 'Css', 'Javascript', 'Zeplin', 'Laravel blade'],
@@ -389,7 +396,7 @@ async function main() {
       preview: 'SVP.jpg',
     },
     {
-      date: '2019 - 2020', name: 'Longchamp', company: Company.WEB_ATRIO, category: ProjectCategory.COMMERCE,
+      startDate: '2019-01-01', endDate: '2020-01-01', name: 'Longchamp', company: Company.WEB_ATRIO, category: ProjectCategory.COMMERCE,
       type: ProjectType.PRO, status: ProjectStatus.ENDED,
       description: 'Développement et intégration front-end pour Salesforce Commerce Cloud et Angular 7, incluant la création de modules e-commerce personnalisés, l’optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Angular', 'Typescript', 'Html', 'Isml', 'Scss', 'Photoshop', 'Gitlab'],
@@ -397,7 +404,7 @@ async function main() {
       preview: 'Longchamp Mypliage.jpg',
     },
     {
-      date: '2019', name: 'Inovarion', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
+      startDate: '2019-01-01', endDate: '2019-01-01', name: 'Inovarion', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
       type: ProjectType.PRO, status: ProjectStatus.REFUNDED,
       description: 'Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php', 'TreeJs'],
@@ -405,7 +412,7 @@ async function main() {
       preview: 'Inovarion.jpg',
     },
     {
-      date: '2019', name: 'Yposkesi', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
+      startDate: '2019-01-01', endDate: '2019-01-01', name: 'Yposkesi', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
       type: ProjectType.PRO, status: ProjectStatus.REFUNDED,
       description: 'Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -413,7 +420,7 @@ async function main() {
       preview: 'Yposkesi.jpg',
     },
     {
-      date: '2018', name: 'Pinet', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
+      startDate: '2018-01-01', endDate: '2018-01-01', name: 'Pinet', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
       type: ProjectType.PRO, status: ProjectStatus.ENDED,
       description: 'Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -421,7 +428,7 @@ async function main() {
       preview: 'Pinet.jpg',
     },
     {
-      date: '2018', name: 'Nextensia', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
+      startDate: '2018-01-01', endDate: '2018-01-01', name: 'Nextensia', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
       type: ProjectType.PRO, status: ProjectStatus.ENDED,
       description: 'Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -429,7 +436,7 @@ async function main() {
       preview: 'Nextensia.jpg',
     },
     {
-      date: '2018', name: 'Metroscope', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
+      startDate: '2018-01-01', endDate: '2018-01-01', name: 'Metroscope', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
       type: ProjectType.PRO, status: ProjectStatus.REFUNDED,
       description: 'Développement et intégration front-end sous wordpress. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -437,7 +444,7 @@ async function main() {
       preview: 'Metroscope EDF.jpg',
     },
     {
-      date: '2018', name: 'Fondation avenir du patrimoine à paris', company: Company.ADVERIS,
+      startDate: '2018-01-01', endDate: '2018-01-01', name: 'Fondation avenir du patrimoine à paris', company: Company.ADVERIS,
       category: ProjectCategory.COLLAB, type: ProjectType.PRO, status: ProjectStatus.ENDED,
       description: 'Développement et intégration front-end sous wordpress pour une fondation. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
@@ -452,7 +459,8 @@ async function main() {
     const previewImage = p.preview ? await upsertPreviewMedia(mediaRepo, p.name, p.preview) : undefined;
     const project = await projectRepo.save(
       projectRepo.create({
-        date: p.date,
+        startDate: p.startDate,
+        endDate: p.endDate,
         name: p.name,
         company: p.company,
         category: p.category,

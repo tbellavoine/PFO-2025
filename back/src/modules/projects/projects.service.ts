@@ -59,7 +59,8 @@ export class ProjectsService {
     const skills = await this.resolveSkills(dto.skillIds);
     const project = await this.repository.save(
       this.repository.create({
-        date: dto.date,
+        startDate: dto.startDate,
+        endDate: dto.endDate ?? null,
         name: dto.name,
         company: dto.company,
         category: dto.category,
@@ -79,7 +80,8 @@ export class ProjectsService {
   async update(id: string, dto: UpdateProjectDto): Promise<Project> {
     const project = await this.findOneForAdmin(id);
     Object.assign(project, {
-      date: dto.date ?? project.date,
+      startDate: dto.startDate ?? project.startDate,
+      endDate: dto.endDate !== undefined ? dto.endDate : project.endDate,
       name: dto.name ?? project.name,
       company: dto.company ?? project.company,
       category: dto.category ?? project.category,
