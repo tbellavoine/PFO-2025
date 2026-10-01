@@ -1,8 +1,10 @@
 import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
+import { KeyValuePipe } from '@angular/common';
 import { form, required, FormField } from '@angular/forms/signals';
 import { ExperienceApiModel } from '@models/api/experience.model';
 import { SkillApiModel, SkillCategoryEntity } from '@models/api/skill-catalog.model';
+import { ExperienceStatus } from '@enums/experience-status.enum';
 import { environment } from '../../../environments/environment';
 
 interface ExperienceFormModel {
@@ -10,7 +12,7 @@ interface ExperienceFormModel {
   company: string;
   role: string;
   periodLabel: string;
-  status: string;
+  status: ExperienceStatus;
   order: number;
   published: boolean;
 }
@@ -25,14 +27,14 @@ const EMPTY_MODEL: ExperienceFormModel = {
   company: '',
   role: '',
   periodLabel: '',
-  status: '',
+  status: ExperienceStatus.IN_PROGRESS,
   order: 0,
   published: false,
 };
 
 @Component({
   selector: 'app-experience-edit-form',
-  imports: [FormField],
+  imports: [FormField, KeyValuePipe],
   templateUrl: './experience-edit-form.component.html',
 })
 export class ExperienceEditFormComponent {
@@ -42,6 +44,7 @@ export class ExperienceEditFormComponent {
   public readonly deleted = output<void>();
   public readonly cancelled = output<void>();
   private readonly http = inject(HttpClient);
+  protected readonly ExperienceStatus = ExperienceStatus;
 
   protected readonly skillsResource = httpResource<SkillApiModel[]>(
     () => `${environment.apiBaseUrl}/v1/admin/skills`,
@@ -80,7 +83,7 @@ export class ExperienceEditFormComponent {
         company: experience.company,
         role: experience.role,
         periodLabel: experience.periodLabel,
-        status: experience.status,
+        status: experience.status as ExperienceStatus,
         order: experience.order,
         published: experience.published,
       });

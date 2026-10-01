@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ExperienceEditFormComponent } from './experience-edit-form.component';
 import { ExperienceApiModel } from '@models/api/experience.model';
+import { ExperienceStatus } from '@enums/experience-status.enum';
 import { environment } from '../../../environments/environment';
 
 describe('ExperienceEditFormComponent', () => {
@@ -16,7 +17,7 @@ describe('ExperienceEditFormComponent', () => {
     company: 'Web atrio',
     role: 'Dev',
     periodLabel: 'Oct 2020',
-    status: 'En cours',
+    status: ExperienceStatus.IN_PROGRESS,
     order: 0,
     published: true,
     achievements: [{ id: 'a1', text: 'Did things', order: 0 }],
@@ -57,7 +58,7 @@ describe('ExperienceEditFormComponent', () => {
         company: 'Web atrio',
         role: 'Dev',
         periodLabel: 'Oct 2020',
-        status: 'En cours',
+        status: ExperienceStatus.IN_PROGRESS,
         order: 0,
         published: true,
       });
@@ -104,7 +105,7 @@ describe('ExperienceEditFormComponent', () => {
         company: '',
         role: '',
         periodLabel: '',
-        status: '',
+        status: ExperienceStatus.IN_PROGRESS,
         order: 0,
         published: false,
       });
@@ -117,7 +118,7 @@ describe('ExperienceEditFormComponent', () => {
         company: 'Acme',
         role: 'Dev',
         periodLabel: '2026',
-        status: 'En cours',
+        status: ExperienceStatus.IN_PROGRESS,
         order: 0,
         published: false,
       });

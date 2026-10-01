@@ -18,7 +18,11 @@
     </label>
     <label class="flex flex-col gap-1 text-sm text-light/60">
       Statut
-      <input type="text" [formField]="experienceForm.status" class="rounded border border-light/20 bg-transparent p-2 text-light" />
+      <select [formField]="experienceForm.status" class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (entry of ExperienceStatus | keyvalue; track entry.key) {
+          <option [value]="entry.value">{{ entry.value }}</option>
+        }
+      </select>
     </label>
     <label class="flex flex-col gap-1 text-sm text-light/60">
       Ordre
