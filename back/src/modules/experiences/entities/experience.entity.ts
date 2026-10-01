@@ -3,6 +3,7 @@ import type { Relation } from 'typeorm';
 import { BaseEntity } from '#common/entities/base.entity.js';
 import { Achievement } from './achievement.entity.js';
 import { ExperienceSkill } from './experience-skill.entity.js';
+import { ExperienceStatus } from '../enums/experience-status.enum.js';
 
 @Entity({ name: 'experiences' })
 export class Experience extends BaseEntity {
@@ -22,9 +23,8 @@ export class Experience extends BaseEntity {
   @Column({ type: 'varchar' })
   periodLabel!: string;
 
-  /** Free text too, e.g. "En cours" / "Terminée". */
-  @Column({ type: 'varchar' })
-  status!: string;
+  @Column({ type: 'enum', enum: ExperienceStatus })
+  status!: ExperienceStatus;
 
   @Column({ type: 'int', default: 0 })
   order!: number;

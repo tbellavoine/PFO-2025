@@ -20,6 +20,7 @@ import { Company } from './modules/projects/enums/company.enum.js';
 import { ProjectCategory } from './modules/projects/enums/project-category.enum.js';
 import { ProjectType } from './modules/projects/enums/project-type.enum.js';
 import { ProjectStatus } from './modules/projects/enums/project-status.enum.js';
+import { ExperienceStatus } from './modules/experiences/enums/experience-status.enum.js';
 
 /**
  * Transcribes the content that used to live in front's *.const.ts files.
@@ -209,7 +210,7 @@ async function main() {
     company: string;
     role: string;
     periodLabel: string;
-    status: string;
+    status: ExperienceStatus;
     skills: Partial<Record<keyof typeof categories, string[]>>;
     achievements: string[];
   };
@@ -219,7 +220,7 @@ async function main() {
       company: 'Web atrio',
       role: 'Développeur Front-End Angular',
       periodLabel: 'Oct 2020',
-      status: 'En cours',
+      status: ExperienceStatus.IN_PROGRESS,
       skills: {
         front_end: ['Angular', 'TypeScript', 'HTML', 'Tailwindcss (skills page)'],
         back_end: ['Symfony (skills page)', 'Doctrine (skills page)'],
@@ -241,7 +242,7 @@ async function main() {
       company: 'Web atrio',
       role: 'Développeur Front-End',
       periodLabel: 'Mai 2020 - Juin 2020',
-      status: 'Terminée',
+      status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['HTML', 'Scss', 'Javascript'], // "Webpack" has no catalog equivalent yet
         ux_ui: [], // "Zeplin" listed separately below (catalog has 'Zeplin')
@@ -259,7 +260,7 @@ async function main() {
       company: 'Web atrio',
       role: 'Développeur Front-End',
       periodLabel: 'Avril 2020',
-      status: 'Terminée',
+      status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['Angular', 'TypeScript', 'Isml', 'Scss', 'Javascript'], // "RGAA"/"performance" are qualities, not tools
         ux_ui: ['Photoshop'],
@@ -277,7 +278,7 @@ async function main() {
       company: 'Adveris',
       role: 'Développeur Front-End',
       periodLabel: 'Novembre 2018 - Avril 2019',
-      status: 'Terminée',
+      status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['Angular', 'TypeScript', 'HTML', 'Scss', 'Jquery', 'TreeJs', 'Twig', 'Bootstrap'],
         back_end: ['Php'],
@@ -296,7 +297,7 @@ async function main() {
       company: 'Adveris',
       role: 'Intégrateur Web',
       periodLabel: 'janvier 2014 - Décembre 2018',
-      status: 'Terminée',
+      status: ExperienceStatus.ENDED,
       skills: {
         front_end: ['HTML', 'Sass', 'Jquery'],
         ux_ui: ['Photoshop', 'Illustrator'],

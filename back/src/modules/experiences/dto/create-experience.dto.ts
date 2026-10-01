@@ -3,12 +3,14 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsEnum,
   IsInt,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { ExperienceSkillDto } from './experience-skill.dto.js';
+import { ExperienceStatus } from '../enums/experience-status.enum.js';
 
 export class CreateExperienceDto {
   @ApiProperty()
@@ -27,9 +29,9 @@ export class CreateExperienceDto {
   @IsString()
   periodLabel!: string;
 
-  @ApiProperty({ description: 'Free text, e.g. "En cours" / "Terminée"' })
-  @IsString()
-  status!: string;
+  @ApiProperty({ enum: ExperienceStatus })
+  @IsEnum(ExperienceStatus)
+  status!: ExperienceStatus;
 
   @ApiProperty({ required: false, default: 0 })
   @IsOptional()
