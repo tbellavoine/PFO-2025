@@ -11,7 +11,10 @@ import { AppModule } from './app.module.js';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(helmet());
+  // Media (project preview images) is served from this origin but embedded
+  // on the front's own origin (different hosts in prod, different ports in
+  // dev) — Helmet's default same-origin CORP blocks that <img> load.
+  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
   app.use(cookieParser());
   app.enableCors({
     origin: process.env.CORS_ORIGIN?.split(',') ?? true,

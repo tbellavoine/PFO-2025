@@ -109,13 +109,24 @@ describe('JsonCardComponent', () => {
     describe('openUrl', () => {
       it('should open external URLs in new tab', () => {
         vi.spyOn(window, 'open').mockReturnValue(null);
-        component.openUrl('https://example.com');
+        component.openUrl('External', 'https://example.com');
         expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
       });
 
       it('should navigate internally for non-http URLs', () => {
-        component.openUrl('internal-path');
+        component.openUrl('Internal', 'internal-path');
         expect(router.navigate).toHaveBeenCalledWith([Path.PREVIEW, 'internal-path']);
+      });
+
+      it('should always navigate in-app for a Preview link, even with a real media URL', () => {
+        vi.spyOn(window, 'open').mockReturnValue(null);
+        component.openUrl('Preview', 'http://localhost:3000/media/photo.jpg');
+
+        expect(window.open).not.toHaveBeenCalled();
+        expect(router.navigate).toHaveBeenCalledWith([
+          Path.PREVIEW,
+          encodeURIComponent('http://localhost:3000/media/photo.jpg'),
+        ]);
       });
     });
 
@@ -130,7 +141,7 @@ describe('JsonCardComponent', () => {
 
         linkTrigger.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
-        expect(component.openUrl).toHaveBeenCalledWith(mockJsonObject.links[0].url);
+        expect(component.openUrl).toHaveBeenCalledWith(mockJsonObject.links[0].label, mockJsonObject.links[0].url);
       });
     });
   });

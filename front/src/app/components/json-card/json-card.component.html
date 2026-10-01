@@ -26,9 +26,9 @@
         class="flex items-center justify-center flex-1 py-2 px-4 cursor-pointer transition-all rounded-sm border-b border-b-transparent border-t border-t-white/5 lg:border-t-none hover:border-b-accent hover:bg-primary text-center"
         role="button"
         tabindex="0"
-        (click)="openUrl(link.url)"
-        (keydown.enter)="openUrl(link.url)"
-        (keydown.space)="$event.preventDefault(); openUrl(link.url)">
+        (click)="openUrl(link.label, link.url)"
+        (keydown.enter)="openUrl(link.label, link.url)"
+        (keydown.space)="$event.preventDefault(); openUrl(link.label, link.url)">
         {{ link.label }}
       </div>
     }

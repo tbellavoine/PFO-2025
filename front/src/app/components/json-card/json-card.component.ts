@@ -85,10 +85,19 @@ export class JsonCardComponent {
   }
 
   /**
-   * Open a URL in a new tab or navigate internally
+   * Open a link: "Preview" always navigates in-app to the image viewer
+   * (static asset key or a full media URL, both resolved there); anything
+   * else opens in a new tab if it's a real URL, or navigates internally
+   * otherwise.
+   * @param label
    * @param url
    */
-  public openUrl(url: string): void {
+  public openUrl(label: string, url: string): void {
+    if (label === 'Preview') {
+      this.router.navigate([Path.PREVIEW, encodeURIComponent(url)]).then();
+
+      return;
+    }
     if (url.startsWith('http')) {
       window.open(url, '_blank', 'noopener,noreferrer');
 

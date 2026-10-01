@@ -128,6 +128,20 @@ describe('ImageViewerComponent', () => {
     expect(tabsService.addTab).toHaveBeenCalled();
   });
 
+  it('should use an encoded media URL directly, bypassing ImageAssetsMap', () => {
+    const encoded = encodeURIComponent('http://localhost:3000/media/photo.jpg');
+    paramMapSubject.next({
+      get: (_key: string) => encoded,
+      getAll: () => [],
+      has: () => true,
+      keys: [] as string[],
+    });
+    fixture.detectChanges();
+
+    expect(component.imageName()).toBe('http://localhost:3000/media/photo.jpg');
+    expect(component.imagePath()).toBe('http://localhost:3000/media/photo.jpg');
+  });
+
   it('should handle keydown events on document', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'i' }));
     expect(component.showOverlay()).toBe(true);

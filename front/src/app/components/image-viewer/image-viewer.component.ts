@@ -25,7 +25,12 @@ export class ImageViewerComponent implements OnInit {
   @ViewChild('imageElement') imageElement!: ElementRef<HTMLImageElement>;
   @ViewChild('imageContainer') imageContainer!: ElementRef<HTMLDivElement>;
   public imageName = signal<string | undefined>('');
-  public imagePath = computed(() => '/assets/images/' + this.imageName());
+  // A full media URL (dynamic, uploaded preview image) is used as-is;
+  // anything else is a static asset filename resolved from ImageAssetsMap.
+  public imagePath = computed(() => {
+    const name = this.imageName();
+    return name?.startsWith('http') ? name : '/assets/images/' + name;
+  });
   public zoomLevel = signal<number>(ImageViewerComponent.INITIAL_ZOOM);
   public minZoomLevel = signal<number>(ImageViewerComponent.MIN_ZOOM_ABSOLUTE);
   public panX = signal<number>(0);
@@ -49,13 +54,17 @@ export class ImageViewerComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
-      this.imageName.set(ImageAssetsMap.get(params.get('imageName') as string));
+      const raw = params.get('imageName') as string;
+      const decoded = decodeURIComponent(raw);
+      const isExternalUrl = decoded.startsWith('http');
+      this.imageName.set(isExternalUrl ? decoded : ImageAssetsMap.get(raw));
+      const label = isExternalUrl ? 'Aperçu' : this.imageName();
       this.imageTab.set(new Tab(
-        this.imageName(),
+        label,
         ['fas', 'image'],
         'text-blue-300',
-        this.imageName(),
-        [Path.PREVIEW, this.activatedRoute.snapshot.params['imageName']]
+        label,
+        [Path.PREVIEW, raw]
       ));
       this.tabsService.addTab(this.imageTab());
       this.resetView();
