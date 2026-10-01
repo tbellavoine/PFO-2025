@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
 
 /** Singleton, same convention as Profile (§ enforced at the service layer). */
 @Entity({ name: 'contact_info' })

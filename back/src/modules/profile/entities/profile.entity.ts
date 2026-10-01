@@ -1,12 +1,7 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
 
-/**
- * Singleton: exactly one row is expected to exist. Enforced at the service
- * layer (always read/update the first row), not by a DB constraint — the
- * only writer is the single admin account, so the extra constraint isn't
- * pulling its weight yet.
- */
+// Singleton: one row expected, enforced at the service layer, not by DB constraint.
 @Entity({ name: 'profile' })
 export class Profile extends BaseEntity {
   @Column({ type: 'varchar' })

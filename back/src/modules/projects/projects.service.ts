@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Project } from './entities/project.entity.js';
@@ -12,6 +12,8 @@ const ADMIN_RELATIONS = { links: true, skills: true, previewImage: true } as con
 
 @Injectable()
 export class ProjectsService {
+  private readonly logger = new Logger(ProjectsService.name);
+
   constructor(
     @InjectRepository(Project)
     private readonly repository: Repository<Project>,
@@ -99,15 +101,13 @@ export class ProjectsService {
     if (dto.links !== undefined) {
       await this.replaceLinks(id, dto.links);
     }
-    // The old preview image is replaced, not reused — clean it up so
-    // uploads don't pile up on disk every time an admin swaps a picture.
     if (
       dto.previewImageId !== undefined &&
       previousPreviewImageId &&
       previousPreviewImageId !== dto.previewImageId
     ) {
-      await this.mediaService.remove(previousPreviewImageId).catch(() => {
-        // Best-effort: a cleanup failure shouldn't fail the project update.
+      await this.mediaService.remove(previousPreviewImageId).catch((error) => {
+        this.logger.warn(`Failed to clean up replaced preview image ${previousPreviewImageId}`, error);
       });
     }
     return this.findOneForAdmin(id);
@@ -118,8 +118,8 @@ export class ProjectsService {
     const previewImageId = project.previewImage?.id;
     await this.repository.delete(id);
     if (previewImageId) {
-      await this.mediaService.remove(previewImageId).catch(() => {
-        // Best-effort: the project is already gone either way.
+      await this.mediaService.remove(previewImageId).catch((error) => {
+        this.logger.warn(`Failed to clean up preview image ${previewImageId} for deleted project ${id}`, error);
       });
     }
   }

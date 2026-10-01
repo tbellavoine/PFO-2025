@@ -11,9 +11,8 @@ import { AppModule } from './app.module.js';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Media (project preview images) is served from this origin but embedded
-  // on the front's own origin (different hosts in prod, different ports in
-  // dev) — Helmet's default same-origin CORP blocks that <img> load.
+  // Media is embedded on the front's origin (different port/domain) —
+  // Helmet's default same-origin CORP would block that <img> load.
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
   app.use(cookieParser());
   app.enableCors({
@@ -28,9 +27,8 @@ async function bootstrap() {
     }),
   );
 
-  // Decision §2.4: local server disk, not an S3-compatible bucket — the
-  // upload endpoint (AdminMediaController) writes here, this just serves
-  // it back out at MEDIA_PUBLIC_URL's path.
+  // Local disk, not an S3-compatible bucket; AdminMediaController writes
+  // here, this serves it back out at MEDIA_PUBLIC_URL's path.
   const uploadDir = resolve(process.env.MEDIA_UPLOAD_DIR ?? './uploads');
   mkdirSync(uploadDir, { recursive: true });
   app.useStaticAssets(uploadDir, { prefix: '/media' });

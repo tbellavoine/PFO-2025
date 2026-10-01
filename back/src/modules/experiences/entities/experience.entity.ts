@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import type { Relation } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
 import { Achievement } from './achievement.entity.js';
 import { ExperienceSkill } from './experience-skill.entity.js';
 

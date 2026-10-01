@@ -1,12 +1,8 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
 
-/**
- * An uploaded file (currently: project preview images). `url` is the
- * public path served by the API (MEDIA_PUBLIC_URL + filename) — decision
- * §2.4: local server disk, not an S3-compatible bucket, so `url` always
- * points back at this same API instance.
- */
+// Uploaded file (project preview images). `url` = MEDIA_PUBLIC_URL + filename,
+// served from local disk, not an S3-compatible bucket.
 @Entity({ name: 'media' })
 export class Media extends BaseEntity {
   @Column({ type: 'varchar' })

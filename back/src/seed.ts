@@ -22,15 +22,8 @@ import { ProjectType } from './modules/projects/enums/project-type.enum.js';
 import { ProjectStatus } from './modules/projects/enums/project-status.enum.js';
 
 /**
- * One-time import of the content that used to live in front/src/app's
- * *.const.ts files, transcribed here rather than imported live (front is a
- * separate Angular project with its own build; the data is small and
- * static enough that a faithful copy is simpler and more transparent than
- * a cross-project build-time dependency). Safe to re-run: every insert is
- * keyed and skipped if it already exists, including the project preview
- * images (copied from front/'s static assets into media storage and
- * attached directly — see upsertPreviewMedia below).
- *
+ * Transcribes the content that used to live in front's *.const.ts files.
+ * Idempotent: every insert is keyed and skipped if it already exists.
  * Run with: npm run seed
  */
 
@@ -56,10 +49,8 @@ async function upsertCategory(key: string, label: string, order: number) {
   return repo.save(repo.create({ key, label, order }));
 }
 
-// The static site's project preview images still live in front/'s own
-// assets — copied into the backend's media storage here (not via the
-// admin upload endpoint) so a fresh `npm run seed` is fully reproducible
-// without a separate manual migration step.
+// Preview images still live in front's static assets; copied into media
+// storage directly so seeding is reproducible without a manual upload step.
 const FRONT_IMAGES_DIR = join(process.cwd(), '..', 'front', 'src', 'assets', 'images');
 
 async function upsertPreviewMedia(
@@ -73,7 +64,12 @@ async function upsertPreviewMedia(
   const uploadDir = process.env.MEDIA_UPLOAD_DIR ?? './uploads';
   await mkdir(uploadDir, { recursive: true });
   const filename = `${randomUUID()}${extname(sourceFilename).toLowerCase()}`;
-  await copyFile(join(FRONT_IMAGES_DIR, sourceFilename), join(uploadDir, filename));
+  const sourcePath = join(FRONT_IMAGES_DIR, sourceFilename);
+  try {
+    await copyFile(sourcePath, join(uploadDir, filename));
+  } catch (error) {
+    throw new Error(`Seed: could not copy preview image for "${altText}" from ${sourcePath}`, { cause: error });
+  }
 
   const publicUrl = `${process.env.MEDIA_PUBLIC_URL}/${filename}`;
   return mediaRepo.save(mediaRepo.create({ filename, url: publicUrl, altText }));
@@ -102,8 +98,7 @@ async function main() {
     'Less', 'Material Ui', 'Nestjs', 'Photoshop', 'Php', 'Phpmyadmin', 'Phpstorm', 'Phpunit',
     'Postman', 'Powerpoint', 'Sass', 'Scss', 'Sonarqube', 'Symfony', 'Tailwindcss', 'TreeJs',
     'Twig', 'Typescript', 'Visual Studio Code', 'Webstorm', 'Wordpress', 'Zeplin',
-    // Used by experiences/skills-page entries below but not in the old front-end `Skill` enum
-    // (they were only ever free-text strings there):
+    // Used by experiences/skills-page entries, free-text in the old front-end:
     'TypeScript', 'HTML', 'Tailwindcss (skills page)', 'Symfony (skills page)', 'Doctrine (skills page)',
     'NodeJS', 'Express (skills page)', 'PHPMyAdmin', 'RGAA', 'Performance', 'CSS/SCSS/LESS',
   ];
@@ -127,9 +122,8 @@ async function main() {
     quality: await upsertCategory('quality', 'Qualité', 5),
   };
 
-  // --- Skills page content (SkillsComponent's six signals) ---
-  // "powerpoint" was '🛇' in the original data — normalized to SkillLevel.NOT_A_FIT ('✗'),
-  // same meaning, one consistent symbol instead of two.
+  // --- Skills page content ---
+  // "powerpoint" was '🛇' originally, normalized to SkillLevel.NOT_A_FIT ('✗').
   const skillsPage: [keyof typeof categories, string, SkillLevel][] = [
     ['front_end', 'Angular', SkillLevel.ACQUIRED],
     ['front_end', 'TypeScript', SkillLevel.ACQUIRED],
@@ -344,8 +338,7 @@ async function main() {
   }
 
   // --- Projects ---
-  // `preview` is the front/src/assets/images/* filename to copy into media
-  // storage and attach as this project's previewImage.
+  // `preview`: front/src/assets/images/* filename for the previewImage.
   type SeedProject = {
     date: string; name: string; company: Company; category: ProjectCategory; type: ProjectType;
     status: ProjectStatus; description: string; skills: string[];
@@ -477,10 +470,13 @@ async function main() {
   }
 
   console.log('\nSeed complete.');
-  await AppDataSource.destroy();
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+main()
+  .catch((error) => {
+    console.error('Seed failed:', error);
+    process.exitCode = 1;
+  })
+  .finally(() => {
+    if (AppDataSource.isInitialized) return AppDataSource.destroy();
+  });

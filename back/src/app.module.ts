@@ -52,10 +52,7 @@ import { AuthModule } from './modules/auth/auth.module.js';
           ContactInfo,
           AdminUser,
         ],
-        // Schema changes only ever go through migrations (src/migrations),
-        // never through synchronize — even in development, so that what
-        // gets tested locally is the same schema-change path used in
-        // production.
+        // Schema changes go through migrations, never synchronize (even in dev).
         synchronize: false,
       }),
     }),

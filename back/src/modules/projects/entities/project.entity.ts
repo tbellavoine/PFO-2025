@@ -8,9 +8,9 @@ import {
   OneToMany,
 } from 'typeorm';
 import type { Relation } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
-import { Skill } from '../../skills/entities/skill.entity.js';
-import { Media } from '../../media/entities/media.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
+import { Skill } from '#modules/skills/entities/skill.entity.js';
+import { Media } from '#modules/media/entities/media.entity.js';
 import { ProjectLink } from './project-link.entity.js';
 import { Company } from '../enums/company.enum.js';
 import { ProjectCategory } from '../enums/project-category.enum.js';
@@ -19,10 +19,7 @@ import { ProjectStatus } from '../enums/project-status.enum.js';
 
 @Entity({ name: 'projects' })
 export class Project extends BaseEntity {
-  /**
-   * Free text, as in the current static data ("2020", "2020 - 2025") — not
-   * every project has a single clean year.
-   */
+  // Free text: not every project has a single clean year ("2020 - 2025").
   @Column({ type: 'varchar' })
   date!: string;
 
@@ -57,12 +54,7 @@ export class Project extends BaseEntity {
   @OneToMany(() => ProjectLink, (link) => link.project, { cascade: true })
   links!: Relation<ProjectLink>[];
 
-  /**
-   * Replaces the old "Preview" link whose url actually held an internal
-   * ImageAssets enum key instead of a real URL (see docs/plan-dynamic-
-   * backend.md §4.2) — a real FK to an uploaded image now, `links` only
-   * holds genuine external URLs.
-   */
+  // Real FK to an uploaded image; `links` only holds external URLs.
   @ManyToOne(() => Media, { nullable: true, eager: true })
   @JoinColumn()
   previewImage?: Relation<Media>;

@@ -14,12 +14,8 @@ import { Media } from './modules/media/entities/media.entity.js';
 import { ContactInfo } from './modules/contact/entities/contact-info.entity.js';
 import { AdminUser } from './modules/auth/entities/admin-user.entity.js';
 
-/**
- * Used by the TypeORM CLI only (migration:generate/run/revert), via
- * `npm run typeorm -- <command>` (see package.json). The running Nest app
- * gets its own DataSource from TypeOrmModule.forRootAsync in app.module.ts;
- * both must list the same entities.
- */
+// Used by the TypeORM CLI only; the app gets its own DataSource via
+// TypeOrmModule.forRootAsync in app.module.ts (same entity list).
 export const AppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,

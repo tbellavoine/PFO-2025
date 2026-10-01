@@ -1,9 +1,9 @@
 import { Entity, ManyToOne, Unique } from 'typeorm';
 import type { Relation } from 'typeorm';
-import { BaseEntity } from '../../../common/entities/base.entity.js';
+import { BaseEntity } from '#common/entities/base.entity.js';
 import { Experience } from './experience.entity.js';
-import { Skill } from '../../skills/entities/skill.entity.js';
-import { SkillCategory } from '../../skills/entities/skill-category.entity.js';
+import { Skill } from '#modules/skills/entities/skill.entity.js';
+import { SkillCategory } from '#modules/skills/entities/skill-category.entity.js';
 
 /**
  * A skill used in one experience, grouped by category (presence only — no

@@ -84,11 +84,7 @@ export class ExperiencesService {
     await this.repository.delete(id);
   }
 
-  /**
-   * Replace-all rather than diff/merge: an admin CRUD endpoint edited by
-   * one person at a time doesn't need incremental patching, and replace-
-   * all can't drift out of sync with what the form actually submitted.
-   */
+  // Replace-all, not diff/merge: simpler, can't drift from the submitted form.
   private async replaceAchievementsAndSkills(
     experienceId: string,
     achievements: string[],

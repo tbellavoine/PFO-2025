@@ -18,13 +18,7 @@ export class AuthService implements OnModuleInit {
     private readonly config: ConfigService,
   ) {}
 
-  /**
-   * No open registration (see docs/plan-dynamic-backend.md §4.4): the
-   * single admin account is defined by ADMIN_EMAIL/ADMIN_PASSWORD_HASH in
-   * the environment, not signed up through the API. This keeps the DB row
-   * in sync with whatever those env vars currently say every time the app
-   * starts, rather than requiring a separate one-off script to run first.
-   */
+  // No open registration: syncs the single admin row from env vars on boot.
   async onModuleInit(): Promise<void> {
     const email = this.config.get<string>('ADMIN_EMAIL');
     const passwordHash = this.config.get<string>('ADMIN_PASSWORD_HASH');
