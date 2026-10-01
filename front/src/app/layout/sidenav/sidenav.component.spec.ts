@@ -4,9 +4,10 @@ import { SidenavComponent } from './sidenav.component';
 import { Router, NavigationEnd, ActivatedRoute, UrlTree } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MenuKey } from '@enums/menu-key.enum';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { provideTranslateService } from '@ngx-translate/core';
 import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-explorer',
@@ -20,6 +21,8 @@ describe('SidenavComponent', () => {
   let fixture: ComponentFixture<SidenavComponent>;
   let router: MockedObject<Router>;
   let routerEvents: Subject<NavigationEnd>;
+  let adminSignal: ReturnType<typeof signal<{ email: string } | null>>;
+  let authServiceStub: { admin: typeof adminSignal; logout: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     routerEvents = new Subject<NavigationEnd>();
@@ -29,6 +32,11 @@ describe('SidenavComponent', () => {
       createUrlTree: () => ({}) as unknown as UrlTree,
       serializeUrl: () => ({}) as unknown as string,
     } as unknown as MockedObject<Router>;
+    adminSignal = signal(null);
+    authServiceStub = {
+      admin: adminSignal,
+      logout: vi.fn().mockReturnValue({ subscribe: vi.fn() }),
+    };
 
     await TestBed.configureTestingModule({
       imports: [SidenavComponent, MockExplorerComponent, FontAwesomeTestingModule],
@@ -36,6 +44,7 @@ describe('SidenavComponent', () => {
         provideTranslateService(),
         { provide: Router, useValue: router },
         { provide: ActivatedRoute, useValue: {} },
+        { provide: AuthService, useValue: authServiceStub },
       ],
     }).compileComponents();
 
@@ -116,6 +125,32 @@ describe('SidenavComponent', () => {
       vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(1024);
       window.dispatchEvent(new Event('resize'));
       expect(component.isMobile()).toBe(true);
+    });
+  });
+
+  describe('Connection power button', () => {
+    it('should render dim and unlabeled for logout when not connected', () => {
+      const powerLink = fixture.debugElement.query((el) => el.attributes['title'] === 'Console');
+      expect(powerLink).toBeTruthy();
+      expect(powerLink.nativeElement.classList.contains('text-light/40')).toBe(true);
+    });
+
+    it('should render lit and titled for logout once connected', () => {
+      adminSignal.set({ email: 'admin@example.com' });
+      fixture.detectChanges();
+
+      const powerLink = fixture.debugElement.query((el) => el.attributes['title'] === 'Se déconnecter');
+      expect(powerLink).toBeTruthy();
+      expect(powerLink.nativeElement.classList.contains('text-accent')).toBe(true);
+    });
+
+    it('should log out when clicked while connected', () => {
+      adminSignal.set({ email: 'admin@example.com' });
+      fixture.detectChanges();
+
+      component['onPowerClick']();
+
+      expect(authServiceStub.logout).toHaveBeenCalled();
     });
   });
 
