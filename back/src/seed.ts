@@ -1,5 +1,8 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import { randomUUID } from 'node:crypto';
+import { extname, join } from 'node:path';
+import { copyFile, mkdir } from 'node:fs/promises';
 import { AppDataSource } from './data-source.js';
 import { Skill } from './modules/skills/entities/skill.entity.js';
 import { SkillCategory } from './modules/skills/entities/skill-category.entity.js';
@@ -11,6 +14,7 @@ import { Achievement } from './modules/experiences/entities/achievement.entity.j
 import { ExperienceSkill } from './modules/experiences/entities/experience-skill.entity.js';
 import { Project } from './modules/projects/entities/project.entity.js';
 import { ProjectLink } from './modules/projects/entities/project-link.entity.js';
+import { Media } from './modules/media/entities/media.entity.js';
 import { ContactInfo } from './modules/contact/entities/contact-info.entity.js';
 import { Company } from './modules/projects/enums/company.enum.js';
 import { ProjectCategory } from './modules/projects/enums/project-category.enum.js';
@@ -23,14 +27,9 @@ import { ProjectStatus } from './modules/projects/enums/project-status.enum.js';
  * separate Angular project with its own build; the data is small and
  * static enough that a faithful copy is simpler and more transparent than
  * a cross-project build-time dependency). Safe to re-run: every insert is
- * keyed and skipped if it already exists.
- *
- * Known gap, left for a follow-up once the media upload endpoint exists
- * (phase 2): projects that had a "Preview" link pointing at an internal
- * ImageAssets key (see docs/plan-dynamic-backend.md §4.2) are seeded
- * without a previewImage — the key each one used is noted in a comment
- * next to it, so the right file can be uploaded and attached afterwards
- * instead of being silently dropped.
+ * keyed and skipped if it already exists, including the project preview
+ * images (copied from front/'s static assets into media storage and
+ * attached directly — see upsertPreviewMedia below).
  *
  * Run with: npm run seed
  */
@@ -57,6 +56,29 @@ async function upsertCategory(key: string, label: string, order: number) {
   return repo.save(repo.create({ key, label, order }));
 }
 
+// The static site's project preview images still live in front/'s own
+// assets — copied into the backend's media storage here (not via the
+// admin upload endpoint) so a fresh `npm run seed` is fully reproducible
+// without a separate manual migration step.
+const FRONT_IMAGES_DIR = join(process.cwd(), '..', 'front', 'src', 'assets', 'images');
+
+async function upsertPreviewMedia(
+  mediaRepo: ReturnType<typeof AppDataSource.getRepository<Media>>,
+  altText: string,
+  sourceFilename: string,
+): Promise<Media> {
+  const existing = await mediaRepo.findOne({ where: { altText } });
+  if (existing) return existing;
+
+  const uploadDir = process.env.MEDIA_UPLOAD_DIR ?? './uploads';
+  await mkdir(uploadDir, { recursive: true });
+  const filename = `${randomUUID()}${extname(sourceFilename).toLowerCase()}`;
+  await copyFile(join(FRONT_IMAGES_DIR, sourceFilename), join(uploadDir, filename));
+
+  const publicUrl = `${process.env.MEDIA_PUBLIC_URL}/${filename}`;
+  return mediaRepo.save(mediaRepo.create({ filename, url: publicUrl, altText }));
+}
+
 async function main() {
   await AppDataSource.initialize();
   console.log('Connected. Seeding...');
@@ -70,6 +92,7 @@ async function main() {
   const experienceSkillRepo = AppDataSource.getRepository(ExperienceSkill);
   const projectRepo = AppDataSource.getRepository(Project);
   const projectLinkRepo = AppDataSource.getRepository(ProjectLink);
+  const mediaRepo = AppDataSource.getRepository(Media);
 
   // --- Skill catalog (was the `Skill` enum in front/src/app/enums/skill.enum.ts) ---
   const skillNames = [
@@ -321,8 +344,8 @@ async function main() {
   }
 
   // --- Projects ---
-  // `preview` notes which front/src/assets/images/* file each project used to link to
-  // (via the internal ImageAssets enum) — to attach once the media upload endpoint exists.
+  // `preview` is the front/src/assets/images/* filename to copy into media
+  // storage and attach as this project's previewImage.
   type SeedProject = {
     date: string; name: string; company: Company; category: ProjectCategory; type: ProjectType;
     status: ProjectStatus; description: string; skills: string[];
@@ -345,7 +368,7 @@ async function main() {
       description: 'Conception et développement de l’interface utilisateur pour la gestion des relations producteurs bio-méthane, pilotage de l’architecture front-end Angular (migration progressive v8 à v19), mise en place de tests unitaires et d’intégration (Jasmine/Jest), développement back-end avec Symfony et API-Platform, déploiement sur AWS Cloud, ainsi que formation et encadrement technique des nouveaux collaborateurs.',
       skills: ['Angular', 'Typescript', 'Jest', 'Sonarqube', 'Html', 'Css', 'Tailwindcss', 'Docker', 'Aws', 'Adobe Xd', 'CI/CD', 'Symfony', 'Doctrine', 'Phpunit', 'Jira', 'Gitlab'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://www.grdf.fr/' }],
-      preview: 'gestion-relation-producteur',
+      preview: 'Gestion relation producteur.jpg',
     },
     {
       date: '2022', name: 'Patience .K - coaching', company: Company.PERSO, category: ProjectCategory.APP,
@@ -353,7 +376,7 @@ async function main() {
       description: 'Site vitrine WordPress pour coach sportif à domicile spécialisé dans la remise en forme et perte de poids, avec design personnalisé créé sur maquettes validées et formation back-office pour une gestion autonome du contenu.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://patiencekcoaching.fr' }],
-      preview: 'patience-k-coaching',
+      preview: 'Patience K Coaching.jpg',
     },
     {
       date: '2020', name: 'HORA ASOCIADOS - Estudio Juririco Empresarial', company: Company.PERSO,
@@ -361,7 +384,7 @@ async function main() {
       description: 'Site vitrine WordPress pour cabinet d\'avocats spécialisé en droit du travail, fiscal et corporatif, avec design sur maquettes validées et formation back-office pour une gestion autonome du contenu professionnel.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://horaasociados.com/' }],
-      preview: 'hora-asociados',
+      preview: 'Hora Asociados.jpg',
     },
     {
       date: '2020', name: 'SVP.com', company: Company.WEB_ATRIO, category: ProjectCategory.BLOG,
@@ -369,7 +392,7 @@ async function main() {
       description: 'Mission de refonte technique front-end en urgence : transformation complète des maquettes Zeplin en interfaces HTML5/SCSS compatibles cross-browser (IE11) avec templating Laravel Blade, incluant la réduction de la dette technique avant mise en production.',
       skills: ['Html', 'Css', 'Javascript', 'Zeplin', 'Laravel blade'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://www.svp.com/' }],
-      preview: 'svp',
+      preview: 'SVP.jpg',
     },
     {
       date: '2019 - 2020', name: 'Longchamp', company: Company.WEB_ATRIO, category: ProjectCategory.COMMERCE,
@@ -377,7 +400,7 @@ async function main() {
       description: 'Développement et intégration front-end pour Salesforce Commerce Cloud et Angular 7, incluant la création de modules e-commerce personnalisés, l’optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Angular', 'Typescript', 'Html', 'Isml', 'Scss', 'Photoshop', 'Gitlab'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://www.longchamp.com/fr/fr/mypliage' }],
-      preview: 'longchamp-mypliage',
+      preview: 'Longchamp Mypliage.jpg',
     },
     {
       date: '2019', name: 'Inovarion', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
@@ -385,7 +408,7 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php', 'TreeJs'],
       links: [],
-      preview: 'inovarion',
+      preview: 'Inovarion.jpg',
     },
     {
       date: '2019', name: 'Yposkesi', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
@@ -393,7 +416,7 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress pour un client médical. Optimisation des performances, la mise en conformité accessibilité AA et la transformation de maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [],
-      preview: 'yposkesi',
+      preview: 'Yposkesi.jpg',
     },
     {
       date: '2018', name: 'Pinet', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
@@ -401,7 +424,7 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://www.pinet-industrie.com/fr/' }],
-      preview: 'pinet',
+      preview: 'Pinet.jpg',
     },
     {
       date: '2018', name: 'Nextensia', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
@@ -409,7 +432,7 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress pour un client dans le domaine de la construction. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://www.pinet-industrie.com/fr/' }],
-      preview: 'nextensia',
+      preview: 'Nextensia.jpg',
     },
     {
       date: '2018', name: 'Metroscope', company: Company.ADVERIS, category: ProjectCategory.WEBSITE,
@@ -417,7 +440,7 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [],
-      preview: 'metroscope',
+      preview: 'Metroscope EDF.jpg',
     },
     {
       date: '2018', name: 'Fondation avenir du patrimoine à paris', company: Company.ADVERIS,
@@ -425,14 +448,14 @@ async function main() {
       description: 'Développement et intégration front-end sous wordpress pour une fondation. Optimisation des performances, transformation des maquettes en interfaces UI/UX interactives.',
       skills: ['Wordpress', 'Html', 'Jquery', 'Javascript', 'Sass', 'Photoshop', 'Illustrator', 'Twig', 'Php'],
       links: [{ label: 'Site de l\'entreprise', url: 'https://fondationavenirpatrimoineparis.fr' }],
-      preview: 'fondation-avenir-du-patrimoine-paris',
+      preview: 'Fondation avenir du patrimoine paris.jpg',
     },
   ];
 
-  const skippedPreviews: string[] = [];
   for (const [index, p] of projects.entries()) {
     const existing = await projectRepo.findOne({ where: { name: p.name } });
     if (existing) continue;
+    const previewImage = p.preview ? await upsertPreviewMedia(mediaRepo, p.name, p.preview) : undefined;
     const project = await projectRepo.save(
       projectRepo.create({
         date: p.date,
@@ -445,17 +468,12 @@ async function main() {
         order: index,
         published: true,
         skills: p.skills.map((name) => skill(name)),
+        previewImage,
       }),
     );
     for (const [lIndex, link] of p.links.entries()) {
       await projectLinkRepo.save(projectLinkRepo.create({ project, label: link.label, url: link.url, order: lIndex }));
     }
-    if (p.preview) skippedPreviews.push(`${p.name} -> ${p.preview}`);
-  }
-
-  if (skippedPreviews.length) {
-    console.log('\nPreview images not migrated yet (upload manually once the media endpoint exists):');
-    for (const line of skippedPreviews) console.log(`  - ${line}`);
   }
 
   console.log('\nSeed complete.');
