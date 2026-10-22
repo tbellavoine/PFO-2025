@@ -1,0 +1,63 @@
+name: CI (back)
+
+on:
+  push:
+    branches: [master]
+    paths: ["back/**", "pnpm-lock.yaml", ".github/workflows/ci-back.yml"]
+  pull_request:
+    branches: [master]
+    paths: ["back/**", "pnpm-lock.yaml", ".github/workflows/ci-back.yml"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: pfo
+          POSTGRES_PASSWORD: pfo_ci_password
+          POSTGRES_DB: pfo2025
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pfo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://pfo:pfo_ci_password@localhost:5432/pfo2025
+      DATABASE_SSL: "false"
+      JWT_SECRET: ci-only-secret
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD_HASH: ""
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run lint
+        working-directory: back
+
+      - run: pnpm run build
+        working-directory: back
+
+      - run: pnpm run migration:run
+        working-directory: back
+
+      - run: pnpm test
+        working-directory: back
+
+      - run: pnpm run test:e2e
+        working-directory: back

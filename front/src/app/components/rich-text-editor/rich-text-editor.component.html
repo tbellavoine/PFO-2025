@@ -1,0 +1,32 @@
+<div class="flex flex-col rounded border border-light/20 overflow-hidden bg-transparent">
+  <div class="flex gap-1 border-b border-light/20 bg-primary-darker p-1">
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="exec('bold')"
+            [class.bg-accent]="activeFormats().bold" [class.text-light]="activeFormats().bold"
+            class="flex items-center justify-center w-7 h-7 rounded-sm text-light/70 transition-all hover:bg-primary hover:text-light cursor-pointer" title="Gras">
+      <fa-icon [icon]="['fas','bold']"/>
+    </button>
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="exec('italic')"
+            [class.bg-accent]="activeFormats().italic" [class.text-light]="activeFormats().italic"
+            class="flex items-center justify-center w-7 h-7 rounded-sm text-light/70 transition-all hover:bg-primary hover:text-light cursor-pointer" title="Italique">
+      <fa-icon [icon]="['fas','italic']"/>
+    </button>
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="exec('underline')"
+            [class.bg-accent]="activeFormats().underline" [class.text-light]="activeFormats().underline"
+            class="flex items-center justify-center w-7 h-7 rounded-sm text-light/70 transition-all hover:bg-primary hover:text-light cursor-pointer" title="Souligné">
+      <fa-icon [icon]="['fas','underline']"/>
+    </button>
+    <button type="button" (mousedown)="$event.preventDefault()" (click)="exec('insertUnorderedList')"
+            [class.bg-accent]="activeFormats().insertUnorderedList" [class.text-light]="activeFormats().insertUnorderedList"
+            class="flex items-center justify-center w-7 h-7 rounded-sm text-light/70 transition-all hover:bg-primary hover:text-light cursor-pointer" title="Liste">
+      <fa-icon [icon]="['fas','list-ul']"/>
+    </button>
+  </div>
+  <div #editor
+       contenteditable="true"
+       (input)="syncValue()"
+       (keyup)="updateActiveFormats()"
+       (mouseup)="updateActiveFormats()"
+       (focus)="updateActiveFormats()"
+       class="p-2 min-h-24 text-light text-sm focus:outline-none [&_strong]:text-light [&_b]:text-light [&_em]:text-light [&_i]:text-light [&_ul]:list-disc [&_ul]:pl-5">
+  </div>
+</div>

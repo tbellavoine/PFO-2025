@@ -1,0 +1,49 @@
+@if (profile.value(); as profileData) {
+  <div class="relative flex flex-col p-6 md:p-20 gap-12 text-light/60">
+    @if (admin()) {
+      <div class="absolute top-4 right-4 md:top-8 md:right-8">
+        <edit-button (edit)="editing.set(true)"/>
+      </div>
+    }
+    <div class="flex flex-col gap-2  justify-center items-center">
+      <p class="text-xs text-accent/50 mb-4">
+        &lt;about-me /&gt;
+      </p>
+      <h3 class="text-5xl text-light font-semibold">{{ profileData.name }}</h3>
+      <p class="text-accent text-xl italic">{{ profileData.title }}</p>
+    </div>
+    <div class="flex flex-col gap-6 [&_strong]:text-light [&_b]:text-light [&_em]:text-light [&_i]:text-light">
+      @for (paragraph of profileData.bioParagraphs; track $index) {
+        <p [innerHTML]="paragraph"></p>
+      }
+    </div>
+    <div class="flex flex-col md:flex-row md:items-center gap-12 md:gap-6 w-full">
+      <div class="flex flex-col gap-2 w-full md:w-1/2">
+        <p class="text-lg text-accent/70">
+          &lt;Savoir-être /&gt;
+        </p>
+        <json-card [jsonObject]="softSkillsObject()"/>
+      </div>
+      <div class="flex flex-col items-center gap-2 w-full md:w-1/2">
+        <div (click)="openCV()"
+             (keydown.enter)="openCV()"
+             (keydown.space)="$event.preventDefault(); openCV()"
+             role="button"
+             tabindex="0"
+             class="group flex flex-col items-center gap-4 cursor-pointer">
+          <div
+            class="flex items-center justify-center p-3 rounded-full h-30 w-30 border-2 border-light transition-all group-hover:border-accent group-hover:text-accent">
+            <fa-icon [icon]="['fas','file-arrow-down']" [size]="'3x'" class="transition-all group-hover:animate-pulse"/>
+          </div>
+          <span class="transition-all group-hover:!text-accent text-light/20">Télécharger le CV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (editing()) {
+    <app-modal title="Modifier le profil" (closed)="editing.set(false)">
+      <app-profile-edit-form [profile]="profileData" (saved)="onSaved()" (cancelled)="editing.set(false)"/>
+    </app-modal>
+  }
+}

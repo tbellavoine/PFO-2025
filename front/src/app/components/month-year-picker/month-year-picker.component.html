@@ -1,0 +1,31 @@
+<div class="flex items-center gap-2">
+  <select
+    [disabled]="ongoing()"
+    (change)="onMonthChange(+$any($event.target).value)"
+    class="rounded border border-light/20 bg-primary p-2 text-light disabled:opacity-40"
+  >
+    @if (selectedMonth() === null) {
+      <option [value]="null" disabled [selected]="true">Mois...</option>
+    }
+    @for (month of months; track month.value) {
+      <option [value]="month.value" [selected]="month.value === selectedMonth()">{{ month.label }}</option>
+    }
+  </select>
+
+  <select
+    [disabled]="ongoing()"
+    (change)="onYearChange(+$any($event.target).value)"
+    class="rounded border border-light/20 bg-primary p-2 text-light disabled:opacity-40"
+  >
+    @for (year of years; track year) {
+      <option [value]="year" [selected]="year === selectedYear()">{{ year }}</option>
+    }
+  </select>
+
+  @if (allowOngoing()) {
+    <label class="flex items-center gap-1 text-sm text-light/60">
+      <input type="checkbox" [checked]="ongoing()" (change)="onOngoingChange($any($event.target).checked)" />
+      En cours
+    </label>
+  }
+</div>

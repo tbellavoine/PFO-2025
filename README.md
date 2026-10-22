@@ -1,88 +1,37 @@
 # PFO2025
 
-Ce projet est un portfolio personnel présentant diverses applications et composants Angular. Il sert de terrain de jeu pour explorer les fonctionnalités modernes d'Angular, les modèles architecturaux et les implémentations UI/UX.
+Portfolio personnel de Thomas BELLAVOINE. Monorepo :
 
-## Fonctionnalités
+- [`front/`](front/README.md) — application Angular (portfolio public, statique/prerendu).
+- `back/` — API NestJS (contenu dynamique, console d'admin). Voir [`docs/plan-dynamic-backend.md`](docs/plan-dynamic-backend.md) pour l'architecture.
 
-- **Composant Explorateur**: Une navigation de type explorateur de fichiers pour les différentes sections du portfolio.
-- **Jeu de Tic-Tac-Toe**: Un jeu classique de Tic-Tac-Toe implémenté avec les signaux Angular.
-- **Jeu du Serpent**: Un jeu rétro du Serpent construit avec les signaux Angular.
-- **Jeu 2048**: Une implémentation du jeu 2048.
-- **Section Profil**: Affiche des informations personnelles et des compétences comportementales.
-- **Section Compétences**: Présente les compétences techniques classées par frontend, backend, DevOps, UX/UI et outils.
-- **Section Projets**: Liste divers projets personnels et professionnels.
-- **Section Expériences**: Détaille les expériences professionnelles.
-- **Formulaire de Contact**: Un simple formulaire de contact.
-- **Onglets Dynamiques**: Un système d'onglets pour gérer les pages/applications ouvertes.
-- **Composant Carte JSON**: Un composant réutilisable pour afficher des données JSON avec coloration syntaxique et liens cliquables.
+## Installation
 
-## Technologies Utilisées
-
-- **Angular**: Framework frontend (version 22)
-- **TypeScript**: Sur-ensemble de JavaScript
-- **Tailwind CSS**: Framework CSS utilitaire
-- **Font Awesome**: Bibliothèque d'icônes
-- **ngx-translate**: Bibliothèque d'internationalisation
-- **Vitest**: Framework de tests unitaires
-
-## Development server
-
-To start a local development server, run:
+Gestionnaire de paquets : [pnpm](https://pnpm.io) (workspace à la racine, un seul lockfile pour `back/` et `front/`).
 
 ```bash
-ng serve
+corepack enable   # une fois, pour que pnpm utilise la version épinglée dans package.json
+pnpm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- `pnpm --filter back <script>` / `pnpm --filter front <script>` — lance un script d'un seul package.
+- `pnpm -r lint` / `pnpm -r build` / `pnpm -r test` — lance un script dans tous les packages.
 
-## Code scaffolding
+### Réseau GRDF : 404 sur @fortawesome
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Sur le réseau interne, le registre scope `@fortawesome` (`grdf-npm-fontawesome` dans le
+`.npmrc` utilisateur) ne sert pas tous les tarballs des paquets gratuits FontAwesome et
+peut renvoyer des 404 sur `pnpm install`. Si ça arrive, pointer temporairement ce scope
+vers le miroir npmjs qui fonctionne, dans **votre** `.npmrc` utilisateur (`~/.npmrc`), pas
+dans celui du projet (ça casserait la CI, qui n'a pas cette config) :
 
-```bash
-ng generate component component-name
+```
+@fortawesome:registry=https://artifactory.cloud-grdf.fr/artifactory/api/npm/grdf-npm-npmjs/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Une fois l'install passée, le store local pnpm garde les paquets en cache : la ligne peut
+être retirée ensuite.
 
-```bash
-ng generate --help
-```
+## Documentation
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev) test runner, use the following command:
-
-```bash
-ng test
-```
-
-To generate a coverage report, run:
-
-```bash
-npm run test-coverage
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Plan contenu dynamique / admin / backend](docs/plan-dynamic-backend.md)

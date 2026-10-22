@@ -1,0 +1,47 @@
+<div class="flex flex-col p-6 md:p-20 gap-8 md:gap-20 text-light/60">
+  <div class="flex flex-col gap-2 justify-center items-center">
+    <p class="text-xs text-accent/50 mb-4">
+      &lt;Projects /&gt;
+    </p>
+    <h3 class="text-2xl md:text-5xl text-light font-semibold text-center">Mes dernières réalisations</h3>
+    <p class="text-accent text-lg md:text-xl italic text-center">Des réalisations aux petits oignons...sans remonter trop loin dans le temps </p>
+  </div>
+  <div class="flex items-center justify-center flex-wrap gap-4">
+    @for (category of ProjectCategory | keyvalue; track category) {
+      <div class="flex p-2 border border-accent/50 text-xs text-light cursor-pointer transition-all hover:bg-accent hover:text-light"
+           role="button"
+           tabindex="0"
+           [attr.aria-pressed]="selectedCategory() === category.value"
+           [ngClass]="{'!bg-accent !text-light': selectedCategory() === category.value}"
+           (click)="filterProjectsByCategory(category.value)"
+           (keydown.enter)="filterProjectsByCategory(category.value)"
+           (keydown.space)="$event.preventDefault(); filterProjectsByCategory(category.value)">
+        {{ category.value }}
+      </div>
+    }
+  </div>
+  @if (admin()) {
+    <button type="button" (click)="editingId.set('new')" class="w-fit mx-auto rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">+ Nouveau projet</button>
+  }
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    @for (project of projectCards(); track project.id) {
+      <div class="relative h-full">
+        <json-card [jsonObject]="project.jsonObject" [title]="project.title"/>
+        @if (admin()) {
+          <div class="absolute top-2 right-2 flex items-center gap-2">
+            @if (!project.published) {
+              <span class="text-xs text-light/40 border border-light/20 rounded-sm px-2 py-1">Brouillon</span>
+            }
+            <edit-button (edit)="editingId.set(project.id)"/>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+@if (editingId()) {
+  <app-modal [title]="editingId() === 'new' ? 'Nouveau projet' : 'Modifier le projet'" (closed)="editingId.set(null)">
+    <app-project-edit-form [project]="editingProject()" (saved)="onSaved()" (deleted)="onDeleted()" (cancelled)="editingId.set(null)"/>
+  </app-modal>
+}

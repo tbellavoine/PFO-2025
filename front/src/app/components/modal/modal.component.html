@@ -1,0 +1,15 @@
+<div class="fixed inset-0 z-1000 flex items-center justify-center bg-black/60 p-4"
+     (click)="onBackdropClick()" (keydown.enter)="onBackdropClick()" role="presentation">
+  <div class="flex flex-col max-h-[90vh] w-full max-w-2xl rounded border border-light/20 bg-primary text-light overflow-hidden"
+       (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-between border-b border-white/5 bg-primary-darker px-4 py-3">
+      <p class="text-sm text-light/80">{{ title() }}</p>
+      <button type="button" (click)="closed.emit()" class="text-light/40 transition-all hover:text-light cursor-pointer" aria-label="Fermer">
+        <fa-icon [icon]="['fas','xmark']"/>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-6">
+      <ng-content/>
+    </div>
+  </div>
+</div>

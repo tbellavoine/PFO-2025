@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-4">
+  <table class="w-full text-left text-sm text-light">
+    <thead>
+      <tr class="text-light/40">
+        <th class="py-1">Compétence</th>
+        <th class="py-1">Niveau</th>
+        <th class="py-1">Ordre</th>
+        <th class="py-1"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (entry of entriesResource.value() ?? []; track entry.id) {
+        <tr class="border-t border-light/10">
+          <td class="py-1">{{ entry.skill.name }}</td>
+          <td class="py-1">{{ entry.level }}</td>
+          <td class="py-1">{{ entry.order }}</td>
+          <td class="py-1">
+            <button type="button" (click)="deleteEntry(entry.skill.id)" class="text-light/40 transition-all hover:text-red-500 cursor-pointer">✕</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="flex flex-wrap items-end gap-2">
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Compétence
+      <select [value]="entrySkillId()" (change)="entrySkillId.set($any($event.target).value)"
+              class="rounded border border-light/20 bg-primary p-2 text-light">
+        <option value="" disabled>Choisir...</option>
+        @for (skill of skillsResource.value() ?? []; track skill.id) {
+          <option [value]="skill.id">{{ skill.name }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Niveau
+      <select [value]="entryLevel()" (change)="entryLevel.set($any($event.target).value)"
+              class="rounded border border-light/20 bg-primary p-2 text-light">
+        @for (level of SkillLevel | keyvalue; track level.key) {
+          <option [value]="level.value">{{ level.value }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="flex flex-col gap-1 text-sm text-light/60">
+      Ordre
+      <input type="number" [value]="entryOrder()" (input)="entryOrder.set($any($event.target).valueAsNumber)"
+             class="w-20 rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+
+    <button type="button" (click)="upsertEntry()" class="rounded bg-accent px-4 py-2 text-light transition-all hover:opacity-80 cursor-pointer">Ajouter/Maj</button>
+  </div>
+
+  <div class="flex items-end gap-2 border-t border-white/5 pt-4">
+    <label class="flex flex-col gap-1 text-sm text-light/60 flex-1">
+      Nouvelle compétence (catalogue)
+      <input type="text" [value]="newSkillName()" (input)="newSkillName.set($any($event.target).value)"
+             placeholder="Nom de la compétence"
+             class="rounded border border-light/20 bg-transparent p-2 text-light" />
+    </label>
+    <button type="button" (click)="createSkill()" class="rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Créer</button>
+  </div>
+
+  <button type="button" (click)="closed.emit()" class="w-fit rounded border border-light/20 px-4 py-2 text-light transition-all hover:bg-light/5 cursor-pointer">Fermer</button>
+</div>

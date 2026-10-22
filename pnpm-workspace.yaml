@@ -1,0 +1,21 @@
+packages:
+  - "back"
+  - "front"
+
+# Supply-chain guard: don't install a package version published in the
+# last 24h, since a malicious release is usually pulled within that window.
+minimumReleaseAge: 1440
+
+allowBuilds:
+  '@parcel/watcher': true
+  '@scarf/scarf': false
+  argon2: true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
+minimumReleaseAgeExclude:
+  - dotenv@18.0.5
+  - pg-cloudflare@1.4.1
+  - pg-connection-string@2.14.1
+  - pg-protocol@1.16.1
+  - pg@8.23.1
